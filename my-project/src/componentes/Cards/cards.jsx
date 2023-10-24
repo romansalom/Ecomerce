@@ -12,7 +12,7 @@ function Cards() {
       quantity: 0, // Agregamos la propiedad "quantity" inicializada en 0
     },
     {
-      title: 'Strawberry ',
+      title: 'Strawberry Candy Cotton Ice  ',
       price: 20000,
       billing: '$',
       features: ['5000 puffs'],
@@ -21,7 +21,7 @@ function Cards() {
       quantity: 0, // Agregamos la propiedad "quantity" inicializada en 0
     },
     {
-      title: ' Banana',
+      title: ' Banana Coca Zero Same',
       price: 20000,
       billing: '$',
       features: ['5000 puffs'],
@@ -30,7 +30,7 @@ function Cards() {
       quantity: 0, // Agregamos la propiedad "quantity" inicializada en 0
     },
     {
-        title: 'Fume Banana',
+        title: 'Fume Banana Love Dick',
         price: 20000,
         billing: '$',
         features: ['5000 puffs'],
@@ -39,7 +39,7 @@ function Cards() {
         quantity: 0, // Agregamos la propiedad "quantity" inicializada en 0
       },
       {
-        title: 'Fume Strawberry ',
+        title: 'Fume Strawberry Candy Coca Light ',
         price: 20000,
         billing: '$',
         features: ['5000 puffs'],
