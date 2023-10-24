@@ -4,7 +4,7 @@ function Cards() {
   const [pricingData, setPricingData] = useState([
     {
       title: 'Strawberry Banana',
-      price: 20000,
+      price: "20.000",
       billing: '$',
       features: ['5000 puffs'],
       buttonText: 'Ver Detalle',
@@ -13,7 +13,7 @@ function Cards() {
     },
     {
       title: 'Strawberry Candy Cotton Ice ',
-      price: 20000,
+      price: "20.000",
       billing: '$',
       features: ['5000 puffs'],
       buttonText: 'Ver Detalle',
@@ -22,7 +22,7 @@ function Cards() {
     },
     {
       title: ' Banana Coca Zero Same',
-      price: 20000,
+      price: "20.000",
       billing: '$',
       features: ['5000 puffs'],
       buttonText: 'Ver Detalle',
@@ -31,7 +31,7 @@ function Cards() {
     },
     {
         title: 'Fume Banana Love Dick',
-        price: 20000,
+        price: "20.000",
         billing: '$',
         features: ['5000 puffs'],
         buttonText: 'Ver Detalle',
@@ -40,7 +40,7 @@ function Cards() {
       },
       {
         title: 'Fume Strawberry Candy Coca Light ',
-        price: 20000,
+        price: "20.000",
         billing: '$',
         features: ['5000 puffs'],
         buttonText: 'Ver Detalle',
@@ -49,7 +49,7 @@ function Cards() {
       },
       {
         title: 'Fume Banana',
-        price: 20000,
+        price: "20.000",
         billing: '$',
         features: ['5000 puffs'],
         buttonText: 'Ver Detalle',
@@ -113,10 +113,10 @@ function Cards() {
               </div>
               <div className="h-2"></div>
               <div className="flex-shrink-0">
-                <span className="pt-2 text-4xl font-bold text-gray-800 uppercase dark:text-gray-500">
-                  {pricing.price}
-                </span>
-                <span className="text-gray-500 dark:text-gray-400">{pricing.billing}</span>
+              <h3 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-black uppercase rounded-lg bg-gray-50 dark:bg-white" style={{ fontSize: '1.2em' }}>
+  {pricing.billing} {pricing.price}
+</h3>
+
               </div>
               <div className="h-2"></div>
               <ul className="flex-1 space-y-4">
