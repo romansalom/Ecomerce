@@ -35,19 +35,19 @@ function Navbar() {
                 className="px-4 py-2 mt-2 text-base font-semibold rounded-lg text-black md:mt-0 md:ml-4 text-decoration-none text-reset hover:text-green-500"
                 href="/"
               >
-                Blog
+                Fume
               </a>
               <a
                 className="px-4 py-2 mt-2 text-base font-semibold rounded-lg text-black md:mt-0 md:ml-4 text-decoration-none text-reset hover:text-green-500"
                 href="/portfolio"
               >
-                Portfolio
+                Supreme
               </a>
               <a
                 className="px-4 py-2 mt-2 text-base font-semibold rounded-lg text-black md:mt-0 md:ml-4 text-decoration-none text-reset hover:text-green-500"
                 href="/about"
               >
-                About
+                Elf Bar
               </a>
               <a
                 className="px-4 py-2 mt-2 text-base font-semibold rounded-lg text-black md:mt-0 md:ml-4 text-decoration-none text-reset hover:text-green-500"
