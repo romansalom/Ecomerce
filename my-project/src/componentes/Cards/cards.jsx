@@ -87,7 +87,7 @@ function Cards() {
   );
 
   return (
-    <div className="bg-white dark:bg-gray-100">
+    <div className="bg-white bg-gray">
           <div className="mt-4">TODOS LOS VAPOS</div> 
       <div className="container px-6 py-8 mx-auto ">
       <input
@@ -100,10 +100,10 @@ function Cards() {
 <div className="h-9"></div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filteredPricingData.map((pricing, index) => (
-            <div
-              key={index}
-              className="p-8 text-center bg-white border-2 border-gray-200 rounded-lg dark:bg-gray-200 dark:border-gray-300"
-            >
+       <div
+       key={index}
+       className="p-8 text-center bg-white border border-gray-200 rounded-lg shadow-xl hover:shadow-lg"
+     >
            
               <div className="flex-shrink-0">
                 <img src={pricing.image} alt={pricing.title} className="w-32 h-32 mx-auto mb-4 rounded-full" />
