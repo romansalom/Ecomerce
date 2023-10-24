@@ -88,7 +88,7 @@ function Cards() {
 
   return (
     <div className="bg-white dark:bg-gray-100">
-          <div className="mt-4">TODOS LOS VAPO</div> 
+          <div className="mt-4">TODOS LOS VAPOS</div> 
       <div className="container px-6 py-8 mx-auto ">
       <input
   type="text"
