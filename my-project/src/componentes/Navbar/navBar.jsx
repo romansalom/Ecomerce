@@ -30,7 +30,7 @@ function Navbar() {
                 </svg>
               </button>
             </div>
-            <nav className={`flex-col flex-grow ${open ? '' : 'hidden'} pb-4 md:pb-0 md:flex md:justify-end md:flex-row`}>
+            <nav className={`flex-col flex-grow ${open ? '' : 'hidden '} pb-4 md:pb-0 md:flex md:justify-end md:flex-row `}>
               <a
                 className="px-4 py-2 mt-2 text-base font-semibold rounded-lg text-black md:mt-0 md:ml-4 text-decoration-none text-reset hover:text-green-500"
                 href="/"
