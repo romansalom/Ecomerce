@@ -111,12 +111,14 @@ function Cards() {
                   {pricing.title}
                 </h2>
               </div>
+              <div className="h-2"></div>
               <div className="flex-shrink-0">
                 <span className="pt-2 text-4xl font-bold text-gray-800 uppercase dark:text-gray-500">
                   {pricing.price}
                 </span>
                 <span className="text-gray-500 dark:text-gray-400">{pricing.billing}</span>
               </div>
+              <div className="h-2"></div>
               <ul className="flex-1 space-y-4">
                 {pricing.features.map((feature, featureIndex) => (
                   <li key={featureIndex} className="text-gray-500 dark:text-gray-400">
@@ -124,6 +126,7 @@ function Cards() {
                   </li>
                 ))}
               </ul>
+              <div className="h-2"></div>
               <div className="flex items-center justify-center space-x-4">
                 <button
                   onClick={() => decreaseQuantity(index)}
