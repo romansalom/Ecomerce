@@ -88,7 +88,7 @@ function Cards() {
 
   return (
     <div className="bg-white bg-gray">
-          <div className="mt-4">TODOS LOS VAPOS</div> 
+          <div className="mt-4">TODOS LOS PRODUCTO</div> 
       <div className="container px-6 py-8 mx-auto ">
       <input
   type="text"
@@ -102,7 +102,7 @@ function Cards() {
           {filteredPricingData.map((pricing, index) => (
        <div
        key={index}
-       className="p-8 text-center bg-white border border-gray-200 rounded-lg shadow-xl hover:shadow-lg"
+       className="p-8 text-center bg-gray-100 border  border-gray-300 rounded-lg shadow-xl hover:shadow-lg"
      >
            
               <div className="flex-shrink-0">
@@ -127,27 +127,28 @@ function Cards() {
                 ))}
               </ul>
               <div className="h-2"></div>
-              <div className="flex items-center justify-center space-x-4">
-                <button
-                  onClick={() => decreaseQuantity(index)}
-                  className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                >
-                  -
-                </button>
-                <span className="text-xl">{pricing.quantity}</span>
-                <button
-                  onClick={() => increaseQuantity(index)}
-                  className="bg-green-500 text-white px-4 py-2 rounded-lg"
-                >
-                  +
-                </button>
-              </div>
-              <button
-                onClick={() => addToCart(pricing)}
-                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
-              >
-                Agregar al Carrito
-              </button>
+<div className="flex items-center justify-center space-x-4">
+  <button
+    onClick={() => decreaseQuantity(index)}
+    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl"
+  >
+    <span style={{ fontSize: '1.25em' }}>-</span>
+  </button>
+  <span className="text-xl">{pricing.quantity}</span>
+  <button
+    onClick={() => increaseQuantity(index)}
+    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-xl"
+  >
+    <span style={{ fontSize: '1.25em' }}>+</span>
+  </button>
+</div>
+<button
+  onClick={() => addToCart(pricing)}
+  className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
+>
+  Agregar al Carrito
+</button>
+
             </div>
           ))}
         </div>
