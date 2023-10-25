@@ -142,6 +142,7 @@ function Cards() {
     <span style={{ fontSize: '1.25em' }}>+</span>
   </button>
 </div>
+<div className="h-2"></div>
 <button
   onClick={() => addToCart(pricing)}
   className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
