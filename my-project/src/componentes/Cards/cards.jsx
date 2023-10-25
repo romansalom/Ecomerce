@@ -107,13 +107,13 @@ function Cards() {
            
               <div className="flex-shrink-0">
                 <img src={pricing.image} alt={pricing.title} className="w-32 h-32 mx-auto mb-4 rounded-full" />
-                <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-black uppercase rounded-lg bg-gray-50 dark:bg-white">
+                <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-black uppercase rounded-lg bg-gray-50 dark:bg-gray">
                   {pricing.title}
                 </h2>
               </div>
               <div className="h-2"></div>
               <div className="flex-shrink-0">
-              <h3 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-black uppercase rounded-lg bg-gray-50 dark:bg-white" style={{ fontSize: '1.2em' }}>
+              <h3 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-black uppercase rounded-lg bg-gray-00 dark:bg-gray" style={{ fontSize: '1.2em' }}>
   {pricing.billing} {pricing.price}
 </h3>
 
