@@ -12,6 +12,10 @@ module.exports = (database) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    marca: {
+      type: DataTypes.STRING, // Agregar la propiedad 'marca'
+      allowNull: false, // Puedes ajustar esto según tus necesidades
+    },
     flavor: {
       type: DataTypes.STRING,
       allowNull: false,

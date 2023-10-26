@@ -1,6 +1,7 @@
 const { database } = require('../db'); 
 
 // Función para obtener todos los productos
+
 const getAllProductos = async (req, res) => {
   try {
     const Productos = database.models.Productos;
@@ -14,7 +15,7 @@ const getAllProductos = async (req, res) => {
 
 // Función para crear un nuevo producto
 const createProducto = async (req, res) => {
-  const { name, flavor, puffs, imageUrl, stock, precio } = req.body; // Incluye 'stock' y 'precio' en la desestructuración
+  const { name, flavor, puffs, imageUrl, stock, precio,marca } = req.body; // Incluye 'stock' y 'precio' en la desestructuración
   try {
     const Productos = database.models.Productos;
 
@@ -24,6 +25,7 @@ const createProducto = async (req, res) => {
         name,
         puffs,
         precio,
+        marca
       },
     });
 
@@ -38,7 +40,8 @@ const createProducto = async (req, res) => {
       puffs,
       imageUrl,
       stock,
-      precio, // Agrega 'precio' al objeto que se crea en la base de datos
+      precio, 
+      marca// Agrega 'precio' al objeto que se crea en la base de datos
     });
     res.status(201).json(nuevoProducto);
   } catch (error) {
@@ -85,6 +88,8 @@ const createMultipleProductos = async (req, res) => {
     res.status(500).json({ error: 'Error al crear múltiples productos' });
   }
 };
+
+
 
 module.exports = {
   getAllProductos,

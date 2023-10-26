@@ -4,17 +4,22 @@ import axios from 'axios';
 function Cards() {
   const [pricingData, setPricingData] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [selectedMarca, setSelectedMarca] = useState(''); 
+  const [uniqueMarcas, setUniqueMarcas] = useState([]); 
 
   useEffect(() => {
     axios
       .get('http://localhost:3001/api/productos/todos')
       .then((response) => {
-        // Actualiza el estado con los datos recibidos
         const dataWithQuantityZero = response.data.map((product) => ({
           ...product,
           quantity: 0,
         }));
         setPricingData(dataWithQuantityZero);
+  
+        // Obtener marcas únicas
+        const uniqueMarcas = [...new Set(response.data.map((product) => product.marca))];
+        setUniqueMarcas(uniqueMarcas);
       })
       .catch((error) => {
         console.error("Error:", error);
@@ -45,10 +50,13 @@ function Cards() {
     setPricingData(updatedPricingData);
   };
 
-  const filteredPricingData = pricingData.filter((product) =>
+  const filteredPricingData = pricingData
+  .filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  )
+  .filter((product) =>
+    selectedMarca ? product.marca === selectedMarca : true
   );
-
   return (
     <div className="bg-white bg-gray">
       <div className="mt-4">TODOS LOS PRODUCTOS</div>
@@ -60,6 +68,18 @@ function Cards() {
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
         />
+        <select
+  value={selectedMarca}
+  onChange={(e) => setSelectedMarca(e.target.value)}
+  className="w-full p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+>
+  <option value="">Todas las marcas</option>
+  {uniqueMarcas.map((marca, index) => (
+    <option key={index} value={marca}>
+      {marca}
+    </option>
+  ))}
+</select>
         <div className="h-9"></div>
         {filteredPricingData.length === 0 ? ( // Verificar si no hay productos
           <p>No hay productos</p>
@@ -88,6 +108,7 @@ function Cards() {
                 <ul className="flex-1 space-y-4">
                   <li className="text-gray-500 dark:text-gray-400">Sabor: {pricing.flavor}</li>
                   <li className="text-gray-500 dark:text-gray-400">Puffs: {pricing.puffs}</li>
+                  <li className="text-gray-500 dark:text-gray-400">Marca: {pricing.marca}</li>
                 </ul>
                 <div className="h-2"></div>
                 <div className="flex items-center justify-center space-x-4">
