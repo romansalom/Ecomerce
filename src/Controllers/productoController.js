@@ -1,6 +1,6 @@
 const { database } = require('../db'); 
 
-// Función para obtener todos los productos
+// Función para obtener todos los productos lol
 
 const getAllProductos = async (req, res) => {
   try {
