@@ -8,6 +8,9 @@ function Cards() {
   const [uniqueMarcas, setUniqueMarcas] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
+  const [puffsFilter, setPuffsFilter] = useState('');
+  const [uniquePuffs, setUniquePuffs] = useState([]);
+  
   useEffect(() => {
     axios
       .get('http://localhost:3001/api/productos/todos')
@@ -21,11 +24,16 @@ function Cards() {
         // Obtener marcas únicas
         const uniqueMarcas = [...new Set(response.data.map((product) => product.marca))];
         setUniqueMarcas(uniqueMarcas);
+  
+        // Obtener valores únicos de la propiedad "puffs"
+        const uniquePuffs = [...new Set(response.data.map((product) => product.puffs.toString()))];
+        setUniquePuffs(uniquePuffs);
       })
       .catch((error) => {
         console.error("Error:", error);
       });
   }, []);
+  
 
   const increaseQuantity = (index) => {
     const updatedPricingData = [...pricingData];
@@ -50,14 +58,17 @@ function Cards() {
     updatedPricingData.forEach((item) => (item.quantity = 0));
     setPricingData(updatedPricingData);
   };
-
   const filteredPricingData = pricingData
   .filter((product) =>
     product.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
   .filter((product) =>
     selectedMarca ? product.marca === selectedMarca : true
+  )
+  .filter((product) =>
+    puffsFilter ? product.puffs.toString() === puffsFilter : true
   );
+
   const openPreview = (product) => {
     setSelectedProduct(product);
   };
@@ -95,6 +106,21 @@ function Cards() {
     ))}
   </select>
 </div>
+<div className="mb-4 text-center">
+  <select
+    value={puffsFilter}
+    onChange={(e) => setPuffsFilter(e.target.value)}
+    className="w-48 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+  >
+    <option value="">Puffs</option>
+    {uniquePuffs.map((puff, index) => (
+      <option key={index} value={puff}>
+        {puff}
+      </option>
+    ))}
+  </select>
+</div>
+
 
         <div className="h-6"></div>
         {filteredPricingData.length === 0 ? (
