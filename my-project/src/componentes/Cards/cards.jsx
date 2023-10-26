@@ -57,6 +57,7 @@ function Cards() {
   .filter((product) =>
     selectedMarca ? product.marca === selectedMarca : true
   );
+
   return (
     <div className="bg-white bg-gray">
       <div className="mt-4">TODOS LOS PRODUCTOS</div>
@@ -69,28 +70,29 @@ function Cards() {
           className="w-full p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
         />
         <select
-  value={selectedMarca}
-  onChange={(e) => setSelectedMarca(e.target.value)}
-  className="w-full p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
->
-  <option value="">Todas las marcas</option>
-  {uniqueMarcas.map((marca, index) => (
-    <option key={index} value={marca}>
-      {marca}
-    </option>
-  ))}
-</select>
+          value={selectedMarca}
+          onChange={(e) => setSelectedMarca(e.target.value)}
+          className="w-full p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+        >
+          <option value="">Todas las marcas</option>
+          {uniqueMarcas.map((marca, index) => (
+            <option key={index} value={marca}>
+              {marca}
+            </option>
+          ))}
+        </select>
         <div className="h-9"></div>
-        {filteredPricingData.length === 0 ? ( // Verificar si no hay productos
+        {filteredPricingData.length === 0 ? (
           <p>No hay productos</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {filteredPricingData.map((pricing, index) => (
               <div
                 key={index}
-                className="p-8 text-center bg-gray-100 border border-gray-300 rounded-lg shadow-xl hover:shadow-lg"
+                className="p-4 text-center bg-gray-100 border border-gray-300 rounded-lg shadow-xl hover:shadow-lg"
               >
                 <div className="flex-shrink-0">
+                <img src={pricing.imageUrl} alt={pricing.name} className="w-32 h-32 mx-auto mb-4 rounded-full" />
                   <h2 className="inline-flex items-center justify-center px-2 font-semibold tracking-tight text-black uppercase rounded-lg bg-gray-00 dark:bg-gray">
                     {pricing.name}
                   </h2>
@@ -114,16 +116,16 @@ function Cards() {
                 <div className="flex items-center justify-center space-x-4">
                   <button
                     onClick={() => decreaseQuantity(index)}
-                    className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-xl"
-                    disabled={pricing.quantity === 0} // Deshabilitar si la cantidad es 0
+                    className="bg-red-500 hover:bg-red-600 text-white px-2 py-1 rounded-lg"
+                    disabled={pricing.quantity === 0}
                   >
                     <span style={{ fontSize: '1.25em' }}>-</span>
                   </button>
-                  <span className="text-xl">{pricing.quantity}</span>
+                  <span className="text-lg">{pricing.quantity}</span>
                   <button
                     onClick={() => increaseQuantity(index)}
-                    className="bg-green-500 hover-bg-green-600 text-white px-4 py-2 rounded-xl"
-                    disabled={pricing.quantity >= pricing.stock} // Deshabilitar si alcanza el stock
+                    className="bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded-lg"
+                    disabled={pricing.quantity >= pricing.stock}
                   >
                     <span style={{ fontSize: '1.25em' }}>+</span>
                   </button>
@@ -131,7 +133,7 @@ function Cards() {
                 <div className="h-2"></div>
                 <button
                   onClick={() => addToCart(pricing)}
-                  className="mt-4 bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-xl"
+                  className="mt-2 bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-lg"
                 >
                   Agregar al Carrito
                 </button>
@@ -143,5 +145,4 @@ function Cards() {
     </div>
   );
 }
-
 export default Cards;
