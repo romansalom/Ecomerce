@@ -1,71 +1,38 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import {
+  fetchPricingData,
+  increaseQuantity,
+  decreaseQuantity,
+  addToCart,
+  setSearchTerm,
+  setSelectedMarca,
+  openPreview,
+  closePreview,
+} from '../../../Redux/actions/products'; // Asegúrate de importar las acciones adecuadas
 
-function Cards() {
-  const [pricingData, setPricingData] = useState([]);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [selectedMarca, setSelectedMarca] = useState('');
-  const [uniqueMarcas, setUniqueMarcas] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+class Cards extends React.Component {
+  componentDidMount() {
+    this.props.fetchPricingData(); // Dispatch la acción para obtener los datos
+  }
 
-  useEffect(() => {
-    axios
-      .get('http://localhost:3001/api/productos/todos')
-      .then((response) => {
-        const dataWithQuantityZero = response.data.map((product) => ({
-          ...product,
-          quantity: 0,
-        }));
-        setPricingData(dataWithQuantityZero);
-  
-        // Obtener marcas únicas
-        const uniqueMarcas = [...new Set(response.data.map((product) => product.marca))];
-        setUniqueMarcas(uniqueMarcas);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
+  render() {
+    const {
+      pricingData,
+      searchTerm,
+      selectedMarca,
+      uniqueMarcas,
+      selectedProduct,
+      increaseQuantity,
+      decreaseQuantity,
+      addToCart,
+      setSearchTerm,
+      setSelectedMarca,
+      openPreview,
+      closePreview,
+    } = this.props;
 
-  const increaseQuantity = (index) => {
-    const updatedPricingData = [...pricingData];
-    if ((updatedPricingData[index].quantity ?? 0) < (updatedPricingData[index].stock ?? 0)) {
-      updatedPricingData[index].quantity += 1;
-      setPricingData(updatedPricingData);
-    }
-  };
-
-  const decreaseQuantity = (index) => {
-    const updatedPricingData = [...pricingData];
-    if ((updatedPricingData[index].quantity ?? 0) > 0) {
-      updatedPricingData[index].quantity -= 1;
-      setPricingData(updatedPricingData);
-    }
-  };
-
-  const addToCart = (product) => {
-    alert(`Se han agregado ${product.quantity} ${product.name} al carrito.`);
-    // Restablecer la cantidad a cero después de agregar al carrito
-    const updatedPricingData = [...pricingData];
-    updatedPricingData.forEach((item) => (item.quantity = 0));
-    setPricingData(updatedPricingData);
-  };
-
-  const filteredPricingData = pricingData
-  .filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase())
-  )
-  .filter((product) =>
-    selectedMarca ? product.marca === selectedMarca : true
-  );
-  const openPreview = (product) => {
-    setSelectedProduct(product);
-  };
-
-  // Función para cerrar la vista previa
-  const closePreview = () => {
-    setSelectedProduct(null);
-  };
   return (
     <div className="font-mono bg-white bg-gray">
       <div className="mt-4 text-2xl">TODOS LOS PRODUCTOS</div>
@@ -183,6 +150,30 @@ function Cards() {
       )}
     </div>
   );
+  
 }
+}
+const mapStateToProps = (state) => ({
+  pricingData: state.pricingData, // Asegúrate de que esto coincida con el nombre de tu reducer
+  searchTerm: state.searchTerm,
+  selectedMarca: state.selectedMarca,
+  uniqueMarcas: state.uniqueMarcas,
+  selectedProduct: state.selectedProduct,
+});
 
-export default Cards;
+const mapDispatchToProps = (dispatch) =>
+  bindActionCreators(
+    {
+      fetchPricingData,
+      increaseQuantity,
+      decreaseQuantity,
+      addToCart,
+      setSearchTerm,
+      setSelectedMarca,
+      openPreview,
+      closePreview,
+    },
+    dispatch
+  );
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cards);
