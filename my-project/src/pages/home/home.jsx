@@ -8,7 +8,7 @@ function Home() {
     return (
         <div>
         <Navbar />
-        <div className="h-10"></div> {/* Agrega un espacio vertical de 1rem */}
+      {/* Agrega un espacio vertical de 1rem */}
         <Header />
      
         <Cards></Cards> {/* Agrega un espacio vertical de 1rem */}

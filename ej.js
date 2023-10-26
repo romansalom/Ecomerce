@@ -67,35 +67,32 @@ function Cards() {
     setSelectedProduct(null);
   };
   return (
-<div className="font-mono bg-white">
-  <div className="bg-gray-00 py-4 text-center">
-    <h1 className="text-4xl text-black font-bold">TODOS LOS PRODUCTOS</h1>
-  </div>
+    <div className="font-mono bg-white bg-gray">
+      <div className="mt-4 text-2xl">TODOS LOS PRODUCTOS</div>
       <div className="container px-6 py-8 mx-auto">
-      <div className="mb-4 text-center">
-  <input
-    type="text"
-    placeholder="Buscar por nombre"
-    value={searchTerm}
-    onChange={(e) => setSearchTerm(e.target.value)}
-    className="w-48 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-  />
-</div>
-<div className="mb-4 text-center">
-  <select
-    value={selectedMarca}
-    onChange={(e) => setSelectedMarca(e.target.value)}
-    className="w-48 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-  >
-    <option value="">Todas las marcas</option>
-    {uniqueMarcas.map((marca, index) => (
-      <option key={index} value={marca}>
-        {marca}
-      </option>
-    ))}
-  </select>
-</div>
-
+        <div className="mb-4">
+          <input
+            type="text"
+            placeholder="Buscar por nombre"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-48 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+          />
+        </div>
+        <div className="mb-4">
+          <select
+            value={selectedMarca}
+            onChange={(e) => setSelectedMarca(e.target.value)}
+            className="w-48 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+          >
+            <option value="">Todas las marcas</option>
+            {uniqueMarcas.map((marca, index) => (
+              <option key={index} value={marca}>
+                {marca}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="h-6"></div>
         {filteredPricingData.length === 0 ? (
           <p>No hay productos</p>
