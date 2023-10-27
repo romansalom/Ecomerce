@@ -20,6 +20,10 @@ module.exports = (database) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    modelo: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     puffs: {
       type: DataTypes.INTEGER,
       allowNull: false,

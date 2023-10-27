@@ -15,7 +15,7 @@ const getAllProductos = async (req, res) => {
 
 // Función para crear un nuevo producto
 const createProducto = async (req, res) => {
-  const { name, flavor, puffs, imageUrl, stock, precio,marca } = req.body; // Incluye 'stock' y 'precio' en la desestructuración
+  const { name, flavor, puffs, imageUrl, stock, precio,marca,modelo } = req.body; // Incluye 'stock' y 'precio' en la desestructuración
   try {
     const Productos = database.models.Productos;
 
@@ -25,7 +25,8 @@ const createProducto = async (req, res) => {
         name,
         puffs,
         precio,
-        marca
+        marca,
+        modelo
       },
     });
 
@@ -41,7 +42,8 @@ const createProducto = async (req, res) => {
       imageUrl,
       stock,
       precio, 
-      marca// Agrega 'precio' al objeto que se crea en la base de datos
+      marca,
+      modelo// Agrega 'precio' al objeto que se crea en la base de datos
     });
     res.status(201).json(nuevoProducto);
   } catch (error) {

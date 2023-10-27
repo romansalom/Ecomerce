@@ -10,29 +10,37 @@ function Cards() {
 
   const [puffsFilter, setPuffsFilter] = useState('');
   const [uniquePuffs, setUniquePuffs] = useState([]);
+  const [selectedModelo, setSelectedModelo] = useState('');
+const [uniqueModelos, setUniqueModelos] = useState([]);
+
   
-  useEffect(() => {
-    axios
-      .get('http://localhost:3001/api/productos/todos')
-      .then((response) => {
-        const dataWithQuantityZero = response.data.map((product) => ({
-          ...product,
-          quantity: 0,
-        }));
-        setPricingData(dataWithQuantityZero);
-  
-        // Obtener marcas únicas
-        const uniqueMarcas = [...new Set(response.data.map((product) => product.marca))];
-        setUniqueMarcas(uniqueMarcas);
-  
-        // Obtener valores únicos de la propiedad "puffs"
-        const uniquePuffs = [...new Set(response.data.map((product) => product.puffs.toString()))];
-        setUniquePuffs(uniquePuffs);
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-      });
-  }, []);
+useEffect(() => {
+  axios
+    .get('http://localhost:3001/api/productos/todos')
+    .then((response) => {
+      const dataWithQuantityZero = response.data.map((product) => ({
+        ...product,
+        quantity: 0,
+      }));
+      setPricingData(dataWithQuantityZero);
+
+      // Obtener marcas únicas
+      const uniqueMarcas = [...new Set(response.data.map((product) => product.marca))];
+      setUniqueMarcas(uniqueMarcas);
+
+      // Obtener valores únicos de la propiedad "puffs"
+      const uniquePuffs = [...new Set(response.data.map((product) => product.puffs.toString()))];
+      setUniquePuffs(uniquePuffs);
+
+      // Obtener valores únicos de la propiedad "modelo"
+      const uniqueModelos = [...new Set(response.data.map((product) => product.modelo))];
+      setUniqueModelos(uniqueModelos);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}, []);
+
   
 
   const increaseQuantity = (index) => {
@@ -67,7 +75,11 @@ function Cards() {
   )
   .filter((product) =>
     puffsFilter ? product.puffs.toString() === puffsFilter : true
+  )
+  .filter((product) =>
+    selectedModelo ? product.modelo === selectedModelo : true
   );
+
 
   const openPreview = (product) => {
     setSelectedProduct(product);
@@ -119,6 +131,22 @@ function Cards() {
       </option>
     ))}
   </select>
+
+
+</div>
+<div className="mb-4 text-center">
+  <select
+    value={selectedModelo}
+    onChange={(e) => setSelectedModelo(e.target.value)}
+    className="w-48 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+  >
+    <option value="">Todos los modelos</option>
+    {uniqueModelos.map((modelo, index) => (
+      <option key={index} value={modelo}>
+        {modelo}
+      </option>
+    ))}
+  </select>
 </div>
 
 
@@ -136,12 +164,15 @@ function Cards() {
       <img src={pricing.imageUrl} alt={pricing.name} className="w-24 h-24 mx-auto mb-2 rounded-full" />
       <h2 className="text-2xl font-semibold text-black mb-2">{pricing.name}</h2>
     </div>
-    <div className="h-2"></div>
+   
     <div className="flex-shrink-0">
+    <h3 className="text-1xl font-semibold text-black">{pricing.modelo}</h3>
+    <div className="h-2"></div>
       <h3 className="text-2xl font-semibold text-black">${pricing.precio}</h3>
     </div>
     <div className="h-2"></div>
     <ul className="text-sm text-gray-600 space-y-2">
+    
       <li>Sabor: {pricing.flavor}</li>
       <li>{pricing.puffs} Puffs</li>
       <li>{pricing.marca}</li>
