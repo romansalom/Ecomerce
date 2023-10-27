@@ -12,7 +12,8 @@ function Cards() {
   const [selectedModelo, setSelectedModelo] = useState('');
   const [uniqueModelos, setUniqueModelos] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [filteredModelos, setFilteredModelos] = useState([]); // Agregamos el estado para modelos filtrados
+  const [filteredModelos, setFilteredModelos] = useState([]);
+  const [filteredPuffs, setFilteredPuffs] = useState([]);
 
   useEffect(() => {
     axios
@@ -48,15 +49,38 @@ function Cards() {
           )
       );
       setFilteredModelos(modelosFiltrados);
-  
-      // Restablecemos el modelo seleccionado cuando seleccionas "Todas las marcas"
+
       if (selectedMarca === '') {
-        setSelectedModelo('');
+        setSelectedModelo(''); // Establece selectedModelo a vacío cuando no hay una marca seleccionada.
+      } else if (!modelosFiltrados.includes(selectedModelo)) {
+        setSelectedModelo(''); // Establece selectedModelo a vacío si el modelo actual no está disponible para la marca seleccionada.
       }
     } else {
       setFilteredModelos(uniqueModelos);
     }
-  }, [selectedMarca, uniqueModelos, pricingData]);
+  }, [selectedMarca, uniqueModelos, pricingData, selectedModelo]);
+
+  // Filtrar los puffs disponibles en función de la marca y el modelo seleccionados
+  useEffect(() => {
+    if (selectedMarca || selectedModelo) {
+      const puffsFiltrados = uniquePuffs.filter((puff) =>
+        pricingData.some(
+          (product) =>
+            (!selectedMarca || product.marca === selectedMarca) &&
+            (!selectedModelo || product.modelo === selectedModelo) &&
+            product.puffs.toString() === puff
+        )
+      );
+      setFilteredPuffs(puffsFiltrados);
+
+      // Restablecemos el filtro de puffs cuando seleccionas "Todas las marcas" o "Todos los modelos"
+      if (selectedMarca === '' || selectedModelo === '') {
+        setPuffsFilter('');
+      }
+    } else {
+      setFilteredPuffs(uniquePuffs);
+    }
+  }, [selectedMarca, selectedModelo, uniquePuffs, pricingData]);
 
   const increaseQuantity = (index) => {
     const updatedPricingData = [...pricingData];
@@ -139,34 +163,34 @@ function Cards() {
               ))}
             </select>
             <select
+              value={selectedModelo}
+              onChange={(e) => setSelectedModelo(e.target.value)}
+              className="w-32 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+            >
+              <option value="">Todos los modelos</option>
+              {filteredModelos.map((modelo, index) => (
+                <option key={index} value={modelo}>
+                  {modelo}
+                </option>
+             ) )}
+            </select>
+            <select
               value={puffsFilter}
               onChange={(e) => setPuffsFilter(e.target.value)}
               className="w-32 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
             >
               <option value="">Puffs</option>
-              {uniquePuffs.map((puff, index) => (
+              {filteredPuffs.map((puff, index) => (
                 <option key={index} value={puff}>
                   {puff}
                 </option>
               ))}
             </select>
-           
-              <select
-                value={selectedModelo}
-                onChange={(e) => setSelectedModelo(e.target.value)}
-                className="w-32 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-              >
-                <option value="">Todos los modelos</option>
-                {filteredModelos.map((modelo, index) => (
-                  <option key={index} value={modelo}>
-                    {modelo}
-                  </option>
-                ))}
-              </select>
-       
           </div>
         </div>
       )}
+
+  
       <div className="container px-6 py-8 mx-auto">
         <div className="h-6"></div>
         {filteredPricingData.length === 0 ? (
