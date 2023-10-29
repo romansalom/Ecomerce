@@ -148,47 +148,48 @@ function Cards() {
         Filtros {showFilters ? "▲" : "▼"}
       </button>
       {showFilters && (
-        <div className="mt-4">
-          <div className="flex space-x-4">
-            <select
-              value={selectedMarca}
-              onChange={(e) => setSelectedMarca(e.target.value)}
-              className="w-32 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-            >
-              <option value="">Todas las marcas</option>
-              {uniqueMarcas.map((marca, index) => (
-                <option key={index} value={marca}>
-                  {marca}
-                </option>
-              ))}
-            </select>
-            <select
-              value={selectedModelo}
-              onChange={(e) => setSelectedModelo(e.target.value)}
-              className="w-32 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-            >
-              <option value="">Todos los modelos</option>
-              {filteredModelos.map((modelo, index) => (
-                <option key={index} value={modelo}>
-                  {modelo}
-                </option>
-             ) )}
-            </select>
-            <select
-              value={puffsFilter}
-              onChange={(e) => setPuffsFilter(e.target.value)}
-              className="w-32 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-            >
-              <option value="">Puffs</option>
-              {filteredPuffs.map((puff, index) => (
-                <option key={index} value={puff}>
-                  {puff}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      )}
+  <div className="mt-4">
+    <div className="flex space-x-4">
+      <select
+        value={selectedMarca}
+        onChange={(e) => setSelectedMarca(e.target.value)}
+        className="w-28 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+      >
+        <option value="">Marcas</option>
+        {uniqueMarcas.map((marca, index) => (
+          <option key={index} value={marca}>
+            {marca}
+          </option>
+        ))}
+      </select>
+      <select
+        value={selectedModelo}
+        onChange={(e) => setSelectedModelo(e.target.value)}
+        className="w-28 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+      >
+        <option value="">Modelos</option>
+        {filteredModelos.map((modelo, index) => (
+          <option key={index} value={modelo}>
+            {modelo}
+          </option>
+        ))}
+      </select>
+      <select
+        value={puffsFilter}
+        onChange={(e) => setPuffsFilter(e.target.value)}
+        className="w-28 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+      >
+        <option value="">Puffs</option>
+        {filteredPuffs.map((puff, index) => (
+          <option key={index} value={puff}>
+            {puff}
+          </option>
+        ))}
+      </select>
+    </div>
+  </div>
+)}
+
 
   
       <div className="container px-6 py-8 mx-auto">
