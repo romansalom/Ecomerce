@@ -1,10 +1,33 @@
 const { database } = require('../db');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+
+// Función para validar el número de teléfono
+function validarNumeroDeTelefono(numeroDeTelefono) {
+  const telefonoRegex = /^\+\d+$/; // Debe empezar con "+" seguido de uno o más dígitos
+  return telefonoRegex.test(numeroDeTelefono);
+}
+
+// Función para validar la contraseña
+function validarContraseña(password) {
+  const contraseñaRegex = /^(?=.*[A-Z])(?=.*\d)/; // Debe contener al menos una mayúscula y un número
+  return contraseñaRegex.test(password);
+}
+
 const createUsuario = async (req, res) => {
   try {
     const { nombre, apellido, numeroDeTelefono, password } = req.body;
     const Usuarios = database.models.Usuarios;
+
+    // Validar el número de teléfono
+    if (!validarNumeroDeTelefono(numeroDeTelefono)) {
+      return res.status(400).json({ error: 'Número de teléfono no válido' });
+    }
+
+    // Validar la contraseña
+    if (!validarContraseña(password)) {
+      return res.status(400).json({ error: 'Contraseña no válida' });
+    }
 
     // Verificar si ya existe un usuario con el mismo número de teléfono
     const usuarioExistente = await Usuarios.findOne({
@@ -40,6 +63,11 @@ const iniciarSesion = async (req, res) => {
   const Usuarios = database.models.Usuarios;
 
   try {
+    // Validar el número de teléfono
+    if (!validarNumeroDeTelefono(numeroDeTelefono)) {
+      return res.status(400).json({ error: 'Número de teléfono no válido' });
+    }
+
     const usuario = await Usuarios.findOne({
       where: {
         numeroDeTelefono
@@ -69,7 +97,7 @@ const iniciarSesion = async (req, res) => {
   }
 };
 
-const getallususarios =  async (req, res) => {
+const getallususarios = async (req, res) => {
   try {
     const Usuarios = database.models.Usuarios;
     const usuarios = await Usuarios.findAll();
