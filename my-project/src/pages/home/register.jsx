@@ -61,8 +61,14 @@ function RegistroModal({ isOpen, onRequestClose }) {
         const response = await axios.post('http://localhost:3001/api/users/post', usuario);
       
         if (response.status >= 200 && response.status < 300) {
-          onRequestClose();
+          onRequestClose(); // Cierra el modal
           alert('Registro exitoso');
+          setUsuario({
+            nombre: '',
+            apellido: '',
+            numeroDeTelefono: '',
+            password: '',
+          }); // Limpia el formulario
         } else {
           if (response.data.error) {
             setErrors({ general: response.data.error });
@@ -74,7 +80,7 @@ function RegistroModal({ isOpen, onRequestClose }) {
         console.error(error);
         setErrors({ general: 'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.' });
       }
-    }      
+    }
 
   return (
     <Modal
