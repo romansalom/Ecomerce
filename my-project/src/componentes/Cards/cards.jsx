@@ -188,9 +188,9 @@ function Cards() {
     )}
     {loading ? (
       <div className="text-center my-8">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 text-center"></div>
         <p>Cargando...</p>
-        </div>
+        
       </div>
     ) : filteredPricingData.length === 0 ? (
       <p>No hay productos</p>
