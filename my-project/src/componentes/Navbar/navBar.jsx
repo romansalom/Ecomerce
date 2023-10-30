@@ -1,7 +1,17 @@
 import React, { useState } from 'react';
+import RegistroModal from '../../pages/home/register'; // Asegúrate de ajustar la ruta correcta
 
 function Navbar() {
   const [open, setOpen] = useState(true);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
 
   return (
     <div className="min-s-screen">
@@ -40,17 +50,17 @@ function Navbar() {
                 </a>
                 <a
                   className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
-                  href="/"
+                  href="/perfil"
                 >
                   Perfil
                 </a>
-                <a className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" className="main-grid-item-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" style={{ display: 'block', margin: 'auto' }}>
-                    <circle cx="9" cy="21" r="1" />
-                    <circle cx="20" cy="21" r="1" />
-                    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                  </svg>
+                <a
+                  className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+                  onClick={openModal}
+                >
+                  Registro
                 </a>
+                <RegistroModal isOpen={modalIsOpen} onRequestClose={closeModal} />
               </nav>
             </div>
           </div>
@@ -61,5 +71,4 @@ function Navbar() {
 }
 
 export default Navbar;
-
 

@@ -37,7 +37,7 @@ const createUsuario = async (req, res) => {
     });
 
     if (usuarioExistente) {
-      return res.status(400).json({ error: 'Este número de teléfono ya está registrado' });
+      return res.status(400).json({ error: 'El número de teléfono ya está registrado' });
     }
 
     // Hashear la contraseña antes de almacenarla
@@ -51,10 +51,33 @@ const createUsuario = async (req, res) => {
       password: hashedPassword // Guarda la contraseña hasheada
     });
 
-    res.status(201).json(nuevoUsuario);
+    res.json({ message: 'Usuario registrado con éxito' });
   } catch (error) {
     console.error(error);
-    res.status(500).send('Error al registrar el usuario');
+    res.status(500).json({ error: 'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.' });
+  }
+};
+
+const getallususarios = async (req, res) => {
+  try {
+    const Usuarios = database.models.Usuarios;
+    const usuarios = await Usuarios.findAll();
+
+    // Validar el formato del número de teléfono y contraseña de todos los usuarios
+    const validUsuarios = usuarios.map((usuario) => {
+      const validNumeroDeTelefono = validarNumeroDeTelefono(usuario.numeroDeTelefono);
+      const validPassword = validarContraseña(usuario.password);
+      return {
+        ...usuario.dataValues,
+        validNumeroDeTelefono,
+        validPassword
+      };
+    });
+
+    res.json(validUsuarios);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Error al obtener la lista de usuarios');
   }
 };
 
@@ -97,16 +120,7 @@ const iniciarSesion = async (req, res) => {
   }
 };
 
-const getallususarios = async (req, res) => {
-  try {
-    const Usuarios = database.models.Usuarios;
-    const usuarios = await Usuarios.findAll();
-    res.json(usuarios);
-  } catch (error) {
-    console.error(error);
-    res.status(500).send('Error al obtener la lista de usuarios');
-  }
-};
+
 
 module.exports = {
   createUsuario,
