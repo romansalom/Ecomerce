@@ -1,20 +1,24 @@
 const { DataTypes } = require('sequelize');
 
 module.exports = (database) => {
-   database.define('Usuarios', {
+  database.define('Usuarios', {
     nombre: {
-      type: DataTypes.STRING, // Campo para el nombre
-      allowNull: false, // No permite valores nulos
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     apellido: {
-      type: DataTypes.STRING, // Campo para el apellido
-      allowNull: false, // No permite valores nulos
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     numeroDeTelefono: {
-      type: DataTypes.STRING, // Campo para el número de teléfono
+      type: DataTypes.STRING,
+      unique: true, // Asegura que el número de teléfono sea único
+      allowNull: false,
     },
-    // Otros campos de usuario que necesites
+    password: {
+      type: DataTypes.STRING, // Campo para la contraseña
+      allowNull: false,
+    },
   });
-
-
 };
+
