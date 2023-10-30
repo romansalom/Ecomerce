@@ -186,15 +186,14 @@ function Cards() {
         </div>
       </div>
     )}
-    {loading ? (
-      <div className="text-center my-8">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500 text-center"></div>
-        <p>Cargando...</p>
-        
-      </div>
-    ) : filteredPricingData.length === 0 ? (
-      <p>No hay productos</p>
-    ) : (
+{loading ? (
+  <div className="flex flex-col items-center justify-center h-screen">
+    <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
+    <p className="mt-4">Cargando...</p>
+  </div>
+) : filteredPricingData.length === 0 ? (
+  <p>No hay productos</p>
+) : (
       <div className="container px-6 py-8 mx-auto">
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
           {filteredPricingData.map((pricing, index) => (
