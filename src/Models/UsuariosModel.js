@@ -19,6 +19,13 @@ module.exports = (database) => {
       type: DataTypes.STRING, // Campo para la contraseña
       allowNull: false,
     },
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      unique: true,
+    },
+    
   });
 };
 

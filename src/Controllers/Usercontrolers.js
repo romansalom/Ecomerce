@@ -51,7 +51,8 @@ const createUsuario = async (req, res) => {
       password: hashedPassword // Guarda la contraseña hasheada
     });
 
-    res.json({ message: 'Usuario registrado con éxito' });
+    // Después de crear el usuario, incluye el ID del usuario en la respuesta
+    res.json({ message: 'Usuario registrado con éxito', userId: nuevoUsuario.id });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.' });
@@ -80,7 +81,6 @@ const getallususarios = async (req, res) => {
     res.status(500).send('Error al obtener la lista de usuarios');
   }
 };
-
 const iniciarSesion = async (req, res) => {
   const { numeroDeTelefono, password } = req.body;
   const Usuarios = database.models.Usuarios;
@@ -108,12 +108,12 @@ const iniciarSesion = async (req, res) => {
       return res.status(401).json({ error: 'Credenciales incorrectas' });
     }
 
-    // Generar y enviar un token JWT si la autenticación es exitosa
+    // Generar y enviar un token JWT y el ID del usuario si la autenticación es exitosa
     const token = jwt.sign({ id: usuario.id }, 'miSecretoJWT', {
       expiresIn: '1h' // Puedes ajustar la duración del token según tus necesidades
     });
 
-    res.json({ token });
+    res.json({ token, userId: usuario.id });
   } catch (error) {
     console.error(error);
     res.status(500).send('Error al iniciar sesión');

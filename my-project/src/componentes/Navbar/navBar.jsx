@@ -1,18 +1,27 @@
 import React, { useState } from 'react';
-import RegistroModal from '../../pages/home/register'; // Asegúrate de ajustar la ruta correcta
+import InicioSesionModal from '../../pages/home/inisiosession';
+import RegistroModal from '../../pages/home/register';
 
 function Navbar() {
   const [open, setOpen] = useState(true);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [inicioSesionModalIsOpen, setInicioSesionModalIsOpen] = useState(false);
+  const [registroModalIsOpen, setRegistroModalIsOpen] = useState(false);
 
-  const openModal = () => {
-    setModalIsOpen(true);
+  const openInicioSesionModal = () => {
+    setInicioSesionModalIsOpen(true);
   };
 
-  const closeModal = () => {
-    setModalIsOpen(false);
+  const closeInicioSesionModal = () => {
+    setInicioSesionModalIsOpen(false);
   };
 
+  const openRegistroModal = () => {
+    setRegistroModalIsOpen(true);
+  };
+
+  const closeRegistroModal = () => {
+    setRegistroModalIsOpen(false);
+  };
   return (
     <div className="min-s-screen">
       <div className="antialiased bg-gray-100 dark-mode:bg-gray-900">
@@ -42,26 +51,33 @@ function Navbar() {
                 </button>
               </div>
               <nav className={`md:flex ${open ? 'flex' : 'hidden'} md:items-center md:justify-between md:flex-row`}>
-                <a
-                  className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
-                  href="/"
-                >
-                  Home
-                </a>
-                <a
-                  className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
-                  href="/perfil"
-                >
-                  Perfil
-                </a>
-                <a
-                  className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
-                  onClick={openModal}
-                >
-                  Registro
-                </a>
-                <RegistroModal isOpen={modalIsOpen} onRequestClose={closeModal} />
-              </nav>
+        <a
+          className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+          href="/"
+        >
+          Home
+        </a>
+        <a
+          className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+          href="/perfil"
+        >
+          Perfil
+        </a>
+        <a
+          className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+          onClick={openInicioSesionModal}
+        >
+          Iniciar Sesión
+        </a>
+        <InicioSesionModal isOpen={inicioSesionModalIsOpen} onRequestClose={closeInicioSesionModal} />
+        <a
+          className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+          onClick={openRegistroModal}
+        >
+          Registro
+        </a>
+        <RegistroModal isOpen={registroModalIsOpen} onRequestClose={closeRegistroModal} />
+      </nav>
             </div>
           </div>
         </div>
@@ -71,4 +87,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
