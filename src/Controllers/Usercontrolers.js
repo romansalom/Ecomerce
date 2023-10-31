@@ -98,14 +98,14 @@ const iniciarSesion = async (req, res) => {
     });
 
     if (!usuario) {
-      return res.status(401).json({ error: 'Credenciales incorrectas' });
+      return res.status(401).json({ error: 'Número de teléfono no registrado' });
     }
 
     // Verificar la contraseña
     const contrasenaValida = await bcrypt.compare(password, usuario.password);
 
     if (!contrasenaValida) {
-      return res.status(401).json({ error: 'Credenciales incorrectas' });
+      return res.status(401).json({ error: 'Contraseña incorrecta' });
     }
 
     // Generar y enviar un token JWT y el ID del usuario si la autenticación es exitosa
@@ -119,6 +119,7 @@ const iniciarSesion = async (req, res) => {
     res.status(500).send('Error al iniciar sesión');
   }
 };
+
 
 
 
