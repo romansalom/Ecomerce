@@ -139,7 +139,10 @@ function Cards() {
     {showFilters && (
       <div className="mt-4">
         <div className="flex space-x-4">
-          <select
+        
+   
+        </div>
+        <select
             value={selectedMarca}
             onChange={(e) => setSelectedMarca(e.target.value)}
             className="w-28 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
@@ -175,16 +178,16 @@ function Cards() {
               </option>
             ))}
           </select>
-      
-      <input
+      <br></br>
+      <br></br>
+
+        <input
         type="text"
         placeholder="Buscar por nombre"
         value={searchTerm}
         onChange={(e) => setSearchTerm(e.target.value)}
         className="w-48 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
       />
-   
-        </div>
       </div>
     )}
 {loading ? (
