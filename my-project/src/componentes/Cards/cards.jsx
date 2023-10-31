@@ -129,20 +129,12 @@ function Cards() {
     <div className="bg-gray-00 py-4 text-center">
       <h1 className="text-4xl text-black font-bold">TODOS LOS PRODUCTOS</h1>
     </div>
-    <div className="mb-4 text-center">
-      <input
-        type="text"
-        placeholder="Buscar por nombre"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="w-48 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-      />
-    </div>
+   
     <button
       onClick={() => setShowFilters(!showFilters)}
       className="text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-lg focus:outline-none"
     >
-      Filtros {showFilters ? "▲" : "▼"}
+      Filtros De Busquedad {showFilters ? "▲" : "▼"}
     </button>
     {showFilters && (
       <div className="mt-4">
@@ -183,6 +175,15 @@ function Cards() {
               </option>
             ))}
           </select>
+      
+      <input
+        type="text"
+        placeholder="Buscar por nombre"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="w-48 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+      />
+   
         </div>
       </div>
     )}

@@ -97,7 +97,7 @@ function Navbar() {
                         setUsuarioAutenticado(false);
                       }}
                     >
-                      Cerrar Sesión
+                      Log Out
                     </a>
                   </>
                 )}
