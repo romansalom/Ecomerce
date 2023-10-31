@@ -51,8 +51,7 @@ function InicioSesionModal({ isOpen, onRequestClose }) {
       if (response.status >= 200 && response.status < 300) {
         // Almacenar el token y el ID del usuario en el almacenamiento local
         localStorage.setItem('token', response.data.token);
-        localStorage.setItem('userId', response.data.userId );
-        console.log(response)
+        localStorage.setItem('userId', response.data.userId);
 
         onRequestClose(); // Cierra el modal
         alert('Inicio de sesión exitoso');
@@ -60,6 +59,9 @@ function InicioSesionModal({ isOpen, onRequestClose }) {
           numeroDeTelefono: '',
           password: '',
         }); // Limpia el formulario
+
+        // Refresca la página para aplicar los cambios en el Navbar
+        window.location.reload();
       } else {
         if (response.data.error) {
           setErrors({ general: response.data.error });
@@ -107,7 +109,7 @@ function InicioSesionModal({ isOpen, onRequestClose }) {
         {errors.general && <p className="text-red-600">{errors.general}</p>}
         <button
           type="submit"
-          className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          className="w-full bg-blue-500 hover-bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           Iniciar Sesión
         </button>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import InicioSesionModal from '../../pages/home/inisiosession';
 import RegistroModal from '../../pages/home/register';
 
@@ -6,6 +6,21 @@ function Navbar() {
   const [open, setOpen] = useState(true);
   const [inicioSesionModalIsOpen, setInicioSesionModalIsOpen] = useState(false);
   const [registroModalIsOpen, setRegistroModalIsOpen] = useState(false);
+  const [usuarioAutenticado, setUsuarioAutenticado] = useState(false); // Agrega este estado
+
+  useEffect(() => {
+    // Aquí debes poner la lógica para verificar si el usuario está autenticado.
+    // Por ejemplo, puedes comprobar si tienes un token de autenticación en el almacenamiento local.
+
+    const token = localStorage.getItem('token');
+    const userId = localStorage.getItem('userId');
+
+    if (token && userId) {
+      setUsuarioAutenticado(true);
+    } else {
+      setUsuarioAutenticado(false);
+    }
+  }, []);
 
   const openInicioSesionModal = () => {
     setInicioSesionModalIsOpen(true);
@@ -22,6 +37,7 @@ function Navbar() {
   const closeRegistroModal = () => {
     setRegistroModalIsOpen(false);
   };
+
   return (
     <div className="min-s-screen">
       <div className="antialiased bg-gray-100 dark-mode:bg-gray-900">
@@ -51,33 +67,59 @@ function Navbar() {
                 </button>
               </div>
               <nav className={`md:flex ${open ? 'flex' : 'hidden'} md:items-center md:justify-between md:flex-row`}>
-        <a
-          className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
-          href="/"
-        >
-          Home
-        </a>
-        <a
-          className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
-          href="/perfil"
-        >
-          Perfil
-        </a>
-        <a
-          className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
-          onClick={openInicioSesionModal}
-        >
-          Iniciar Sesión
-        </a>
-        <InicioSesionModal isOpen={inicioSesionModalIsOpen} onRequestClose={closeInicioSesionModal} />
-        <a
-          className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
-          onClick={openRegistroModal}
-        >
-          Registro
-        </a>
-        <RegistroModal isOpen={registroModalIsOpen} onRequestClose={closeRegistroModal} />
-      </nav>
+                <a
+                  className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+                  href="/"
+                >
+                  Home
+                </a>
+                {usuarioAutenticado && (
+                  <>
+                    <a
+                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+                      href="/perfil"
+                    >
+                      Perfil
+                    </a>
+                    <a
+                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+                      href="/carrito"
+                    >
+                      Carrito
+                    </a>
+                    <a
+                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+                      onClick={() => {
+                        // Agrega aquí la lógica para cerrar la sesión del usuario.
+                        // Esto podría incluir eliminar el token del almacenamiento local.
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('userId');
+                        setUsuarioAutenticado(false);
+                      }}
+                    >
+                      Cerrar Sesión
+                    </a>
+                  </>
+                )}
+                {!usuarioAutenticado && (
+                  <>
+                    <a
+                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+                      onClick={openInicioSesionModal}
+                    >
+                      Iniciar Sesión
+                    </a>
+                    <a
+                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+                      onClick={openRegistroModal}
+                    >
+                      Registro
+                    </a>
+                  </>
+                )}
+                <InicioSesionModal isOpen={inicioSesionModalIsOpen} onRequestClose={closeInicioSesionModal} />
+                <RegistroModal isOpen={registroModalIsOpen} onRequestClose={closeRegistroModal} />
+              </nav>
             </div>
           </div>
         </div>
