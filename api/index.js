@@ -6,7 +6,7 @@ const { conn } = require('./src/db.js');
 
 
 // Syncing all the models at once.
-conn.sync({ force: false }).then(() => {
+conn.sync({ force: true }).then(() => {
   
   server.listen(3001, async () => {
     console.log('%s listening at 3001, estoy escuchando en el puerto 3001');
