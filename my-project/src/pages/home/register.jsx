@@ -8,14 +8,14 @@ function RegistroModal({ isOpen, onRequestClose }) {
   const [usuario, setUsuario] = useState({
     nombre: '',
     apellido: '',
-    numeroDeTelefono: '',
+    email: '', // Cambiamos numeroDeTelefono por email
     password: '',
   });
 
   const [errors, setErrors] = useState({
     nombre: null,
     apellido: null,
-    numeroDeTelefono: null,
+    email: null, // Cambiamos numeroDeTelefono por email
     password: null,
     general: null,
   });
@@ -28,7 +28,6 @@ function RegistroModal({ isOpen, onRequestClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const telefonoRegex = /^\+\d+$/;
 
     const newErrors = {};
 
@@ -38,10 +37,8 @@ function RegistroModal({ isOpen, onRequestClose }) {
     if (!usuario.apellido) {
       newErrors.apellido = 'El apellido es obligatorio';
     }
-    if (!usuario.numeroDeTelefono) {
-      newErrors.numeroDeTelefono = 'El número de teléfono es obligatorio';
-    } else if (!telefonoRegex.test(usuario.numeroDeTelefono)) {
-      newErrors.numeroDeTelefono = 'El número de teléfono debe comenzar con "+" y consistir en dígitos numéricos';
+    if (!usuario.email) { // Cambiamos numeroDeTelefono por email
+      newErrors.email = 'El correo electrónico es obligatorio';
     }
     if (!usuario.password) {
       newErrors.password = 'La contraseña es obligatoria';
@@ -58,29 +55,29 @@ function RegistroModal({ isOpen, onRequestClose }) {
     }
 
     try {
-        const response = await axios.post('http://localhost:3001/api/users/post', usuario);
-      
-        if (response.status >= 200 && response.status < 300) {
-          onRequestClose(); // Cierra el modal
-          alert('Registro exitoso');
-          setUsuario({
-            nombre: '',
-            apellido: '',
-            numeroDeTelefono: '',
-            password: '',
-          }); // Limpia el formulario
+      const response = await axios.post('http://localhost:3001/api/users/post', usuario);
+
+      if (response.status >= 200 && response.status < 300) {
+        onRequestClose(); // Cierra el modal
+        alert('Registro exitoso');
+        setUsuario({
+          nombre: '',
+          apellido: '',
+          email: '', // Cambiamos numeroDeTelefono por email
+          password: '',
+        }); // Limpia el formulario
+      } else {
+        if (response.data.error) {
+          setErrors({ general: response.data.error });
         } else {
-          if (response.data.error) {
-            setErrors({ general: response.data.error });
-          } else {
-            setErrors({ general: 'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.' });
-          }
+          setErrors({ general: 'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.' });
         }
-      } catch (error) {
-        console.error(error);
-        setErrors({ general: 'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.' });
       }
+    } catch (error) {
+      console.error(error);
+      setErrors({ general: 'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.' });
     }
+  }
 
   return (
     <Modal
@@ -116,13 +113,13 @@ function RegistroModal({ isOpen, onRequestClose }) {
         <div className="mb-4">
           <input
             type="text"
-            name="numeroDeTelefono"
-            value={usuario.numeroDeTelefono}
+            name="email" // Cambiamos numeroDeTelefono por email
+            value={usuario.email}
             onChange={handleChange}
-            placeholder="Número de Teléfono"
+            placeholder="Correo Electrónico" // Cambiamos el nombre del campo
             className="w-full p-2 border rounded"
           />
-          {errors.numeroDeTelefono && <p className="text-red-600">{errors.numeroDeTelefono}</p>}
+          {errors.email && <p className="text-red-600">{errors.email}</p>}
         </div>
         <div className="mb-4">
           <input

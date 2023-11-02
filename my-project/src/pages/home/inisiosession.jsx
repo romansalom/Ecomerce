@@ -6,12 +6,12 @@ Modal.setAppElement('#root');
 
 function InicioSesionModal({ isOpen, onRequestClose }) {
   const [credenciales, setCredenciales] = useState({
-    numeroDeTelefono: '',
+    email: '', // Cambiamos numeroDeTelefono por email
     password: '',
   });
 
   const [errors, setErrors] = useState({
-    numeroDeTelefono: null,
+    email: null, // Cambiamos numeroDeTelefono por email
     password: null,
     general: null,
   });
@@ -24,14 +24,11 @@ function InicioSesionModal({ isOpen, onRequestClose }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const telefonoRegex = /^\+\d+$/;
 
     const newErrors = {};
 
-    if (!credenciales.numeroDeTelefono) {
-      newErrors.numeroDeTelefono = 'El número de teléfono es obligatorio';
-    } else if (!telefonoRegex.test(credenciales.numeroDeTelefono)) {
-      newErrors.numeroDeTelefono = 'El número de teléfono debe comenzar con "+" y consistir en dígitos numéricos';
+    if (!credenciales.email) {
+      newErrors.email = 'El correo electrónico es obligatorio';
     }
 
     if (!credenciales.password) {
@@ -56,7 +53,7 @@ function InicioSesionModal({ isOpen, onRequestClose }) {
         onRequestClose(); // Cierra el modal
         alert('Inicio de sesión exitoso');
         setCredenciales({
-          numeroDeTelefono: '',
+          email: '', // Cambiamos numeroDeTelefono por email
           password: '',
         }); // Limpia el formulario
 
@@ -87,13 +84,13 @@ function InicioSesionModal({ isOpen, onRequestClose }) {
         <div className="mb-4">
           <input
             type="text"
-            name="numeroDeTelefono"
-            value={credenciales.numeroDeTelefono}
+            name="email" // Cambiamos numeroDeTelefono por email
+            value={credenciales.email}
             onChange={handleChange}
-            placeholder="Número de Teléfono"
+            placeholder="Correo Electrónico" // Cambiamos el nombre del campo
             className="w-full p-2 border rounded"
           />
-          {errors.numeroDeTelefono && <p className="text-red-600">{errors.numeroDeTelefono}</p>}
+          {errors.email && <p className="text-red-600">{errors.email}</p>}
         </div>
         <div className="mb-4">
           <input

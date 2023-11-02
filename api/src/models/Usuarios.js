@@ -10,9 +10,9 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    numeroDeTelefono: {
+    email: {
       type: DataTypes.STRING,
-      unique: true, // Asegura que el número de teléfono sea único
+      unique: true, // Asegura que el correo electrónico sea único
       allowNull: false,
     },
     password: {
@@ -25,7 +25,5 @@ module.exports = (sequelize) => {
       primaryKey: true,
       unique: true,
     },
-    
   });
 };
-
