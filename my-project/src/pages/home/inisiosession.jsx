@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
+import { useState } from 'react';
 
 Modal.setAppElement('#root');
 
@@ -36,14 +36,20 @@ function InicioSesionModal({ isOpen, onRequestClose }) {
     }
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors({ ...newErrors, general: 'Por favor, corrija los errores en el formulario.' });
+      setErrors({
+        ...newErrors,
+        general: 'Por favor, corrija los errores en el formulario.',
+      });
       return;
     }
 
     try {
       // Realizar la solicitud de inicio de sesión
       // Reemplaza la URL con la URL de tu servidor de inicio de sesión
-      const response = await axios.post('http://localhost:3001/api/users/inicio-sesion', credenciales);
+      const response = await axios.post(
+        'http://localhost:5432/api/users/inicio-sesion',
+        credenciales
+      );
 
       if (response.status >= 200 && response.status < 300) {
         // Almacenar el token y el ID del usuario en el almacenamiento local
@@ -63,12 +69,17 @@ function InicioSesionModal({ isOpen, onRequestClose }) {
         if (response.data.error) {
           setErrors({ general: response.data.error });
         } else {
-          setErrors({ general: 'Credenciales incorrectas. Por favor, inténtalo de nuevo.' });
+          setErrors({
+            general: 'Credenciales incorrectas. Por favor, inténtalo de nuevo.',
+          });
         }
       }
     } catch (error) {
       console.error(error);
-      setErrors({ general: 'Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo.' });
+      setErrors({
+        general:
+          'Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo.',
+      });
     }
   };
 

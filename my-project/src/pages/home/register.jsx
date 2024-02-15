@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 
@@ -37,7 +37,8 @@ function RegistroModal({ isOpen, onRequestClose }) {
     if (!usuario.apellido) {
       newErrors.apellido = 'El apellido es obligatorio';
     }
-    if (!usuario.email) { // Cambiamos numeroDeTelefono por email
+    if (!usuario.email) {
+      // Cambiamos numeroDeTelefono por email
       newErrors.email = 'El correo electrónico es obligatorio';
     }
     if (!usuario.password) {
@@ -45,17 +46,24 @@ function RegistroModal({ isOpen, onRequestClose }) {
     } else {
       const passwordRegex = /^(?=.*[A-Z])(?=.*\d)/;
       if (!passwordRegex.test(usuario.password)) {
-        newErrors.password = 'La contraseña debe contener al menos una mayúscula y un número';
+        newErrors.password =
+          'La contraseña debe contener al menos una mayúscula y un número';
       }
     }
 
     if (Object.keys(newErrors).length > 0) {
-      setErrors({ ...newErrors, general: 'Por favor, corrija los errores en el formulario.' });
+      setErrors({
+        ...newErrors,
+        general: 'Por favor, corrija los errores en el formulario.',
+      });
       return;
     }
 
     try {
-      const response = await axios.post('http://localhost:3001/api/users/post', usuario);
+      const response = await axios.post(
+        'http://localhost:5432/api/users/post',
+        usuario
+      );
 
       if (response.status >= 200 && response.status < 300) {
         onRequestClose(); // Cierra el modal
@@ -70,14 +78,20 @@ function RegistroModal({ isOpen, onRequestClose }) {
         if (response.data.error) {
           setErrors({ general: response.data.error });
         } else {
-          setErrors({ general: 'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.' });
+          setErrors({
+            general:
+              'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.',
+          });
         }
       }
     } catch (error) {
       console.error(error);
-      setErrors({ general: 'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.' });
+      setErrors({
+        general:
+          'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.',
+      });
     }
-  }
+  };
 
   return (
     <Modal

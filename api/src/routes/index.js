@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const productoRoutes = require('../routes/productoRoutes'); // Asegúrate de utilizar la ruta correcta
-const usuariosRoutes = require('../routes/usuarioRoutes')
+const usuariosRoutes = require('../routes/usuarioRoutes');
 
 // Importar todos los routers;
 // Ejemplo: const authRouter = require('./auth.js');
@@ -13,6 +13,5 @@ router.use('/api/productos', productoRoutes);
 
 // Rutas para los usuarios
 router.use('/api/users', usuariosRoutes);
-
 
 module.exports = router;
