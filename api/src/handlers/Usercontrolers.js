@@ -31,12 +31,14 @@ const createUsuario = async (req, res) => {
     // Verificar si ya existe un usuario con el mismo correo electrónico
     const usuarioExistente = await UserModel.findOne({
       where: {
-        email
-      }
+        email,
+      },
     });
 
     if (usuarioExistente) {
-      return res.status(400).json({ error: 'El correo electrónico ya está registrado' });
+      return res
+        .status(400)
+        .json({ error: 'El correo electrónico ya está registrado' });
     }
 
     // Hashear la contraseña antes de almacenarla
@@ -47,14 +49,22 @@ const createUsuario = async (req, res) => {
       nombre,
       apellido,
       email,
-      password: hashedPassword // Guarda la contraseña hasheada
+      password: hashedPassword, // Guarda la contraseña hasheada
     });
 
     // Después de crear el usuario, incluye el ID del usuario en la respuesta
-    res.json({ message: 'Usuario registrado con éxito', userId: nuevoUsuario.id });
+    res.json({
+      message: 'Usuario registrado con éxito',
+      userId: nuevoUsuario.id,
+    });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.' });
+    res
+      .status(500)
+      .json({
+        error:
+          'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.',
+      });
   }
 };
 
@@ -69,7 +79,7 @@ const getallususarios = async (req, res) => {
       return {
         ...usuario.dataValues,
         validCorreoElectronico,
-        validPassword
+        validPassword,
       };
     });
 
@@ -91,12 +101,14 @@ const iniciarSesion = async (req, res) => {
 
     const usuario = await UserModel.findOne({
       where: {
-        email
-      }
+        email,
+      },
     });
 
     if (!usuario) {
-      return res.status(401).json({ error: 'Correo electrónico no registrado' });
+      return res
+        .status(401)
+        .json({ error: 'Correo electrónico no registrado' });
     }
 
     // Verificar la contraseña
@@ -108,7 +120,7 @@ const iniciarSesion = async (req, res) => {
 
     // Generar y enviar un token JWT y el ID del usuario si la autenticación es exitosa
     const token = jwt.sign({ id: usuario.id }, 'miSecretoJWT', {
-      expiresIn: '1h' // Puedes ajustar la duración del token según tus necesidades
+      expiresIn: '1h', // Puedes ajustar la duración del token según tus necesidades
     });
 
     res.json({ token, userId: usuario.id });
@@ -121,5 +133,5 @@ const iniciarSesion = async (req, res) => {
 module.exports = {
   createUsuario,
   iniciarSesion,
-  getallususarios
+  getallususarios,
 };

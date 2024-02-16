@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 Modal.setAppElement('#root');
 
+// eslint-disable-next-line react/prop-types
 function InicioSesionModal({ isOpen, onRequestClose }) {
   const [credenciales, setCredenciales] = useState({
     email: '', // Cambiamos numeroDeTelefono por email

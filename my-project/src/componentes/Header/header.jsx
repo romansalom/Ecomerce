@@ -28,7 +28,7 @@ function Header() {
         <div>
           <div className="flex items-center justify-center w-full h-full bg-white">
             <img
-              src="imagen2.jpg"
+              src="imagen1.jpg"
               alt="Imagen 2"
               className="max-w-full max-h-full"
             />
@@ -37,7 +37,7 @@ function Header() {
         <div>
           <div className="flex items-center justify-center w-full h-full bg-white">
             <img
-              src="imagen3.jpg"
+              src="imagen1.jpg"
               alt="Imagen 3"
               className="max-w-full max-h-full"
             />

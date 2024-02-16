@@ -14,7 +14,8 @@ const getAllProductos = async (req, res) => {
 
 // Función para crear un nuevo producto
 const createProducto = async (req, res) => {
-  const { name, flavor, puffs, imageUrl, stock, precio, marca, modelo } = req.body;
+  const { name, flavor, puffs, imageUrl, stock, precio, marca, modelo } =
+    req.body;
 
   try {
     // Validación: Comprueba si ya existe un producto con el mismo nombre, cantidad de puffs y precio
@@ -29,7 +30,12 @@ const createProducto = async (req, res) => {
     });
 
     if (productoExistente) {
-      return res.status(400).json({ error: 'Producto con el mismo nombre, cantidad de puff y precio ya existe' });
+      return res
+        .status(400)
+        .json({
+          error:
+            'Producto con el mismo nombre, cantidad de puff y precio ya existe',
+        });
     }
 
     // Si no existe un producto con los mismos datos, crea un nuevo producto
@@ -76,9 +82,16 @@ const createMultipleProductos = async (req, res) => {
 
     if (uniqueProducts.length > 0) {
       const nuevosProductos = await ProductosModel.bulkCreate(uniqueProducts);
-      res.status(201).json({ created: nuevosProductos, duplicates: duplicateProducts });
+      res
+        .status(201)
+        .json({ created: nuevosProductos, duplicates: duplicateProducts });
     } else {
-      res.status(400).json({ error: 'Todos los productos son duplicados', duplicates: duplicateProducts });
+      res
+        .status(400)
+        .json({
+          error: 'Todos los productos son duplicados',
+          duplicates: duplicateProducts,
+        });
     }
   } catch (error) {
     console.error('Error al crear múltiples productos:', error);

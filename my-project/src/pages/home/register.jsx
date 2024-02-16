@@ -4,6 +4,7 @@ import axios from 'axios';
 
 Modal.setAppElement('#root');
 
+// eslint-disable-next-line react/prop-types
 function RegistroModal({ isOpen, onRequestClose }) {
   const [usuario, setUsuario] = useState({
     nombre: '',

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import InicioSesionModal from '../../pages/home/inisiosession';
 import RegistroModal from '../../pages/home/register';
 
@@ -45,11 +45,21 @@ function Navbar() {
           <div className="max-w-screen-xl px-4 mx-auto md:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between p-4">
               <div className="flex items-center mb-4 md:mb-0">
-                <a href="/" className="text-xl font-semibold tracking-widest text-black uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline">
+                <a
+                  href="/"
+                  className="text-xl font-semibold tracking-widest text-black uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
+                >
                   Flowtrail UI
                 </a>
-                <button className="rounded-lg md:hidden focus:outline-none focus:shadow-outline" onClick={() => setOpen(!open)}>
-                  <svg fill="currentColor" viewBox="0 0 20 20" className="w-6 h-6">
+                <button
+                  className="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
+                  onClick={() => setOpen(!open)}
+                >
+                  <svg
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    className="w-6 h-6"
+                  >
                     {open ? (
                       <path
                         fillRule="evenodd"
@@ -66,7 +76,11 @@ function Navbar() {
                   </svg>
                 </button>
               </div>
-              <nav className={`md:flex ${open ? 'flex' : 'hidden'} md:items-center md:justify-between md:flex-row`}>
+              <nav
+                className={`md:flex ${
+                  open ? 'flex' : 'hidden'
+                } md:items-center md:justify-between md:flex-row`}
+              >
                 <a
                   className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
                   href="/"
@@ -117,8 +131,14 @@ function Navbar() {
                     </a>
                   </>
                 )}
-                <InicioSesionModal isOpen={inicioSesionModalIsOpen} onRequestClose={closeInicioSesionModal} />
-                <RegistroModal isOpen={registroModalIsOpen} onRequestClose={closeRegistroModal} />
+                <InicioSesionModal
+                  isOpen={inicioSesionModalIsOpen}
+                  onRequestClose={closeInicioSesionModal}
+                />
+                <RegistroModal
+                  isOpen={registroModalIsOpen}
+                  onRequestClose={closeRegistroModal}
+                />
               </nav>
             </div>
           </div>
