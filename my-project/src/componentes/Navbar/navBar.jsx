@@ -22,10 +22,6 @@ function Navbar() {
     }
   }, []);
 
-  const openInicioSesionModal = () => {
-    setInicioSesionModalIsOpen(true);
-  };
-
   const closeInicioSesionModal = () => {
     setInicioSesionModalIsOpen(false);
   };
@@ -49,7 +45,7 @@ function Navbar() {
                   href="/"
                   className="text-xl font-semibold tracking-widest text-black uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
                 >
-                  Flowtrail UI
+                  Vape Store{' '}
                 </a>
                 <button
                   className="rounded-lg md:hidden focus:outline-none focus:shadow-outline"
@@ -119,22 +115,19 @@ function Navbar() {
                   <>
                     <a
                       className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
-                      onClick={openInicioSesionModal}
-                    >
-                      Iniciar Sesión
-                    </a>
-                    <a
-                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
                       onClick={openRegistroModal}
                     >
                       Registro
                     </a>
+                    <a className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500">
+                      <InicioSesionModal
+                        isOpen={inicioSesionModalIsOpen}
+                        onRequestClose={closeInicioSesionModal}
+                      />
+                    </a>
                   </>
                 )}
-                <InicioSesionModal
-                  isOpen={inicioSesionModalIsOpen}
-                  onRequestClose={closeInicioSesionModal}
-                />
+
                 <RegistroModal
                   isOpen={registroModalIsOpen}
                   onRequestClose={closeRegistroModal}

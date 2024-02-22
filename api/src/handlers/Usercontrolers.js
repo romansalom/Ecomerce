@@ -59,12 +59,10 @@ const createUsuario = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        error:
-          'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.',
-      });
+    res.status(500).json({
+      error:
+        'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.',
+    });
   }
 };
 
@@ -108,7 +106,7 @@ const iniciarSesion = async (req, res) => {
     if (!usuario) {
       return res
         .status(401)
-        .json({ error: 'Correo electrónico no registrado' });
+        .json({ error: 'El correo electrónico no está registrado' });
     }
 
     // Verificar la contraseña

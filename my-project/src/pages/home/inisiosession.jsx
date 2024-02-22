@@ -1,18 +1,26 @@
-import Modal from 'react-modal';
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Button,
+  useDisclosure,
+  Input,
+} from '@nextui-org/react';
 import axios from 'axios';
 import { useState } from 'react';
 
-Modal.setAppElement('#root');
+export default function App() {
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-// eslint-disable-next-line react/prop-types
-function InicioSesionModal({ isOpen, onRequestClose }) {
   const [credenciales, setCredenciales] = useState({
-    email: '', // Cambiamos numeroDeTelefono por email
+    email: '',
     password: '',
   });
 
   const [errors, setErrors] = useState({
-    email: null, // Cambiamos numeroDeTelefono por email
+    email: null,
     password: null,
     general: null,
   });
@@ -45,37 +53,40 @@ function InicioSesionModal({ isOpen, onRequestClose }) {
     }
 
     try {
-      // Realizar la solicitud de inicio de sesión
-      // Reemplaza la URL con la URL de tu servidor de inicio de sesión
       const response = await axios.post(
         'http://localhost:5432/api/users/inicio-sesion',
         credenciales
       );
 
       if (response.status >= 200 && response.status < 300) {
-        // Almacenar el token y el ID del usuario en el almacenamiento local
+        // El inicio de sesión fue exitoso
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userId', response.data.userId);
 
-        onRequestClose(); // Cierra el modal
+        onOpenChange();
         alert('Inicio de sesión exitoso');
-        setCredenciales({
-          email: '', // Cambiamos numeroDeTelefono por email
-          password: '',
-        }); // Limpia el formulario
-
-        // Refresca la página para aplicar los cambios en el Navbar
+        setCredenciales({ email: '', password: '' });
         window.location.reload();
       } else {
-        if (response.data.error) {
-          setErrors({ general: response.data.error });
-        } else {
-          setErrors({
-            general: 'Credenciales incorrectas. Por favor, inténtalo de nuevo.',
-          });
+        // La solicitud no fue exitosa
+        const responseData = response.data;
+
+        // Revisa si la respuesta contiene errores específicos
+        if (responseData && responseData.errors) {
+          // Revisar si hay errores específicos para el correo electrónico o la contraseña
+          if (responseData.errors.email) {
+            // Se recibió un mensaje de error específico para el correo electrónico
+            newErrors.email = responseData.errors.email;
+          }
+          if (responseData.errors.password) {
+            // Se recibió un mensaje de error específico para la contraseña
+            newErrors.password = responseData.errors.password;
+          }
         }
+        setErrors(newErrors);
       }
     } catch (error) {
+      // Error al realizar la solicitud
       console.error(error);
       setErrors({
         general:
@@ -85,46 +96,55 @@ function InicioSesionModal({ isOpen, onRequestClose }) {
   };
 
   return (
-    <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
-      contentLabel="Inicio de Sesión Modal"
-      className="w-full max-w-sm p-4 bg-white rounded-lg mx-auto mt-20"
-    >
-      <h2 className="text-xl font-bold mb-4">Inicio de Sesión</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <input
-            type="text"
-            name="email" // Cambiamos numeroDeTelefono por email
-            value={credenciales.email}
-            onChange={handleChange}
-            placeholder="Correo Electrónico" // Cambiamos el nombre del campo
-            className="w-full p-2 border rounded"
-          />
-          {errors.email && <p className="text-red-600">{errors.email}</p>}
-        </div>
-        <div className="mb-4">
-          <input
-            type="password"
-            name="password"
-            value={credenciales.password}
-            onChange={handleChange}
-            placeholder="Contraseña"
-            className="w-full p-2 border rounded"
-          />
-          {errors.password && <p className="text-red-600">{errors.password}</p>}
-        </div>
-        {errors.general && <p className="text-red-600">{errors.general}</p>}
-        <button
-          type="submit"
-          className="w-full bg-blue-500 hover-bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Iniciar Sesión
-        </button>
-      </form>
-    </Modal>
+    <>
+      <Button onPress={onOpen} color="secondary" size="ml" rounded="ml">
+        Log in
+      </Button>
+
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+        <ModalContent>
+          {(onClose) => (
+            <form onSubmit={handleSubmit}>
+              <ModalHeader className="flex flex-col gap-1">Log in</ModalHeader>
+              <ModalBody>
+                <Input
+                  autoFocus
+                  label="Email"
+                  placeholder="Enter your email"
+                  variant="bordered"
+                  name="email"
+                  value={credenciales.email}
+                  onChange={handleChange}
+                />
+                {errors.email && <p className="text-red-600">{errors.email}</p>}
+                <Input
+                  label="Password"
+                  placeholder="Enter your password"
+                  type="password"
+                  variant="bordered"
+                  name="password"
+                  value={credenciales.password}
+                  onChange={handleChange}
+                />
+                {errors.password && (
+                  <p className="text-red-600">{errors.password}</p>
+                )}
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="flat" onPress={onClose}>
+                  Close
+                </Button>
+                <Button color="primary" type="submit">
+                  Sign in
+                </Button>
+              </ModalFooter>
+              {errors.general && (
+                <p className="text-red-600">{errors.general}</p>
+              )}
+            </form>
+          )}
+        </ModalContent>
+      </Modal>
+    </>
   );
 }
-
-export default InicioSesionModal;
