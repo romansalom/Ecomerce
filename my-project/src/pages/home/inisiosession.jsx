@@ -109,7 +109,7 @@ export default function App() {
                 <Input
                   autoFocus
                   label="Email"
-                  placeholder="Enter your email"
+                  placeholder="Ingresa tu correo"
                   variant="bordered"
                   name="email"
                   value={credenciales.email}
@@ -117,8 +117,8 @@ export default function App() {
                 />
                 {errors.email && <p className="text-red-600">{errors.email}</p>}
                 <Input
-                  label="Password"
-                  placeholder="Enter your password"
+                  label="Contraseña"
+                  placeholder="Ingresa tu contraseña"
                   type="password"
                   variant="bordered"
                   name="password"
