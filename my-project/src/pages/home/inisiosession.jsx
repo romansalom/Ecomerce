@@ -96,11 +96,16 @@ export default function App() {
 
   return (
     <>
-      <Button onPress={onOpen} color="secondary" size="ml" rounded="ml">
+      {/* Aplica mt-10 en dispositivos móviles y responsivos */}
+      <Button onPress={onOpen} color="secondary" size="ml" className="w-20">
         Log in
       </Button>
-
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange} placement="top-center">
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="top-center"
+        className="w-4/5 md:w-full"
+      >
         <ModalContent>
           {(onClose) => (
             <form onSubmit={handleSubmit}>
@@ -131,7 +136,7 @@ export default function App() {
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
-                  Closes
+                  Close
                 </Button>
                 <Button color="primary" type="submit">
                   {loading ? 'Loading...' : 'Sign in'}{' '}
