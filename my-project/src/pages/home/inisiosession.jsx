@@ -14,6 +14,8 @@ import { useState } from 'react';
 export default function App() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
+  const [loading, setLoading] = useState(false); // Estado para controlar el loading
+
   const [credenciales, setCredenciales] = useState({
     email: '',
     password: '',
@@ -33,6 +35,7 @@ export default function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); // Mostrar loading al enviar la solicitud
 
     const newErrors = {};
 
@@ -49,6 +52,7 @@ export default function App() {
         ...newErrors,
         general: 'Por favor, corrija los errores en el formulario.',
       });
+      setLoading(false); // Ocultar loading si hay errores en el formulario
       return;
     }
 
@@ -64,7 +68,6 @@ export default function App() {
         localStorage.setItem('userId', response.data.userId);
 
         onOpenChange();
-        alert('Inicio de sesión exitoso');
         setCredenciales({ email: '', password: '' });
         window.location.reload();
       } else {
@@ -92,6 +95,8 @@ export default function App() {
         general:
           'Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo.',
       });
+    } finally {
+      setLoading(false); // Ocultar loading después de recibir la respuesta
     }
   };
 
@@ -135,7 +140,8 @@ export default function App() {
                   Closes
                 </Button>
                 <Button color="primary" type="submit">
-                  Sign in
+                  {loading ? 'Loading...' : 'Sign in'}{' '}
+                  {/* Mostrar loading o texto del botón según el estado */}
                 </Button>
               </ModalFooter>
               {errors.general && (

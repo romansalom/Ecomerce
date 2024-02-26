@@ -43,7 +43,7 @@ function Navbar() {
               <div className="flex items-center mb-4 md:mb-0">
                 <a
                   href="/"
-                  className="text-xl font-semibold tracking-widest text-black uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline"
+                  className="text-xl font-semibold tracking-widest text-black uppercase rounded-lg dark-mode:text-white focus:outline-none focus:shadow-outline  hover:text-green-500"
                 >
                   Vape Store{' '}
                 </a>
@@ -77,14 +77,14 @@ function Navbar() {
                   open ? 'flex' : 'hidden'
                 } md:items-center md:justify-between md:flex-row`}
               >
-                <a
-                  className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
-                  href="/"
-                >
-                  Home
-                </a>
                 {usuarioAutenticado && (
                   <>
+                    <a
+                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+                      href="/"
+                    >
+                      Home
+                    </a>
                     <a
                       className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
                       href="/perfil"
@@ -98,7 +98,7 @@ function Navbar() {
                       Carrito
                     </a>
                     <a
-                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-red-500"
                       onClick={() => {
                         // Agrega aquí la lógica para cerrar la sesión del usuario.
                         // Esto podría incluir eliminar el token del almacenamiento local.
