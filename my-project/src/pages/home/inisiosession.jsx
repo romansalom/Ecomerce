@@ -37,32 +37,13 @@ export default function App() {
     e.preventDefault();
     setLoading(true); // Mostrar loading al enviar la solicitud
 
-    const newErrors = {};
-
-    if (!credenciales.email) {
-      newErrors.email = 'El correo electrónico es obligatorio';
-    }
-
-    if (!credenciales.password) {
-      newErrors.password = 'La contraseña es obligatoria';
-    }
-
-    if (Object.keys(newErrors).length > 0) {
-      setErrors({
-        ...newErrors,
-        general: 'Por favor, corrija los errores en el formulario.',
-      });
-      setLoading(false); // Ocultar loading si hay errores en el formulario
-      return;
-    }
-
     try {
       const response = await axios.post(
         'http://localhost:5432/api/users/inicio-sesion',
         credenciales
       );
 
-      if (response.status >= 200 && response.status < 300) {
+      if (response.status === 200) {
         // El inicio de sesión fue exitoso
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('userId', response.data.userId);
@@ -70,31 +51,44 @@ export default function App() {
         onOpenChange();
         setCredenciales({ email: '', password: '' });
         window.location.reload();
-      } else {
-        // La solicitud no fue exitosa
-        const responseData = response.data;
-
-        // Revisa si la respuesta contiene errores específicos
-        if (responseData && responseData.errors) {
-          // Revisar si hay errores específicos para el correo electrónico o la contraseña
-          if (responseData.errors.email) {
-            // Se recibió un mensaje de error específico para el correo electrónico
-            newErrors.email = responseData.errors.email;
-          }
-          if (responseData.errors.password) {
-            // Se recibió un mensaje de error específico para la contraseña
-            newErrors.password = responseData.errors.password;
-          }
-        }
-        setErrors(newErrors);
       }
     } catch (error) {
       // Error al realizar la solicitud
-      console.error(error);
-      setErrors({
-        general:
-          'Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo.',
-      });
+      if (error.response) {
+        const responseData = error.response.data;
+
+        // Revisa si la respuesta contiene errores específicos
+        if (responseData && responseData.error) {
+          // Revisa si el error es por contraseña incorrecta
+          if (responseData.error === 'Contraseña incorrecta') {
+            setErrors({
+              ...errors,
+              password: 'Contraseña incorrecta',
+              general: null,
+            });
+          } else {
+            setErrors({
+              ...errors,
+              general: responseData.error,
+              password: null,
+            });
+          }
+        } else {
+          setErrors({
+            ...errors,
+            general:
+              'Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo.',
+            password: null,
+          });
+        }
+      } else {
+        setErrors({
+          ...errors,
+          general:
+            'Ocurrió un error al iniciar sesión. Por favor, inténtalo de nuevo.',
+          password: null,
+        });
+      }
     } finally {
       setLoading(false); // Ocultar loading después de recibir la respuesta
     }

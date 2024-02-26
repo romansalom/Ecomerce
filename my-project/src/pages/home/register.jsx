@@ -4,19 +4,18 @@ import axios from 'axios';
 
 Modal.setAppElement('#root');
 
-// eslint-disable-next-line react/prop-types
 function RegistroModal({ isOpen, onRequestClose }) {
   const [usuario, setUsuario] = useState({
     nombre: '',
     apellido: '',
-    email: '', // Cambiamos numeroDeTelefono por email
+    email: '',
     password: '',
   });
 
   const [errors, setErrors] = useState({
     nombre: null,
     apellido: null,
-    email: null, // Cambiamos numeroDeTelefono por email
+    email: null,
     password: null,
     general: null,
   });
@@ -39,7 +38,6 @@ function RegistroModal({ isOpen, onRequestClose }) {
       newErrors.apellido = 'El apellido es obligatorio';
     }
     if (!usuario.email) {
-      // Cambiamos numeroDeTelefono por email
       newErrors.email = 'El correo electrónico es obligatorio';
     }
     if (!usuario.password) {
@@ -66,31 +64,40 @@ function RegistroModal({ isOpen, onRequestClose }) {
         usuario
       );
 
-      if (response.status >= 200 && response.status < 300) {
+      if (response.status === 201) {
         onRequestClose(); // Cierra el modal
         alert('Registro exitoso');
         setUsuario({
           nombre: '',
           apellido: '',
-          email: '', // Cambiamos numeroDeTelefono por email
+          email: '',
           password: '',
         }); // Limpia el formulario
-      } else {
-        if (response.data.error) {
-          setErrors({ general: response.data.error });
+      }
+    } catch (error) {
+      if (error.response) {
+        const responseData = error.response.data;
+        if (responseData.errors) {
+          const { errors } = responseData;
+          const formattedErrors = {};
+          errors.forEach((error) => {
+            formattedErrors[error.param] = error.msg;
+          });
+          setErrors({ ...formattedErrors, general: null });
+        } else if (responseData.error) {
+          setErrors({ general: responseData.error });
         } else {
           setErrors({
             general:
               'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.',
           });
         }
+      } else {
+        setErrors({
+          general:
+            'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.',
+        });
       }
-    } catch (error) {
-      console.error(error);
-      setErrors({
-        general:
-          'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.',
-      });
     }
   };
 
@@ -128,10 +135,10 @@ function RegistroModal({ isOpen, onRequestClose }) {
         <div className="mb-4">
           <input
             type="text"
-            name="email" // Cambiamos numeroDeTelefono por email
+            name="email"
             value={usuario.email}
             onChange={handleChange}
-            placeholder="Correo Electrónico" // Cambiamos el nombre del campo
+            placeholder="Correo Electrónico"
             className="w-full p-2 border rounded"
           />
           {errors.email && <p className="text-red-600">{errors.email}</p>}
