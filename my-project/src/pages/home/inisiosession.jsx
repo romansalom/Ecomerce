@@ -132,7 +132,7 @@ export default function App() {
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
-                  Close
+                  Closes
                 </Button>
                 <Button color="primary" type="submit">
                   Sign in
