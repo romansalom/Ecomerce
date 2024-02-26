@@ -97,7 +97,12 @@ export default function App() {
   return (
     <>
       {/* Aplica mt-10 en dispositivos móviles y responsivos */}
-      <Button onPress={onOpen} color="secondary" size="ml" className="w-20">
+      <Button
+        onPress={onOpen}
+        color="secondary"
+        size="ml"
+        className="w-20 hover:text-green-800"
+      >
         Log in
       </Button>
       <Modal

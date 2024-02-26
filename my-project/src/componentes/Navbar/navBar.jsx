@@ -98,10 +98,8 @@ function Navbar() {
                       Carrito
                     </a>
                     <a
-                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-red-500"
+                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-red-500 cursor-pointer"
                       onClick={() => {
-                        // Agrega aquí la lógica para cerrar la sesión del usuario.
-                        // Esto podría incluir eliminar el token del almacenamiento local.
                         localStorage.removeItem('token');
                         localStorage.removeItem('userId');
                         setUsuarioAutenticado(false);
@@ -114,20 +112,31 @@ function Navbar() {
                 {!usuarioAutenticado && (
                   <>
                     <a
-                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
+                      className="hidden md:block px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500 cursor-pointer"
                       onClick={openRegistroModal}
                     >
                       Registro
                     </a>
-                    <a className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500">
+                    <a className="hidden md:block px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500">
                       <InicioSesionModal
                         isOpen={inicioSesionModalIsOpen}
                         onRequestClose={closeInicioSesionModal}
                       />
                     </a>
+                    <div className="md:hidden">
+                      <a
+                        className="block px-4 py-2 mt-2 text-base font-semibold rounded-lg text-black text-decoration-none text-reset hover:text-green-500 cursor-pointer"
+                        onClick={openRegistroModal}
+                      >
+                        Registro
+                      </a>
+                      <InicioSesionModal
+                        isOpen={inicioSesionModalIsOpen}
+                        onRequestClose={closeInicioSesionModal}
+                      />
+                    </div>
                   </>
                 )}
-
                 <RegistroModal
                   isOpen={registroModalIsOpen}
                   onRequestClose={closeRegistroModal}

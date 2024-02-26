@@ -4,46 +4,45 @@ import 'slick-carousel/slick/slick-theme.css';
 
 function Header() {
   const settings = {
-    dots: false, // Desactiva los botones de navegación
+    dots: false,
     infinite: true,
-    speed: 5000, // Cambia la velocidad a 5 segundos
+    speed: 3000,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000, // Cambia el tiempo de transición a 5 segundos
+    autoplaySpeed: 5000,
   };
 
   return (
-    <header>
+    <header className=" relative overflow-hidden">
       <Slider {...settings}>
         <div>
-          <div className="flex items-center justify-center w-full h-full bg-white">
+          <div className="w-full h-full">
             <img
-              src="imagen1.jpg"
+              src="bannenuevo.jpg"
               alt="Imagen 1"
-              className="max-w-full max-h-full"
+              className="w-full h-full object-cover"
             />
           </div>
         </div>
         <div>
-          <div className="flex items-center justify-center w-full h-full bg-white">
+          <div className="w-full h-full">
             <img
-              src="imagen1.jpg"
+              src="bannenuevo.jpg"
               alt="Imagen 2"
-              className="max-w-full max-h-full"
+              className="w-full h-full object-cover"
             />
           </div>
         </div>
         <div>
-          <div className="flex items-center justify-center w-full h-full bg-white">
+          <div className="w-full h-full">
             <img
-              src="imagen1.jpg"
+              src="bannenuevo.jpg"
               alt="Imagen 3"
-              className="max-w-full max-h-full"
+              className="w-full h-full object-cover"
             />
           </div>
         </div>
-        {/* Agrega más imágenes según sea necesario */}
       </Slider>
     </header>
   );
