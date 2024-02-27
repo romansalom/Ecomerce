@@ -10,7 +10,7 @@ function Header() {
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
-    autoplaySpeed: 5000,
+    autoplaySpeed: 4000,
   };
 
   return (
@@ -28,7 +28,7 @@ function Header() {
         <div>
           <div className="w-full h-full">
             <img
-              src="bannenuevo.jpg"
+              src="aaaaa3.jpg"
               alt="Imagen 2"
               className="w-full h-full object-cover"
             />
@@ -37,7 +37,7 @@ function Header() {
         <div>
           <div className="w-full h-full">
             <img
-              src="bannenuevo.jpg"
+              src="FRUITIAxFumevapebanner_1024x1024.jpg"
               alt="Imagen 3"
               className="w-full h-full object-cover"
             />
