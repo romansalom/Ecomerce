@@ -1,6 +1,16 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, CardBody, CardHeader, Image } from '@nextui-org/react';
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Image,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button,
+} from '@nextui-org/react';
 
 function Cards() {
   const [pricingData, setPricingData] = useState([]);
@@ -86,32 +96,6 @@ function Cards() {
     }
   }, [selectedMarca, selectedModelo, uniquePuffs, pricingData]);
 
-  const increaseQuantity = (index) => {
-    const updatedPricingData = [...pricingData];
-    if (
-      (updatedPricingData[index].quantity ?? 0) <
-      (updatedPricingData[index].stock ?? 0)
-    ) {
-      updatedPricingData[index].quantity += 1;
-      setPricingData(updatedPricingData);
-    }
-  };
-
-  const decreaseQuantity = (index) => {
-    const updatedPricingData = [...pricingData];
-    if ((updatedPricingData[index].quantity ?? 0) > 0) {
-      updatedPricingData[index].quantity -= 1;
-      setPricingData(updatedPricingData);
-    }
-  };
-
-  const addToCart = (product) => {
-    alert(`Se han agregado ${product.quantity} ${product.name} al carrito.`);
-    const updatedPricingData = [...pricingData];
-    updatedPricingData.forEach((item) => (item.quantity = 0));
-    setPricingData(updatedPricingData);
-  };
-
   const filteredPricingData = pricingData
     .filter((product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -151,42 +135,66 @@ function Cards() {
       {showFilters && (
         <div className="mt-4">
           <div className="flex space-x-4"></div>
-          <select
-            value={selectedMarca}
-            onChange={(e) => setSelectedMarca(e.target.value)}
-            className="w-28 p-2 border border-balck rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-          >
-            <option value="">Marcas</option>
-            {uniqueMarcas.map((marca, index) => (
-              <option key={index} value={marca}>
-                {marca}
-              </option>
-            ))}
-          </select>
-          <select
-            value={selectedModelo}
-            onChange={(e) => setSelectedModelo(e.target.value)}
-            className="w-28 p-2 border border-balck-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-          >
-            <option value="">Modelos</option>
-            {filteredModelos.map((modelo, index) => (
-              <option key={index} value={modelo}>
-                {modelo}
-              </option>
-            ))}
-          </select>
-          <select
-            value={puffsFilter}
-            onChange={(e) => setPuffsFilter(e.target.value)}
-            className="w-28 p-2 border border-balck-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-          >
-            <option value="">Puffs</option>
-            {filteredPuffs.map((puff, index) => (
-              <option key={index} value={puff}>
-                {puff}
-              </option>
-            ))}
-          </select>
+          <Dropdown>
+            <DropdownTrigger>
+              <Button variant="bordered">
+                {selectedMarca ? selectedMarca : 'Marcas'}
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Static Actions">
+              <DropdownItem onClick={() => setSelectedMarca('')}>
+                Todas las Marcas
+              </DropdownItem>
+              {uniqueMarcas.map((marca, index) => (
+                <DropdownItem
+                  key={index}
+                  onClick={() => setSelectedMarca(marca)}
+                >
+                  {marca}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+
+          <Dropdown>
+            <DropdownTrigger>
+              <Button variant="bordered">
+                {selectedModelo ? selectedModelo : 'Modelos'}
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Static Actions">
+              <DropdownItem onClick={() => setSelectedModelo('')}>
+                Todos los Modelos
+              </DropdownItem>
+              {filteredModelos.map((modelo, index) => (
+                <DropdownItem
+                  key={index}
+                  onClick={() => setSelectedModelo(modelo)}
+                >
+                  {modelo}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+
+          <Dropdown>
+            <DropdownTrigger>
+              <Button variant="bordered">
+                {puffsFilter ? puffsFilter : 'Puffs'}
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Static Actions">
+              <DropdownItem onClick={() => setPuffsFilter('')}>
+                Todos los Puffs
+              </DropdownItem>
+              {filteredPuffs.map((puff, index) => (
+                <DropdownItem key={index} onClick={() => setPuffsFilter(puff)}>
+                  {puff}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+
           <br></br>
           <br></br>
 
@@ -199,6 +207,7 @@ function Cards() {
           />
         </div>
       )}
+
       {loading ? (
         <div className="flex flex-col items-center justify-center h-screen">
           <div className="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-blue-500"></div>
@@ -215,25 +224,25 @@ function Cards() {
                 key={index}
                 isPressable
                 onClick={() => openPreview(pricing)}
-                className="border-2 border-green-200"
+                className="border-2 border-black-800 transition duration-300 ease-in-out transform hover:shadow-xl"
                 style={{ height: 'auto' }} // Ajusta la altura de la tarjeta según sea necesario
               >
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-center justify-center shadow-md bg-white-200">
-                  <h4 className="font-bold text-lg text-center">
+                  <h1 className="font-bold text-lg text-center">
                     {pricing.name}
-                  </h4>
-                  <h5 className="text-default-500 text-center">
+                  </h1>
+                  <h4 className="text-default-500 text-center">
                     Puffs: {pricing.puffs}
-                  </h5>
-                  <h6 className="text-tiny uppercase font-bold text-center">
+                  </h4>
+                  <h5 className="text-tiny uppercase font-bold text-center">
                     ${pricing.precio}
-                  </h6>
+                  </h5>
                 </CardHeader>
 
                 <CardBody className="overflow-visible py-2">
                   <Image
                     alt="Card background"
-                    className="object-cover rounded-xl w-full h-full flex justify-center items-center"
+                    className="object-cover rounded-xl w-full max-h-50" // Ajusta la altura máxima
                     src={pricing.imageUrl}
                   />
                 </CardBody>
@@ -243,10 +252,10 @@ function Cards() {
         </div>
       )}
       {selectedProduct && (
-        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-gray-300 bg-opacity-75">
-          <div className="relative w-4/5 sm:w-2/3 md:w-1/2 bg-white rounded-lg shadow-2xl p-4">
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
+          <div className="relative w-full max-w-xl bg-white rounded-xl shadow-lg p-6">
             <button
-              className="absolute top-2 right-2 text-red-700 hover:text-gray-800"
+              className="absolute top-2 right-2 text-red-800 focus:outline-none"
               onClick={closePreview}
             >
               Cerrar
@@ -257,16 +266,25 @@ function Cards() {
                 alt={selectedProduct.name}
                 className="w-48 h-48 mx-auto mb-4 rounded-full"
               />
-              <h2 className="text-2xl font-semibold text-black mb-2">
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">
                 {selectedProduct.name}
               </h2>
-              <p className="text-lg text-gray-700 mb-4">
+              <p className="text-lg text-gray-600 mb-4">
                 ${selectedProduct.precio}
               </p>
-              <ul className="text-sm text-gray-600 space-y-2">
-                <li>Sabor: {selectedProduct.flavor}</li>
-                <li>{selectedProduct.puffs} Puffs</li>
-                <li>{selectedProduct.marca}</li>
+              <ul className="text-sm text-gray-500 space-y-2">
+                <li>
+                  <span className="font-semibold">Sabor:</span>{' '}
+                  {selectedProduct.flavor}
+                </li>
+                <li>
+                  <span className="font-semibold">Puffs:</span>{' '}
+                  {selectedProduct.puffs}
+                </li>
+                <li>
+                  <span className="font-semibold">Marca:</span>{' '}
+                  {selectedProduct.marca}
+                </li>
               </ul>
             </div>
           </div>
