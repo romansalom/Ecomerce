@@ -133,78 +133,78 @@ function Cards() {
         Busquedad Perzonalizada {showFilters ? '▲' : '▼'}
       </button>
       {showFilters && (
-        <div className="mt-4">
-          <div className="flex space-x-4"></div>
-          <Dropdown>
-            <DropdownTrigger>
-              <Button variant="bordered">
-                {selectedMarca ? selectedMarca : 'Marcas'}
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
-              <DropdownItem onClick={() => setSelectedMarca('')}>
-                Todas las Marcas
-              </DropdownItem>
-              {uniqueMarcas.map((marca, index) => (
-                <DropdownItem
-                  key={index}
-                  onClick={() => setSelectedMarca(marca)}
-                >
-                  {marca}
+        <div className="mt-4 flex justify-center">
+          <div className="flex flex-wrap justify-center space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-10">
+            <Dropdown>
+              <DropdownTrigger>
+                <Button variant="bordered">
+                  {selectedMarca ? selectedMarca : 'Marcas'}
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem onClick={() => setSelectedMarca('')}>
+                  Todas las Marcas
                 </DropdownItem>
-              ))}
-            </DropdownMenu>
-          </Dropdown>
-
-          <Dropdown>
-            <DropdownTrigger>
-              <Button variant="bordered">
-                {selectedModelo ? selectedModelo : 'Modelos'}
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
-              <DropdownItem onClick={() => setSelectedModelo('')}>
-                Todos los Modelos
-              </DropdownItem>
-              {filteredModelos.map((modelo, index) => (
-                <DropdownItem
-                  key={index}
-                  onClick={() => setSelectedModelo(modelo)}
-                >
-                  {modelo}
+                {uniqueMarcas.map((marca, index) => (
+                  <DropdownItem
+                    key={index}
+                    onClick={() => setSelectedMarca(marca)}
+                  >
+                    {marca}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button variant="bordered">
+                  {selectedModelo ? selectedModelo : 'Modelos'}
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem onClick={() => setSelectedModelo('')}>
+                  Todos los Modelos
                 </DropdownItem>
-              ))}
-            </DropdownMenu>
-          </Dropdown>
-
-          <Dropdown>
-            <DropdownTrigger>
-              <Button variant="bordered">
-                {puffsFilter ? puffsFilter : 'Puffs'}
-              </Button>
-            </DropdownTrigger>
-            <DropdownMenu aria-label="Static Actions">
-              <DropdownItem onClick={() => setPuffsFilter('')}>
-                Todos los Puffs
-              </DropdownItem>
-              {filteredPuffs.map((puff, index) => (
-                <DropdownItem key={index} onClick={() => setPuffsFilter(puff)}>
-                  {puff}
+                {filteredModelos.map((modelo, index) => (
+                  <DropdownItem
+                    key={index}
+                    onClick={() => setSelectedModelo(modelo)}
+                  >
+                    {modelo}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button variant="bordered">
+                  {puffsFilter ? puffsFilter : 'Puffs'}
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="Static Actions">
+                <DropdownItem onClick={() => setPuffsFilter('')}>
+                  Todos los Puffs
                 </DropdownItem>
-              ))}
-            </DropdownMenu>
-          </Dropdown>
-
-          <br></br>
-          <br></br>
-
-          <input
-            type="text"
-            placeholder="Buscar por nombre"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-48 p-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
-          />
+                {filteredPuffs.map((puff, index) => (
+                  <DropdownItem
+                    key={index}
+                    onClick={() => setPuffsFilter(puff)}
+                  >
+                    {puff}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
+            <br></br>
+            <br></br>
+            <input
+              type="text"
+              placeholder="Buscar por nombre"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full sm:w-40PX p-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 text-center"
+            />
+          </div>
         </div>
       )}
 
