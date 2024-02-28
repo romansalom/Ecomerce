@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Card, CardBody, CardHeader, Image } from '@nextui-org/react';
 
 function Cards() {
   const [pricingData, setPricingData] = useState([]);
@@ -136,14 +137,16 @@ function Cards() {
   return (
     <div className="font-mono bg-white">
       <div className="bg-gray-00 py-4 text-center">
-        <h1 className="text-4xl text-black font-bold">TODOS LOS PRODUCTOS</h1>
+        <h1 className="text-3xl text-black  tracking-wide">
+          TODOS LOS PRODUCTOS
+        </h1>
       </div>
 
       <button
         onClick={() => setShowFilters(!showFilters)}
-        className="text-white bg-blue-500 hover:bg-blue-600 px-3 py-2 rounded-lg focus:outline-none"
+        className="text-white bg-black hover:bg-green-600 px-10 py-2 rounded-xl focus:outline-none"
       >
-        Filtros De Busquedad {showFilters ? '▲' : '▼'}
+        Busquedad Perzonalizada {showFilters ? '▲' : '▼'}
       </button>
       {showFilters && (
         <div className="mt-4">
@@ -151,7 +154,7 @@ function Cards() {
           <select
             value={selectedMarca}
             onChange={(e) => setSelectedMarca(e.target.value)}
-            className="w-28 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="w-28 p-2 border border-balck rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
           >
             <option value="">Marcas</option>
             {uniqueMarcas.map((marca, index) => (
@@ -163,7 +166,7 @@ function Cards() {
           <select
             value={selectedModelo}
             onChange={(e) => setSelectedModelo(e.target.value)}
-            className="w-28 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="w-28 p-2 border border-balck-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
           >
             <option value="">Modelos</option>
             {filteredModelos.map((modelo, index) => (
@@ -175,7 +178,7 @@ function Cards() {
           <select
             value={puffsFilter}
             onChange={(e) => setPuffsFilter(e.target.value)}
-            className="w-28 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="w-28 p-2 border border-balck-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
           >
             <option value="">Puffs</option>
             {filteredPuffs.map((puff, index) => (
@@ -192,7 +195,7 @@ function Cards() {
             placeholder="Buscar por nombre"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-48 p-2 border border-blue-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
+            className="w-48 p-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200"
           />
         </div>
       )}
@@ -207,69 +210,34 @@ function Cards() {
         <div className="container px-6 py-8 mx-auto">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
             {filteredPricingData.map((pricing, index) => (
-              <div
+              <Card
+                shadow="lg"
                 key={index}
-                className="p-3 transform scale-80 text-center bg-gray-100 border border-gray-300 rounded-lg shadow-xl hover:shadow-lg"
+                isPressable
+                onClick={() => openPreview(pricing)}
+                className="border-2 border-green-200"
+                style={{ height: 'auto' }} // Ajusta la altura de la tarjeta según sea necesario
               >
-                <div className="flex-shrink-0 mt-2">
-                  <img
-                    src={pricing.imageUrl}
-                    alt={pricing.name}
-                    className="w-24 h-24 mx-auto mb-2 rounded-full"
-                  />
-                  <h2 className="text-2xl font-semibold text-black mb-2">
+                <CardHeader className="pb-0 pt-2 px-4 flex-col items-center justify-center shadow-md bg-white-200">
+                  <h4 className="font-bold text-lg text-center">
                     {pricing.name}
-                  </h2>
-                </div>
-                <div className="flex-shrink-0">
-                  <h3 className="text-1xl font-semibold text-black">
-                    {pricing.modelo}
-                  </h3>
-                  <div className="h-2"></div>
-                  <h3 className="text-2xl font-semibold text-black">
+                  </h4>
+                  <h5 className="text-default-500 text-center">
+                    Puffs: {pricing.puffs}
+                  </h5>
+                  <h6 className="text-tiny uppercase font-bold text-center">
                     ${pricing.precio}
-                  </h3>
-                </div>
-                <div className="h-2"></div>
-                <ul className="text-sm text-gray-600 space-y-2">
-                  <li>Sabor: {pricing.flavor}</li>
-                  <li>{pricing.puffs} Puffs</li>
-                  <li>{pricing.marca}</li>
-                </ul>
-                <div className="h-2"></div>
-                <div className="flex items-center justify-center space-x-2">
-                  <button
-                    onClick={() => decreaseQuantity(index)}
-                    className="bg-red-500 hover:bg-red-600 text-white px-1 py-1 rounded-lg"
-                    disabled={pricing.quantity === 0}
-                  >
-                    <span style={{ fontSize: '1em' }}>-</span>
-                  </button>
-                  <span className="text-base">{pricing.quantity}</span>
-                  <button
-                    onClick={() => increaseQuantity(index)}
-                    className="bg-green-500 hover:bg-green-600 text-white px-1 py-1 rounded-lg"
-                    disabled={pricing.quantity >= pricing.stock}
-                  >
-                    <span style={{ fontSize: '1em' }}>+</span>
-                  </button>
-                </div>
-                <div className="h-2"></div>
-                <button
-                  onClick={() => addToCart(pricing)}
-                  className="mt-1 bg-blue-500 hover:bg-blue-600 text-white px-2 py-1 rounded-lg"
-                >
-                  Agregar al Carrito
-                </button>
-                <div className="mt-2">
-                  <button
-                    onClick={() => openPreview(pricing)}
-                    className="bg-gray-500 hover:bg-gray-600 text-white px-2 py-1 rounded-lg"
-                  >
-                    Ver más
-                  </button>
-                </div>
-              </div>
+                  </h6>
+                </CardHeader>
+
+                <CardBody className="overflow-visible py-2">
+                  <Image
+                    alt="Card background"
+                    className="object-cover rounded-xl w-full h-full flex justify-center items-center"
+                    src={pricing.imageUrl}
+                  />
+                </CardBody>
+              </Card>
             ))}
           </div>
         </div>
