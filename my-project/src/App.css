@@ -48,3 +48,11 @@ body {
 .read-the-docs {
   color: #888;
 }
+
+.search-input {
+  background-color: #838181 !important;
+  color: #fff !important;
+  padding: 1px !important;
+  border-radius: 14px !important;
+  /* Ajusta el valor de acuerdo a tu preferencia */
+}

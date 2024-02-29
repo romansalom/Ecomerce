@@ -10,11 +10,12 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
+  Input,
 } from '@nextui-org/react';
 
 function Cards() {
   const [pricingData, setPricingData] = useState([]);
-  const [loading, setLoading] = useState(true); // Nuevo estado para el indicador de carga
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedMarca, setSelectedMarca] = useState('');
   const [uniqueMarcas, setUniqueMarcas] = useState([]);
@@ -26,6 +27,8 @@ function Cards() {
   const [showFilters, setShowFilters] = useState(false);
   const [filteredModelos, setFilteredModelos] = useState([]);
   const [filteredPuffs, setFilteredPuffs] = useState([]);
+  const [sortBy, setSortBy] = useState('name'); // Estado para el criterio de ordenamiento
+  const [sortDirection, setSortDirection] = useState('asc'); // Estado para la dirección de ordenamiento
 
   useEffect(() => {
     axios
@@ -36,7 +39,7 @@ function Cards() {
           quantity: 0,
         }));
         setPricingData(dataWithQuantityZero);
-        setLoading(false); // Marcar la carga como completa
+        setLoading(false);
         const uniqueMarcas = [
           ...new Set(response.data.map((product) => product.marca)),
         ];
@@ -52,7 +55,7 @@ function Cards() {
       })
       .catch((error) => {
         console.error('Error:', error);
-        setLoading(false); // Marcar la carga como completa en caso de error
+        setLoading(false);
       });
   }, []);
 
@@ -108,7 +111,18 @@ function Cards() {
     )
     .filter((product) =>
       selectedModelo ? product.modelo === selectedModelo : true
-    );
+    )
+    .sort((a, b) => {
+      if (sortBy === 'name') {
+        return sortDirection === 'asc'
+          ? a.name.localeCompare(b.name)
+          : b.name.localeCompare(a.name);
+      } else if (sortBy === 'precio') {
+        return sortDirection === 'asc'
+          ? a.precio - b.precio
+          : b.precio - a.precio;
+      }
+    });
 
   const openPreview = (product) => {
     setSelectedProduct(product);
@@ -118,10 +132,19 @@ function Cards() {
     setSelectedProduct(null);
   };
 
+  const handleSortBy = (criteria) => {
+    if (sortBy === criteria) {
+      setSortDirection(sortDirection === 'asc' ? 'desc' : 'asc');
+    } else {
+      setSortBy(criteria);
+      setSortDirection('asc');
+    }
+  };
+
   return (
     <div className="font-mono bg-white">
-      <div className="bg-gray-00 py-4 text-center">
-        <h1 className="text-3xl text-black  tracking-wide">
+      <div className=" py-6 text-center">
+        <h1 className="text-3xl font-semibold text-black tracking-wide ">
           TODOS LOS PRODUCTOS
         </h1>
       </div>
@@ -162,9 +185,9 @@ function Cards() {
                 </Button>
               </DropdownTrigger>
               <DropdownMenu aria-label="Static Actions">
-                <DropdownItem onClick={() => setSelectedModelo('')}>
-                  Todos los Modelos
-                </DropdownItem>
+                <DropdownItem
+                  onClick={() => setSelectedModelo('')}
+                ></DropdownItem>
                 {filteredModelos.map((modelo, index) => (
                   <DropdownItem
                     key={index}
@@ -195,14 +218,66 @@ function Cards() {
                 ))}
               </DropdownMenu>
             </Dropdown>
+            <Dropdown>
+              <DropdownTrigger>
+                <Button variant="bordered">
+                  {sortBy === 'name'
+                    ? 'Ordenar por Nombre'
+                    : sortBy === 'precio'
+                    ? 'Ordenar por Precio'
+                    : 'Todos'}
+                  {sortBy && (
+                    <span className="ml-1">
+                      {sortBy === 'name'
+                        ? sortDirection === 'asc'
+                          ? '▲'
+                          : '▼'
+                        : sortDirection === 'asc'
+                        ? '▲'
+                        : '▼'}
+                    </span>
+                  )}
+                </Button>
+              </DropdownTrigger>
+
+              <DropdownMenu>
+                <DropdownItem onClick={() => handleSortBy('')}>
+                  Todos
+                  {!sortBy && (
+                    <span className="ml-1">
+                      {' '}
+                      {/* Mostrar la dirección solo si no hay sort */} ▲▼
+                    </span>
+                  )}
+                </DropdownItem>
+                <DropdownItem onClick={() => handleSortBy('name')}>
+                  Nombre{' '}
+                  {sortBy === 'name' && (
+                    <span className="ml-1">
+                      {sortDirection === 'asc' ? '▲' : '▼'}
+                    </span>
+                  )}
+                </DropdownItem>
+                <DropdownItem onClick={() => handleSortBy('precio')}>
+                  Precio{' '}
+                  {sortBy === 'precio' && (
+                    <span className="ml-1">
+                      {sortDirection === 'asc' ? '▲' : '▼'}
+                    </span>
+                  )}
+                </DropdownItem>
+              </DropdownMenu>
+            </Dropdown>
+
             <br></br>
             <br></br>
-            <input
+            <br></br>
+            <Input
               type="text"
               placeholder="Buscar por nombre"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full sm:w-40PX p-2 border border-black rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-200 text-center"
+              className="search-input" // Clase personalizada para el input
             />
           </div>
         </div>
