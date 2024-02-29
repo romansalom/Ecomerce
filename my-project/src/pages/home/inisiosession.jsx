@@ -35,6 +35,17 @@ export default function App() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Verifica si el email o la contraseña están vacíos
+    if (!credenciales.email || !credenciales.password) {
+      setErrors({
+        ...errors,
+        general: 'Por favor, ingresa tu email y contraseña.',
+        password: null,
+      });
+      return; // Detiene el envío del formulario si hay campos vacíos
+    }
+
     setLoading(true); // Mostrar loading al enviar la solicitud
 
     try {
