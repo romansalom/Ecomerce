@@ -299,7 +299,7 @@ function Cards() {
                 key={index}
                 isPressable
                 onClick={() => openPreview(pricing)}
-                className="border-2 border-black-800 transition duration-300 ease-in-out transform hover:shadow-xl"
+                className="border-2 border-black-800 transition duration-300 ease-in-out transform hover:shadow-xl hover:scale-105"
                 style={{ height: 'auto', transform: 'scale(0.8)' }} // Reducción del 20%
               >
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-center justify-center shadow-md bg-white-200">
