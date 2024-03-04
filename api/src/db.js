@@ -3,8 +3,6 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const path = require('path');
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME } = process.env;
-const ProductosModel = require('./models/Productos');
-const UserModel = require('./models/Usuarios');
 
 const sequelize = new Sequelize(
   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
@@ -37,16 +35,28 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-ProductosModel(sequelize);
-UserModel(sequelize);
-// En sequelize.models están todos los modelos importados como propiedades
-// Para relacionarlos hacemos un destructuring
-const { Productos, Usuarios } = sequelize.models;
+const { Carrito, Usuarios, Productos } = sequelize.models;
+
+Usuarios.hasOne(Carrito); // Un usuario tiene un carrito
+Carrito.belongsTo(Usuarios); // Un carrito pertenece a un usuario
+
+Carrito.belongsToMany(Productos, { through: 'CarritoProducto' }); // Un carrito tiene muchos productos
+Productos.belongsToMany(Carrito, { through: 'CarritoProducto' });
+
+// Gancho para crear un carrito automáticamente después de crear un usuario
+Usuarios.afterCreate(async (usuario) => {
+  try {
+    // Crear un nuevo carrito asociado al usuario recién creado
+    await Carrito.create({ usuario_id: usuario.id });
+  } catch (error) {
+    console.error('Error al crear un carrito para el usuario:', error);
+  }
+});
+
+module.exports = {
+  ...sequelize.models,
+  conn: sequelize,
+};
 
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
-
-module.exports = {
-  ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
-  conn: sequelize, // para importart la conexión { conn } = require('./db.js');
-};
