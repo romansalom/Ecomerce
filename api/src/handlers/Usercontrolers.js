@@ -1,6 +1,8 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Usuarios: UserModel } = require('../db');
+const { verContenidoCarrito } = require('./carritoController');
+const Usuarios = require('../models/Usuarios');
 
 // Función para validar el correo electrónico
 function validarCorreoElectronico(email) {
@@ -49,20 +51,16 @@ const createUsuario = async (req, res) => {
     });
 
     // Incluir el ID del usuario en la respuesta
-    res
-      .status(201)
-      .json({
-        message: 'Usuario registrado con éxito',
-        userId: nuevoUsuario.id,
-      });
+    res.status(201).json({
+      message: 'Usuario registrado con éxito',
+      userId: nuevoUsuario.id,
+    });
   } catch (error) {
     console.error(error);
-    res
-      .status(500)
-      .json({
-        error:
-          'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.',
-      });
+    res.status(500).json({
+      error:
+        'Ocurrió un error al registrar el usuario. Por favor, inténtalo de nuevo.',
+    });
   }
 };
 
@@ -97,10 +95,13 @@ const iniciarSesion = async (req, res) => {
     }
 
     // Generar y enviar un token JWT y el ID del usuario si la autenticación es exitosa
-    const token = jwt.sign({ id: usuario.id }, 'miSecretoJWT', {
-      expiresIn: '1h',
-    });
-    res.json({ token, userId: usuario.id });
+    const token = jwt.sign({ id: usuario.id }, 'miSecretoJWT', {});
+
+    // Obtener el contenido del carrito y enviarlo en la respuesta
+    const carrito = await verContenidoCarrito(usuario.id);
+
+    res.json({ token, userId: usuario.id, carrito });
+    console.log(carrito.dataValues.Productos); // No necesitas imprimirlo aquí
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error al iniciar sesión' });
