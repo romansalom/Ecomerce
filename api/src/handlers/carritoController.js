@@ -24,7 +24,7 @@ const verContenidoCarrito = async (userId) => {
 
 const agregarProductoAlCarrito = async (req, res) => {
   const { userId, cantidad } = req.body;
-  const { productId, stock } = req.params; // Obtener el productId de los parámetros de la solicitud
+  const { productId } = req.params; // Obtener el productId de los parámetros de la solicitud
 
   try {
     // Verificar si el usuario tiene un carrito existente
@@ -41,22 +41,36 @@ const agregarProductoAlCarrito = async (req, res) => {
     });
 
     if (existeProducto) {
-      // Si el producto ya está en el carrito, actualizar la stock
-      existeProducto.stock += stock;
+      // Si el producto ya está en el carrito, actualizar la cantidad
+      existeProducto.stock += cantidad;
       await existeProducto.save();
     } else {
       // Si el producto no está en el carrito, agregarlo
       await CarritoProducto.create({
         CarritoId: carrito.id,
         ProductoId: productId,
-        stock: stock,
+        stock: cantidad,
       });
     }
 
-    // Devolver el carrito actualizado
+    // Restar la cantidad seleccionada del stock general del producto
+    const producto = await Productos.findByPk(productId);
+    producto.stock -= cantidad;
+    await producto.save();
+
+    // Devolver el carrito actualizado con la información del producto
     const carritoActualizado = await verContenidoCarrito(userId);
 
-    res.json(carritoActualizado.Productos);
+    // Devolver la información del producto con la cantidad seleccionada
+    const productosConCantidad = carritoActualizado.Productos.map(
+      (producto) => ({
+        ...producto.toJSON(),
+        cantidad: cantidad, // Agregar la cantidad seleccionada
+        stock: producto.stock, // Devolver el stock actualizado
+      })
+    );
+
+    res.json(productosConCantidad);
   } catch (error) {
     console.error('Error al agregar producto al carrito:', error);
     res.status(500).json({ error: 'Error al agregar producto al carrito' });
