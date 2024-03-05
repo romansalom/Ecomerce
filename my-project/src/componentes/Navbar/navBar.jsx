@@ -95,7 +95,21 @@ function Navbar() {
                       className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
                       href="/carrito"
                     >
-                      Carrito
+                      <svg
+                        className="w-6 h-6 text-gray-800 dark:text-white"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.3L19 7H7.3"
+                        />
+                      </svg>
                     </a>
                     <a
                       className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-red-500 cursor-pointer"
@@ -105,7 +119,21 @@ function Navbar() {
                         setUsuarioAutenticado(false);
                       }}
                     >
-                      Log Out
+                      <svg
+                        className="w-6 h-6 text-black-500 dark:text-white hover:text-red-400 transition-colors duration-300"
+                        aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="white" // Cambiado a "red" para establecer directamente el color rojo
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          stroke="currentColor"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
+                        />
+                      </svg>
                     </a>
                   </>
                 )}

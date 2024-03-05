@@ -24,6 +24,7 @@ function Cards() {
   const [uniquePuffs, setUniquePuffs] = useState([]);
   const [selectedModelo, setSelectedModelo] = useState('');
   const [uniqueModelos, setUniqueModelos] = useState([]);
+  // eslint-disable-next-line no-unused-vars
   const [showFilters, setShowFilters] = useState(false);
   const [filteredModelos, setFilteredModelos] = useState([]);
   const [filteredPuffs, setFilteredPuffs] = useState([]);
@@ -143,145 +144,144 @@ function Cards() {
 
   return (
     <div className="font-mono bg-white">
-      <div className=" py-6 text-center">
-        <h1 className="text-3xl font-semibold text-black tracking-wide ">
-          TODOS LOS PRODUCTOS
-        </h1>
-      </div>
-
-      <button
-        onClick={() => setShowFilters(!showFilters)}
-        className="text-white bg-black hover:bg-green-600 px-10 py-2 rounded-xl focus:outline-none"
-      >
-        Busquedad Perzonalizada {showFilters ? '▲' : '▼'}
-      </button>
-      {showFilters && (
-        <div className="mt-4 flex justify-center">
-          <div className="flex flex-wrap justify-center space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-10">
-            <Dropdown>
-              <DropdownTrigger>
-                <Button variant="bordered">
-                  {selectedMarca ? selectedMarca : 'Marcas'}
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Static Actions">
-                <DropdownItem onClick={() => setSelectedMarca('')}>
-                  Todas las Marcas
-                </DropdownItem>
-                {uniqueMarcas.map((marca, index) => (
-                  <DropdownItem
-                    key={index}
-                    onClick={() => setSelectedMarca(marca)}
-                  >
-                    {marca}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger>
-                <Button variant="bordered">
-                  {selectedModelo ? selectedModelo : 'Modelos'}
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Static Actions">
+      <div className="mt-4 flex justify-center">
+        <div className="flex flex-wrap justify-center space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-10">
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                className="font-custom text-l text-center"
+                variant="bordered"
+              >
+                {selectedMarca ? selectedMarca : 'Marcas'}
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Static Actions">
+              <DropdownItem onClick={() => setSelectedMarca('')}>
+                Todas las Marcas
+              </DropdownItem>
+              {uniqueMarcas.map((marca, index) => (
                 <DropdownItem
-                  onClick={() => setSelectedModelo('')}
-                ></DropdownItem>
-                {filteredModelos.map((modelo, index) => (
-                  <DropdownItem
-                    key={index}
-                    onClick={() => setSelectedModelo(modelo)}
-                  >
-                    {modelo}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger>
-                <Button variant="bordered">
-                  {puffsFilter ? puffsFilter : 'Puffs'}
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu aria-label="Static Actions">
-                <DropdownItem onClick={() => setPuffsFilter('')}>
-                  Todos los Puffs
+                  key={index}
+                  onClick={() => setSelectedMarca(marca)}
+                >
+                  {marca}
                 </DropdownItem>
-                {filteredPuffs.map((puff, index) => (
-                  <DropdownItem
-                    key={index}
-                    onClick={() => setPuffsFilter(puff)}
-                  >
-                    {puff}
-                  </DropdownItem>
-                ))}
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger>
-                <Button variant="bordered">
-                  {sortBy === 'name'
-                    ? 'Ordenar por Nombre'
-                    : sortBy === 'precio'
-                    ? 'Ordenar por Precio'
-                    : 'Todos'}
-                  {sortBy && (
-                    <span className="ml-1">
-                      {sortBy === 'name'
-                        ? sortDirection === 'asc'
-                          ? '▲'
-                          : '▼'
-                        : sortDirection === 'asc'
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                className="font-custom text-l text-center"
+                variant="bordered"
+              >
+                {selectedModelo ? selectedModelo : 'Modelos'}
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Static Actions">
+              <DropdownItem onClick={() => setSelectedModelo('')}>
+                Todos los Modelos
+              </DropdownItem>
+              {filteredModelos.map((modelo, index) => (
+                <DropdownItem
+                  key={index}
+                  onClick={() => setSelectedModelo(modelo)}
+                >
+                  {modelo}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                className="font-custom text-l text-center"
+                variant="bordered"
+              >
+                {puffsFilter ? puffsFilter : 'Puffs'}
+              </Button>
+            </DropdownTrigger>
+            <DropdownMenu aria-label="Static Actions">
+              <DropdownItem onClick={() => setPuffsFilter('')}>
+                Todos los Puffs
+              </DropdownItem>
+              {filteredPuffs.map((puff, index) => (
+                <DropdownItem key={index} onClick={() => setPuffsFilter(puff)}>
+                  {puff}
+                </DropdownItem>
+              ))}
+            </DropdownMenu>
+          </Dropdown>
+          <br></br>
+          <br></br>
+
+          <Dropdown>
+            <DropdownTrigger>
+              <Button
+                className="font-custom text-l text-center"
+                variant="bordered"
+              >
+                {sortBy === 'name'
+                  ? 'Ordenar por Nombre'
+                  : sortBy === 'precio'
+                  ? 'Ordenar por Precio'
+                  : 'Todos'}
+                {sortBy && (
+                  <span className="ml-1">
+                    {sortBy === 'name'
+                      ? sortDirection === 'asc'
                         ? '▲'
-                        : '▼'}
-                    </span>
-                  )}
-                </Button>
-              </DropdownTrigger>
+                        : '▼'
+                      : sortDirection === 'asc'
+                      ? '▲'
+                      : '▼'}
+                  </span>
+                )}
+              </Button>
+            </DropdownTrigger>
 
-              <DropdownMenu>
-                <DropdownItem onClick={() => handleSortBy('')}>
-                  Todos
-                  {!sortBy && (
-                    <span className="ml-1">
-                      {' '}
-                      {/* Mostrar la dirección solo si no hay sort */} ▲▼
-                    </span>
-                  )}
-                </DropdownItem>
-                <DropdownItem onClick={() => handleSortBy('name')}>
-                  Nombre{' '}
-                  {sortBy === 'name' && (
-                    <span className="ml-1">
-                      {sortDirection === 'asc' ? '▲' : '▼'}
-                    </span>
-                  )}
-                </DropdownItem>
-                <DropdownItem onClick={() => handleSortBy('precio')}>
-                  Precio{' '}
-                  {sortBy === 'precio' && (
-                    <span className="ml-1">
-                      {sortDirection === 'asc' ? '▲' : '▼'}
-                    </span>
-                  )}
-                </DropdownItem>
-              </DropdownMenu>
-            </Dropdown>
+            <DropdownMenu>
+              <DropdownItem onClick={() => handleSortBy('')}>
+                Todos
+                {!sortBy && (
+                  <span className="ml-1">
+                    {' '}
+                    {/* Mostrar la dirección solo si no hay sort */} ▲▼
+                  </span>
+                )}
+              </DropdownItem>
+              <DropdownItem onClick={() => handleSortBy('name')}>
+                Nombre{' '}
+                {sortBy === 'name' && (
+                  <span className="ml-1">
+                    {sortDirection === 'asc' ? '▲' : '▼'}
+                  </span>
+                )}
+              </DropdownItem>
+              <DropdownItem onClick={() => handleSortBy('precio')}>
+                Precio{' '}
+                {sortBy === 'precio' && (
+                  <span className="ml-1">
+                    {sortDirection === 'asc' ? '▲' : '▼'}
+                  </span>
+                )}
+              </DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
 
-            <br></br>
-            <br></br>
-            <br></br>
-            <Input
-              type="text"
-              placeholder="Buscar por nombre"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="search-input" // Clase personalizada para el input
-            />
-          </div>
+          <br></br>
+          <br></br>
+          <br></br>
+          <Input
+            type="text"
+            placeholder="Buscar por nombre"
+            style={{ textAlign: 'center' }}
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input font-custom text-l text-center placeholder-center" // Clase personalizada para el input
+          />
         </div>
-      )}
+      </div>
 
       {loading ? (
         <div className="flex flex-col items-center justify-center h-screen">
@@ -303,17 +303,17 @@ function Cards() {
                 style={{ height: 'auto', transform: 'scale(0.8)' }} // Reducción del 20%
               >
                 <CardHeader className="pb-0 pt-2 px-4 flex-col items-center justify-center shadow-md bg-white-200">
-                  <h1 className="font-bold text-xl text-center">
+                  <h1 className="font-custom text-xl text-center">
                     {' '}
                     {/* Aumento de tamaño de fuente */}
                     {pricing.name}
                   </h1>
-                  <h4 className="text-lg text-center">
+                  <h4 className="font-custom text-lg text-center">
                     {' '}
                     {/* Aumento de tamaño de fuente */}
                     Puffs: {pricing.puffs}
                   </h4>
-                  <h5 className="text-base uppercase font-bold text-center">
+                  <h5 className="font-custom text-base uppercase  text-center">
                     {' '}
                     {/* Aumento de tamaño de fuente */}${pricing.precio}
                   </h5>

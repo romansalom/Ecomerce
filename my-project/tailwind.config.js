@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        custom: ['Madimi One'], // Reemplaza "Roboto" con el nombre de tu fuente
+      },
       colors: {
         // Define el secondary color como verde
         secondary: {
