@@ -11,6 +11,7 @@ import {
   DropdownItem,
   Button,
   Input,
+  ScrollShadow,
 } from '@nextui-org/react';
 
 function Cards() {
@@ -291,45 +292,47 @@ function Cards() {
       ) : filteredPricingData.length === 0 ? (
         <p>No hay productos</p>
       ) : (
-        <div className="container px-6 py-8 mx-auto">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-            {filteredPricingData.map((pricing, index) => (
-              <Card
-                shadow="lg"
-                key={index}
-                isPressable
-                onClick={() => openPreview(pricing)}
-                className="border-2 border-black-800 transition duration-300 ease-in-out transform hover:shadow-xl hover:scale-105"
-                style={{ height: 'auto', transform: 'scale(0.8)' }} // Reducción del 20%
-              >
-                <CardHeader className="pb-0 pt-2 px-4 flex-col items-center justify-center shadow-md bg-white-200">
-                  <h1 className="font-custom text-xl text-center">
-                    {' '}
-                    {/* Aumento de tamaño de fuente */}
-                    {pricing.name}
-                  </h1>
-                  <h4 className="font-custom text-lg text-center">
-                    {' '}
-                    {/* Aumento de tamaño de fuente */}
-                    Puffs: {pricing.puffs}
-                  </h4>
-                  <h5 className="font-custom text-base uppercase  text-center">
-                    {' '}
-                    {/* Aumento de tamaño de fuente */}${pricing.precio}
-                  </h5>
-                </CardHeader>
+        <ScrollShadow size={'1000'} className="w-full h-full">
+          <div className="container px-6 py-8 mx-auto">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+              {filteredPricingData.map((pricing, index) => (
+                <Card
+                  shadow="lg"
+                  key={index}
+                  isPressable
+                  onClick={() => openPreview(pricing)}
+                  className="border-2 border-black-800 transition duration-300 ease-in-out transform hover:shadow-xl hover:scale-105"
+                  style={{ height: 'auto', transform: 'scale(0.8)' }} // Reducción del 20%
+                >
+                  <CardHeader className="pb-0 pt-2 px-4 flex-col items-center justify-center shadow-md bg-white-200">
+                    <h1 className="font-custom text-xl text-center">
+                      {' '}
+                      {/* Aumento de tamaño de fuente */}
+                      {pricing.name}
+                    </h1>
+                    <h4 className="font-custom text-lg text-center">
+                      {' '}
+                      {/* Aumento de tamaño de fuente */}
+                      Puffs: {pricing.puffs}
+                    </h4>
+                    <h5 className="font-custom text-base uppercase  text-center">
+                      {' '}
+                      {/* Aumento de tamaño de fuente */}${pricing.precio}
+                    </h5>
+                  </CardHeader>
 
-                <CardBody className="overflow-visible py-2">
-                  <Image
-                    alt="Card background"
-                    className="object-cover rounded-xl w-full max-h-50" // Ajusta la altura máxima
-                    src={pricing.imageUrl}
-                  />
-                </CardBody>
-              </Card>
-            ))}
+                  <CardBody className="overflow-visible py-2">
+                    <Image
+                      alt="Card background"
+                      className="object-cover rounded-xl w-full max-h-50" // Ajusta la altura máxima
+                      src={pricing.imageUrl}
+                    />
+                  </CardBody>
+                </Card>
+              ))}
+            </div>
           </div>
-        </div>
+        </ScrollShadow>
       )}
       {selectedProduct && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
