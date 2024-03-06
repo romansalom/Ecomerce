@@ -42,33 +42,29 @@ const agregarProductoAlCarrito = async (req, res) => {
 
     if (existeProducto) {
       // Si el producto ya está en el carrito, actualizar la cantidad
-      let stockRestante = producto.stock - cantidad;
+      existeProducto.cantidad += cantidad; // Incrementar la cantidad existente en el carrito
       await existeProducto.save();
-      console.log(stockRestante);
-      console.log(cantidad);
     } else {
-      // Si el producto no está en el carrito, agregarlo
+      // Si el producto no está en el carrito, agregarlo con la cantidad enviada
       await CarritoProducto.create({
         CarritoId: carrito.id,
         ProductoId: productId,
-        stock: cantidad,
+        cantidad: cantidad, // Agregar la cantidad enviada
       });
     }
 
     // Restar la cantidad seleccionada del stock general del producto
-
     producto.stock -= cantidad;
     await producto.save();
 
     // Devolver el carrito actualizado con la información del producto
     const carritoActualizado = await verContenidoCarrito(userId);
 
-    // Devolver la información del producto con la cantidad seleccionada
+    // Devolver la información del producto con la cantidad total en el carrito
     const productosConCantidad = carritoActualizado.Productos.map(
       (producto) => ({
         ...producto.toJSON(),
-        cantidad: cantidad, // Agregar la cantidad seleccionada
-        stock: producto.stock, // Devolver el stock actualizado
+        cantidad: producto.CarritoProducto.cantidad, // Utilizar la cantidad en el carrito
       })
     );
 

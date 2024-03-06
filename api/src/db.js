@@ -35,7 +35,7 @@ let capsEntries = entries.map((entry) => [
 ]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { Carrito, Usuarios, Productos } = sequelize.models;
+const { Carrito, Usuarios, Productos, CarritoProducto } = sequelize.models;
 
 Usuarios.hasOne(Carrito); // Un usuario tiene un carrito
 Carrito.belongsTo(Usuarios); // Un carrito pertenece a un usuario
