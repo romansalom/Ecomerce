@@ -10,7 +10,7 @@ const verContenidoCarrito = async (userId) => {
         {
           model: Productos,
           through: 'CarritoProducto',
-          attributes: ['id', 'name', 'marca', 'puffs', 'precio'], // Especificar los atributos que deseas devolver
+          attributes: ['id', 'name', 'marca', 'puffs', 'precio', 'stock'], // Especificar los atributos que deseas devolver
         },
       ],
     });
@@ -25,7 +25,7 @@ const verContenidoCarrito = async (userId) => {
 const agregarProductoAlCarrito = async (req, res) => {
   const { userId, cantidad } = req.body;
   const { productId } = req.params; // Obtener el productId de los parámetros de la solicitud
-
+  const producto = await Productos.findByPk(productId);
   try {
     // Verificar si el usuario tiene un carrito existente
     let carrito = await Carrito.findOne({ where: { usuario_id: userId } });
@@ -42,8 +42,10 @@ const agregarProductoAlCarrito = async (req, res) => {
 
     if (existeProducto) {
       // Si el producto ya está en el carrito, actualizar la cantidad
-      existeProducto.stock += cantidad;
+      let stockRestante = producto.stock - cantidad;
       await existeProducto.save();
+      console.log(stockRestante);
+      console.log(cantidad);
     } else {
       // Si el producto no está en el carrito, agregarlo
       await CarritoProducto.create({
@@ -54,7 +56,7 @@ const agregarProductoAlCarrito = async (req, res) => {
     }
 
     // Restar la cantidad seleccionada del stock general del producto
-    const producto = await Productos.findByPk(productId);
+
     producto.stock -= cantidad;
     await producto.save();
 
