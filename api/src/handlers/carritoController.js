@@ -1,11 +1,30 @@
 const { Carrito, Productos, CarritoProducto } = require('../db');
+const jwt = require('jsonwebtoken');
 
+const verificarToken = (req, res, next) => {
+  const token = req.headers.authorization; // Así es como podrías enviar el token en el encabezado Authorization: Bearer <token>
+
+  if (!token) {
+    return res.status(401).json({ message: 'No se proporcionó un token' });
+  }
+
+  try {
+    const decoded = jwt.verify(token, 'miSecretoJWT');
+    req.userId = decoded.id; // Agregar userId al objeto req para que esté disponible en las rutas posteriores
+    next();
+  } catch (error) {
+    console.error('Error al verificar el token:', error);
+    return res.status(401).json({ message: 'Token inválido' });
+  }
+};
+
+// Obtener el contenido del carrito del usuario logeado
 // Obtener el contenido del carrito del usuario logeado
 const verContenidoCarrito = async (userId) => {
   try {
     // Buscar el carrito asociado al usuario
     const carrito = await Carrito.findOne({
-      where: { usuario_id: userId },
+      where: { usuario_id: userId }, // Corregir aquí
       include: [
         {
           model: Productos,
@@ -23,16 +42,20 @@ const verContenidoCarrito = async (userId) => {
 };
 
 const agregarProductoAlCarrito = async (req, res) => {
-  const { userId, cantidad } = req.body;
+  const { cantidad } = req.body;
   const { productId } = req.params; // Obtener el productId de los parámetros de la solicitud
   const producto = await Productos.findByPk(productId);
+
   try {
+    const userId = req.userId; // Obtener userId del middleware verificarToken
+
+    // Verificar si el usuario tiene un carrito existente
     // Verificar si el usuario tiene un carrito existente
     let carrito = await Carrito.findOne({ where: { usuario_id: userId } });
 
     // Si no hay un carrito existente, crear uno nuevo para el usuario
     if (!carrito) {
-      carrito = await Carrito.create({ usuario_id: userId });
+      carrito = await Carrito.create({ userId: userId });
     }
 
     // Verificar si el producto ya está en el carrito del usuario
@@ -75,4 +98,8 @@ const agregarProductoAlCarrito = async (req, res) => {
   }
 };
 
-module.exports = { verContenidoCarrito, agregarProductoAlCarrito };
+module.exports = {
+  verContenidoCarrito,
+  agregarProductoAlCarrito,
+  verificarToken,
+};

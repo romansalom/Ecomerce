@@ -97,11 +97,12 @@ const iniciarSesion = async (req, res) => {
     // Generar y enviar un token JWT y el ID del usuario si la autenticación es exitosa
     const token = jwt.sign({ id: usuario.id }, 'miSecretoJWT', {});
 
+    console.log('Token JWT:', token); // Agrega este console.log para imprimir el token
+
     // Obtener el contenido del carrito y enviarlo en la respuesta
     const carrito = await verContenidoCarrito(usuario.id);
 
     res.json({ token, userId: usuario.id, carrito });
-    console.log(carrito.dataValues.Productos); // No necesitas imprimirlo aquí
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Error al iniciar sesión' });
