@@ -31,6 +31,7 @@ function Cards() {
   const [filteredPuffs, setFilteredPuffs] = useState([]);
   const [sortBy, setSortBy] = useState('name'); // Estado para el criterio de ordenamiento
   const [sortDirection, setSortDirection] = useState('asc'); // Estado para la dirección de ordenamiento
+  const [cantidad, setCantidad] = useState(1);
 
   useEffect(() => {
     axios
@@ -140,6 +141,43 @@ function Cards() {
     } else {
       setSortBy(criteria);
       setSortDirection('asc');
+    }
+  };
+  useEffect(() => {
+    const interceptor = axios.interceptors.request.use(
+      (config) => {
+        const token = localStorage.getItem('token');
+        if (token) {
+          config.headers.Authorization = token;
+        }
+        return config;
+      },
+      (error) => {
+        return Promise.reject(error);
+      }
+    );
+
+    return () => {
+      axios.interceptors.request.eject(interceptor);
+    };
+  }, []);
+
+  const agregarProductoAlCarrito = async () => {
+    try {
+      const productId = selectedProduct.id;
+      const response = await axios.post(
+        `http://localhost:5432/api/carritos/agregar-producto/${productId}/${cantidad}`
+      );
+
+      if (response.status >= 200 && response.status < 300) {
+        const carritoActualizado = response.data;
+        console.log(carritoActualizado);
+      } else {
+        throw new Error('Error al agregar producto al carrito');
+      }
+    } catch (error) {
+      console.error('Error al agregar producto al carrito:', error);
+      throw error;
     }
   };
 
@@ -369,6 +407,15 @@ function Cards() {
                   {selectedProduct.marca}
                 </li>
               </ul>
+              <input
+                type="number"
+                min="1"
+                value={cantidad}
+                onChange={(e) => setCantidad(e.target.value)}
+              />
+              <button onClick={agregarProductoAlCarrito}>
+                Agregar al carrito
+              </button>
             </div>
           </div>
         </div>
