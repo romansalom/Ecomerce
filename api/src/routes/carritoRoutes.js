@@ -8,10 +8,11 @@ const {
 const router = Router();
 
 // Ruta para obtener el contenido del carrito
-router.get('/', verContenidoCarrito);
+router.get('/', verificarToken, verContenidoCarrito); // Agrega el middleware verificarToken aquí
 
+// Ruta para agregar un producto al carrito
 router.post(
-  '/agregar-producto/:productId',
+  '/agregar-producto/:productId/:cantidad', // Agrega el parámetro de cantidad a la ruta
   verificarToken,
   agregarProductoAlCarrito
 );
