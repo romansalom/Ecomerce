@@ -56,3 +56,9 @@ body {
   border-radius: 14px !important;
   /* Ajusta el valor de acuerdo a tu preferencia */
 }
+
+/* Estilos personalizados para las flechas de incremento y decremento */
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}

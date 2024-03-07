@@ -32,6 +32,7 @@ function Cards() {
   const [sortBy, setSortBy] = useState('name'); // Estado para el criterio de ordenamiento
   const [sortDirection, setSortDirection] = useState('asc'); // Estado para la dirección de ordenamiento
   const [cantidad, setCantidad] = useState(1);
+  const [mensaje, setMensaje] = useState('');
 
   useEffect(() => {
     axios
@@ -172,6 +173,10 @@ function Cards() {
       if (response.status >= 200 && response.status < 300) {
         const carritoActualizado = response.data;
         console.log(carritoActualizado);
+        setMensaje('¡Producto agregado al carrito!');
+        setTimeout(() => {
+          setMensaje('');
+        }, 1500); // Después de 3 segundos, limpiar el mensaje
       } else {
         throw new Error('Error al agregar producto al carrito');
       }
@@ -387,23 +392,23 @@ function Cards() {
                 alt={selectedProduct.name}
                 className="w-48 h-48 mx-auto mb-4 rounded-full"
               />
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
+              <h2 className="text-xl font-custom text-gray-800 mb-2">
                 {selectedProduct.name}
               </h2>
-              <p className="text-lg text-gray-600 mb-4">
+              <p className=" font-custom text-lg text-gray-600 mb-4">
                 ${selectedProduct.precio}
               </p>
-              <ul className="text-sm text-gray-500 space-y-2">
+              <ul className=" font-custom text-sm text-gray-500 space-y-2">
                 <li>
-                  <span className="font-semibold">Sabor:</span>{' '}
+                  <span className="font-custom">Sabor:</span>{' '}
                   {selectedProduct.flavor}
                 </li>
                 <li>
-                  <span className="font-semibold">Puffs:</span>{' '}
+                  <span className="font-custom">Puffs:</span>{' '}
                   {selectedProduct.puffs}
                 </li>
                 <li>
-                  <span className="font-semibold">Marca:</span>{' '}
+                  <span className="font-custom">Marca:</span>{' '}
                   {selectedProduct.marca}
                 </li>
               </ul>
@@ -412,10 +417,20 @@ function Cards() {
                 min="1"
                 value={cantidad}
                 onChange={(e) => setCantidad(e.target.value)}
+                className="block mx-auto w-16 my-2 text-center placeholder-center appearance-none" // Clases para centrar horizontalmente el input, espacios en la parte superior e inferior y reducir su ancho
               />
-              <button onClick={agregarProductoAlCarrito}>
+
+              <Button
+                onClick={agregarProductoAlCarrito}
+                className="bg-gradient-to-r from-green-500 to-indigo-600 hover:from-indigo-500 hover:to-yellow-600"
+              >
                 Agregar al carrito
-              </button>
+              </Button>
+              {mensaje && (
+                <div className="fixed bottom-0 right-0 m-4 bg-green-500 text-white px-4 py-2 rounded">
+                  {mensaje}
+                </div>
+              )}
             </div>
           </div>
         </div>
