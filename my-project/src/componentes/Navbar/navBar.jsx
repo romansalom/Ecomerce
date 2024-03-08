@@ -153,30 +153,39 @@ function Navbars() {
                             carrito.Productos.map((product, index) => (
                               <DropdownItem key={index}>
                                 <div
+                                  className="container2"
                                   style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                   }}
                                 >
-                                  <div style={{ marginRight: '1rem' }}>
+                                  <div
+                                    className="img1"
+                                    style={{ marginRight: '1rem' }}
+                                  >
                                     <Image
                                       src={product.imageUrl}
                                       alt={product.name}
-                                      width="50px"
                                       height="50px"
+                                      width="50px"
                                       className="rounded-full border" // Agregar la clase "border" para darle bordes
                                     />
                                   </div>
                                   <div>
-                                    <span style={{ marginRight: '1rem' }}>
+                                    <span
+                                      className="span1"
+                                      style={{ marginRight: '1rem' }}
+                                    >
                                       {product.name}
                                     </span>
-                                    <span style={{ marginRight: '1rem' }}>
-                                      Cantidad:{' '}
-                                      {product.CarritoProducto.cantidad}
+                                    <span
+                                      className="span1"
+                                      style={{ marginRight: '1rem' }}
+                                    >
+                                      {product.CarritoProducto.cantidad}U
                                     </span>
-                                    <span>
-                                      Precio unitario: {product.precio}
+                                    <span className="span1">
+                                      ${product.precio}
                                     </span>
                                   </div>
                                 </div>

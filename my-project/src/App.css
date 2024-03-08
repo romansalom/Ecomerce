@@ -81,3 +81,29 @@ input[type="number"]::-webkit-outer-spin-button {
   cursor: pointer;
   /* Cambia el cursor a un puntero */
 }
+
+/* Estilos para el menú desplegable */
+
+
+
+
+/* Estilos para la imagen de cada producto */
+
+/* Estilos para el texto de cada producto */
+.span1,
+.spn1 {
+  /* Cambiar la fuente */
+  font-family: Arial, sans-serif;
+  /* Cambiar el tamaño */
+  font-size: 12px;
+  /* Cambiar el grosor */
+  font-weight: bold;
+  /* Cambiar el color */
+  color: #333;
+  /* Limitar el ancho a 10 caracteres */
+  width: 5ch;
+  /* Ocultar el texto que se desborde */
+  overflow: hidden;
+  /* Mostrar puntos suspensivos */
+  text-overflow: ellipsis;
+}
