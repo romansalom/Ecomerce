@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import InicioSesionModal from '../../pages/home/inisiosession';
 import RegistroModal from '../../pages/home/register';
+import axios from 'axios';
 import {
   Dropdown,
   DropdownTrigger,
@@ -15,8 +16,8 @@ function Navbars() {
   const [open, setOpen] = useState(true);
   const [inicioSesionModalIsOpen, setInicioSesionModalIsOpen] = useState(false);
   const [registroModalIsOpen, setRegistroModalIsOpen] = useState(false);
-  const [usuarioAutenticado, setUsuarioAutenticado] = useState(false); // Agrega este estado
-
+  const [usuarioAutenticado, setUsuarioAutenticado] = useState(false);
+  const [carrito, setCarrito] = useState(null); // Agrega este estado
   useEffect(() => {
     // Aquí debes poner la lógica para verificar si el usuario está autenticado.
     // Por ejemplo, puedes comprobar si tienes un token de autenticación en el almacenamiento local.
@@ -26,11 +27,27 @@ function Navbars() {
 
     if (token && userId) {
       setUsuarioAutenticado(true);
+      obtenerContenidoCarrito(userId);
     } else {
       setUsuarioAutenticado(false);
     }
   }, []);
-
+  const obtenerContenidoCarrito = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      const response = await axios.get(
+        `http://localhost:5432/api/carritos/carrito/`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Asegúrate de reemplazar 'token' con el valor real del token
+          },
+        }
+      );
+      setCarrito(response.data); // Almacenar el contenido del carrito en el estado
+    } catch (error) {
+      console.error('Error al obtener el contenido del carrito:', error);
+    }
+  };
   const closeInicioSesionModal = () => {
     setInicioSesionModalIsOpen(false);
   };
@@ -42,29 +59,6 @@ function Navbars() {
   const closeRegistroModal = () => {
     setRegistroModalIsOpen(false);
   };
-  const products = [
-    {
-      name: 'Producto 1',
-      quantity: 5,
-      price: 10,
-      image:
-        'https://fumvape.com/wp-content/uploads/2023/04/Double_Apple_Infinty_600x.webp',
-    },
-    {
-      name: 'Producto 2',
-      quantity: 3,
-      price: 15,
-      image:
-        'https://fumvape.com/wp-content/uploads/2023/04/Double_Apple_Infinty_600x.webp',
-    },
-    {
-      name: 'Producto 3',
-      quantity: 8,
-      price: 20,
-      image:
-        'https://fumvape.com/wp-content/uploads/2023/04/Blueberry_CC_Infinty_600x.webp',
-    },
-  ];
 
   return (
     <div className="min-s-screen">
@@ -128,12 +122,14 @@ function Navbars() {
                         <DropdownTrigger>
                           <NavbarContent>
                             <NavbarItem>
+                              {' '}
                               <svg
                                 className="w-7 h-7 text-green-800 dark:text-white"
                                 aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg"
                                 fill="none"
                                 viewBox="0 0 24 24"
+                                onClick={obtenerContenidoCarrito}
                               >
                                 <path
                                   stroke="currentColor"
@@ -152,35 +148,40 @@ function Navbars() {
                           className="dropdown-menu-custom"
                           style={{ left: '-10px' }} // Ajustar la posición a la izquierda
                         >
-                          {products.map((product, index) => (
-                            <DropdownItem key={index}>
-                              <div
-                                style={{
-                                  display: 'flex',
-                                  alignItems: 'center',
-                                }}
-                              >
-                                <div style={{ marginRight: '1rem' }}>
-                                  <Image
-                                    src={product.image}
-                                    alt={product.name}
-                                    width="50px"
-                                    height="50px"
-                                    className="rounded-full border" // Agregar la clase "border" para darle bordes
-                                  />
+                          {carrito &&
+                            carrito.Productos &&
+                            carrito.Productos.map((product, index) => (
+                              <DropdownItem key={index}>
+                                <div
+                                  style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                  }}
+                                >
+                                  <div style={{ marginRight: '1rem' }}>
+                                    <Image
+                                      src={product.imageUrl}
+                                      alt={product.name}
+                                      width="50px"
+                                      height="50px"
+                                      className="rounded-full border" // Agregar la clase "border" para darle bordes
+                                    />
+                                  </div>
+                                  <div>
+                                    <span style={{ marginRight: '1rem' }}>
+                                      {product.name}
+                                    </span>
+                                    <span style={{ marginRight: '1rem' }}>
+                                      Cantidad:{' '}
+                                      {product.CarritoProducto.cantidad}
+                                    </span>
+                                    <span>
+                                      Precio unitario: {product.precio}
+                                    </span>
+                                  </div>
                                 </div>
-                                <div>
-                                  <span style={{ marginRight: '1rem' }}>
-                                    {product.name}
-                                  </span>
-                                  <span style={{ marginRight: '1rem' }}>
-                                    Cantidad: {product.quantity}
-                                  </span>
-                                  <span>Precio unitario: {product.price}</span>
-                                </div>
-                              </div>
-                            </DropdownItem>
-                          ))}
+                              </DropdownItem>
+                            ))}
                         </DropdownMenu>
                       </Dropdown>
                     </div>

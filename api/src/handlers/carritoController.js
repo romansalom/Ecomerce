@@ -26,7 +26,15 @@ const verContenidoCarrito = async (userId) => {
         {
           model: Productos,
           through: 'CarritoProducto',
-          attributes: ['id', 'name', 'marca', 'puffs', 'precio', 'stock'],
+          attributes: [
+            'id',
+            'name',
+            'marca',
+            'puffs',
+            'precio',
+            'stock',
+            'imageUrl',
+          ],
         },
       ],
     });
