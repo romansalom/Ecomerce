@@ -62,3 +62,22 @@ input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   opacity: 1;
 }
+
+.dropdown-menu-custom .rounded-full {
+  border-radius: 50%;
+  /* Establecer bordes circulares */
+  border: 3px solid #1774dd;
+  /* Opcional: Agregar un borde con el color deseado */
+}
+
+.nav-item {
+  font-size: 18px;
+  /* Ajusta el tamaño de la fuente según tus preferencias */
+}
+
+.nav-item:hover {
+  color: #4CAF50;
+  /* Cambia el color al hacer hover */
+  cursor: pointer;
+  /* Cambia el cursor a un puntero */
+}
