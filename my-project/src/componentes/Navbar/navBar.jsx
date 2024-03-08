@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
 import InicioSesionModal from '../../pages/home/inisiosession';
 import RegistroModal from '../../pages/home/register';
-
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Image,
+} from '@nextui-org/react';
 function Navbar() {
   const [open, setOpen] = useState(true);
   const [inicioSesionModalIsOpen, setInicioSesionModalIsOpen] = useState(false);
@@ -33,7 +39,29 @@ function Navbar() {
   const closeRegistroModal = () => {
     setRegistroModalIsOpen(false);
   };
-
+  const products = [
+    {
+      name: 'Producto 1',
+      quantity: 5,
+      price: 10,
+      image:
+        'https://fumvape.com/wp-content/uploads/2023/04/Double_Apple_Infinty_600x.webp',
+    },
+    {
+      name: 'Producto 2',
+      quantity: 3,
+      price: 15,
+      image:
+        'https://fumvape.com/wp-content/uploads/2023/04/Double_Apple_Infinty_600x.webp',
+    },
+    {
+      name: 'Producto 3',
+      quantity: 8,
+      price: 20,
+      image:
+        'https://fumvape.com/wp-content/uploads/2023/04/Blueberry_CC_Infinty_600x.webp',
+    },
+  ];
   return (
     <div className="min-s-screen">
       <div className="antialiased bg-gray-100 dark-mode:bg-gray-900">
@@ -91,26 +119,66 @@ function Navbar() {
                     >
                       Perfil
                     </a>
-                    <a
-                      className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-green-500"
-                      href="/carrito"
-                    >
-                      <svg
-                        className="w-6 h-6 text-gray-800 dark:text-white"
-                        aria-hidden="true"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          stroke="currentColor"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.3L19 7H7.3"
-                        />
-                      </svg>
-                    </a>
+                    <div>
+                      {' '}
+                      <Dropdown>
+                        <DropdownTrigger>
+                          <div>
+                            {' '}
+                            <svg
+                              className="w-6 h-6 text-gray-800 dark:text-white"
+                              aria-hidden="true"
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                            >
+                              <path
+                                stroke="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M5 4h1.5L9 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm-8.5-3h9.3L19 7H7.3"
+                              />
+                            </svg>
+                          </div>
+                        </DropdownTrigger>
+                        <DropdownMenu
+                          variant="faded"
+                          aria-label="Dropdown menu with products"
+                        >
+                          {products.map((product, index) => (
+                            <DropdownItem key={index}>
+                              <div
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                }}
+                              >
+                                <div style={{ marginRight: '1rem' }}>
+                                  <Image
+                                    src={product.image}
+                                    alt={product.name}
+                                    width="50px"
+                                    height="50px"
+                                    className="rounded-full"
+                                  />
+                                </div>
+                                <div>
+                                  <span style={{ marginRight: '1rem' }}>
+                                    {product.name}
+                                  </span>
+                                  <span style={{ marginRight: '1rem' }}>
+                                    Cantidad: {product.quantity}
+                                  </span>
+                                  <span>Precio unitario: {product.price}</span>
+                                </div>
+                              </div>
+                            </DropdownItem>
+                          ))}
+                        </DropdownMenu>
+                      </Dropdown>
+                    </div>
+
                     <a
                       className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-red-500 cursor-pointer"
                       onClick={() => {
