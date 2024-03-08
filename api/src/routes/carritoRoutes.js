@@ -8,7 +8,18 @@ const {
 const router = Router();
 
 // Ruta para obtener el contenido del carrito
-router.get('/', verificarToken, verContenidoCarrito); // Agrega el middleware verificarToken aquí
+router.get('/carrito/', verificarToken, async (req, res) => {
+  try {
+    const userId = req.userId;
+    const carrito = await verContenidoCarrito(userId);
+    res.json(carrito);
+  } catch (error) {
+    console.error('Error al obtener el contenido del carrito:', error);
+    res
+      .status(500)
+      .json({ error: 'Error al obtener el contenido del carrito' });
+  }
+}); // Agrega el middleware verificarToken aquí
 
 // Ruta para agregar un producto al carrito
 router.post(

@@ -128,7 +128,6 @@ function Navbars() {
                         <DropdownTrigger>
                           <NavbarContent>
                             <NavbarItem>
-                              {' '}
                               <svg
                                 className="w-7 h-7 text-green-800 dark:text-white"
                                 aria-hidden="true"
