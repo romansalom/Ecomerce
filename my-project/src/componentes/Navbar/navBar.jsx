@@ -18,6 +18,9 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
 } from '@nextui-org/react';
 function Navbars() {
   const [open, setOpen] = useState(true);
@@ -214,7 +217,7 @@ function Navbars() {
                         <DropdownItem>
                           <div className="flex justify-center px-4 py-2 bg-gray-100 bg-blue">
                             <span onClick={onOpen} className="font-custom">
-                              Ver carrito completo
+                              Desglose
                             </span>
                           </div>
                         </DropdownItem>
@@ -237,7 +240,6 @@ function Navbars() {
                                 <table className="w-full">
                                   <thead>
                                     <tr className="border-b border-gray-200">
-                                      <th className="px-4 py-2 text-left"></th>
                                       <th className="px-4 py-2 text-left">
                                         Nombre
                                       </th>
@@ -263,16 +265,22 @@ function Navbars() {
                                             key={index}
                                             className="border-b border-gray-200"
                                           >
-                                            <Image
-                                              src={product.imageUrl}
-                                              alt={product.name}
-                                              height="50px"
-                                              width="50px"
-                                              className="rounded-full border"
-                                            />{' '}
-                                            <td className="px-4 py-2 font-custom span2 mb-1">
-                                              {product.name}{' '}
-                                            </td>
+                                            {' '}
+                                            <Popover placement="right">
+                                              <PopoverTrigger>
+                                                <div className=" font-custom span2    mb-1 bg-color-blue">
+                                                  {product.name}{' '}
+                                                </div>
+                                              </PopoverTrigger>
+                                              <PopoverContent>
+                                                <Image
+                                                  src={product.imageUrl}
+                                                  alt={product.name}
+                                                  height="80px"
+                                                  width="80px"
+                                                />
+                                              </PopoverContent>
+                                            </Popover>
                                             <td className="px-4 py-2 font-custom span2 mb-1">
                                               {product.puffs}
                                             </td>
@@ -283,9 +291,12 @@ function Navbars() {
                                               ${product.precio}
                                             </td>
                                             <td className="px-4 py-2 font-custom span2 mb-1">
-                                              {' '}
-                                              {product.CarritoProducto
-                                                .cantidad * product.precio}
+                                              {`${(
+                                                product.CarritoProducto
+                                                  .cantidad * product.precio
+                                              )
+                                                .toString()
+                                                .slice(0, 7)}`}
                                             </td>
                                           </tr>
                                         )
