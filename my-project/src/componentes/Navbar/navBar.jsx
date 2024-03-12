@@ -216,6 +216,11 @@ function Navbars() {
                             )}
                           </div>
                         </DropdownItem>
+                        <DropdownItem>
+                          <span className="flex justify-center px-4 py-2 text-blue-500 cursor-pointer">
+                            Ver Carrito
+                          </span>
+                        </DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
                     <NavbarContent>
