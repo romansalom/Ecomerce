@@ -177,6 +177,7 @@ function Cards() {
         setTimeout(() => {
           setMensaje('');
         }, 1500); // Después de 3 segundos, limpiar el mensaje
+        setCantidad(1); // Restablecer la cantidad a 1 después de agregar el producto al carrito
       } else {
         throw new Error('Error al agregar producto al carrito');
       }
@@ -412,13 +413,17 @@ function Cards() {
                   {selectedProduct.marca}
                 </li>
               </ul>
-              <input
-                type="number"
-                min="1"
+              <select
                 value={cantidad}
                 onChange={(e) => setCantidad(e.target.value)}
-                className="block mx-auto w-16 my-2 text-center placeholder-center appearance-none" // Clases para centrar horizontalmente el input, espacios en la parte superior e inferior y reducir su ancho
-              />
+                className="block mx-auto w-16 my-2 text-center placeholder-center" // Clases para centrar horizontalmente el input, espacios en la parte superior e inferior y reducir su ancho
+              >
+                {Array.from({ length: 50 }, (_, i) => i + 1).map((value) => (
+                  <option key={value} value={value}>
+                    {value}
+                  </option>
+                ))}
+              </select>
 
               <Button
                 onClick={agregarProductoAlCarrito}
