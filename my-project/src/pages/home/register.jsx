@@ -25,6 +25,7 @@ export default function RegistroModal({ isOpen, onRequestClose }) {
     password: null,
     general: null,
   });
+  const [successMessage, setSuccessMessage] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -66,8 +67,11 @@ export default function RegistroModal({ isOpen, onRequestClose }) {
       );
 
       if (response.status === 201) {
-        onRequestClose();
         setUsuario({ nombre: '', apellido: '', email: '', password: '' });
+        setSuccessMessage('Usuario creado con éxito');
+        setTimeout(() => {
+          setSuccessMessage('');
+        }, 5000);
       }
     } catch (error) {
       if (error.response) {
@@ -104,6 +108,11 @@ export default function RegistroModal({ isOpen, onRequestClose }) {
       className="w-4/5 md:w-full"
     >
       <ModalContent>
+        {successMessage && (
+          <div className="text-center p-2 bg-green-100 text-green-800 rounded">
+            {successMessage}
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <ModalHeader className="flex flex-col gap-1">Registro</ModalHeader>
           <ModalBody>
