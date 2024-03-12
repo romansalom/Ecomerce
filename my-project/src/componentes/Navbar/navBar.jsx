@@ -326,7 +326,7 @@ function Navbars() {
                                   Close
                                 </Button>
                                 <Button color="primary" onPress={onClose}>
-                                  Action
+                                  Pagar
                                 </Button>
                               </ModalFooter>
                             </>
