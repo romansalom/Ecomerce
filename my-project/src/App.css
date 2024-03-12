@@ -101,7 +101,25 @@ input[type="number"]::-webkit-outer-spin-button {
   /* Cambiar el color */
   color: #333;
   /* Limitar el ancho a 10 caracteres */
-  width: 5ch;
+  width: 15ch;
+  /* Ocultar el texto que se desborde */
+  overflow: hidden;
+  /* Mostrar puntos suspensivos */
+  text-overflow: ellipsis;
+}
+
+.span2,
+.spn2 {
+  /* Cambiar la fuente */
+  font-family: Arial, sans-serif;
+  /* Cambiar el tamaño */
+  font-size: 12px;
+  /* Cambiar el grosor */
+  font-weight: bold;
+  /* Cambiar el color */
+  color: #333;
+  /* Limitar el ancho a 10 caracteres */
+  width: 10ch;
   /* Ocultar el texto que se desborde */
   overflow: hidden;
   /* Mostrar puntos suspensivos */
