@@ -176,7 +176,7 @@ function Cards() {
         setMensaje('¡Producto agregado al carrito!');
         setTimeout(() => {
           setMensaje('');
-        }, 1500); // Después de 3 segundos, limpiar el mensaje
+        }, 2000); // Después de 3 segundos, limpiar el mensaje
         setCantidad(1); // Restablecer la cantidad a 1 después de agregar el producto al carrito
       } else {
         throw new Error('Error al agregar producto al carrito');
@@ -412,6 +412,13 @@ function Cards() {
                   <span className="font-custom">Marca:</span>{' '}
                   {selectedProduct.marca}
                 </li>
+                <li>
+                  {mensaje && (
+                    <div className="bg-green-500 text-white px-4 py-2 rounded">
+                      {mensaje}
+                    </div>
+                  )}
+                </li>
               </ul>
               <select
                 value={cantidad}
@@ -427,15 +434,11 @@ function Cards() {
 
               <Button
                 onClick={agregarProductoAlCarrito}
-                className="bg-gradient-to-r from-green-500 to-indigo-600 hover:from-indigo-500 hover:to-yellow-600"
+                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-indigo-500 hover:to-blue-600"
+                variant="shadow"
               >
                 Agregar al carrito
               </Button>
-              {mensaje && (
-                <div className="fixed bottom-0 right-0 m-4 bg-green-500 text-white px-4 py-2 rounded">
-                  {mensaje}
-                </div>
-              )}
             </div>
           </div>
         </div>
