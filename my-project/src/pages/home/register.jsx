@@ -55,7 +55,6 @@ export default function RegistroModal({ isOpen, onRequestClose }) {
     if (Object.keys(newErrors).length > 0) {
       setErrors({
         ...newErrors,
-        general: 'Por favor, corrija los errores en el formulario.',
       });
       return;
     }
