@@ -201,11 +201,15 @@ function Cards() {
               </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions">
-              <DropdownItem onClick={() => setSelectedMarca('')}>
+              <DropdownItem
+                className="font-custom"
+                onClick={() => setSelectedMarca('')}
+              >
                 Todas las Marcas
               </DropdownItem>
               {uniqueMarcas.map((marca, index) => (
                 <DropdownItem
+                  className="font-custom"
                   key={index}
                   onClick={() => setSelectedMarca(marca)}
                 >
@@ -224,11 +228,15 @@ function Cards() {
               </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions">
-              <DropdownItem onClick={() => setSelectedModelo('')}>
+              <DropdownItem
+                className="font-custom"
+                onClick={() => setSelectedModelo('')}
+              >
                 Todos los Modelos
               </DropdownItem>
               {filteredModelos.map((modelo, index) => (
                 <DropdownItem
+                  className="font-custom"
                   key={index}
                   onClick={() => setSelectedModelo(modelo)}
                 >
@@ -247,11 +255,18 @@ function Cards() {
               </Button>
             </DropdownTrigger>
             <DropdownMenu aria-label="Static Actions">
-              <DropdownItem onClick={() => setPuffsFilter('')}>
+              <DropdownItem
+                className="font-custom"
+                onClick={() => setPuffsFilter('')}
+              >
                 Todos los Puffs
               </DropdownItem>
               {filteredPuffs.map((puff, index) => (
-                <DropdownItem key={index} onClick={() => setPuffsFilter(puff)}>
+                <DropdownItem
+                  className="font-custom"
+                  key={index}
+                  onClick={() => setPuffsFilter(puff)}
+                >
                   {puff}
                 </DropdownItem>
               ))}
@@ -272,7 +287,7 @@ function Cards() {
                   ? 'Ordenar por Precio'
                   : 'Todos'}
                 {sortBy && (
-                  <span className="ml-1">
+                  <span className=" ml-1">
                     {sortBy === 'name'
                       ? sortDirection === 'asc'
                         ? '▲'
@@ -286,7 +301,10 @@ function Cards() {
             </DropdownTrigger>
 
             <DropdownMenu>
-              <DropdownItem onClick={() => handleSortBy('')}>
+              <DropdownItem
+                className="font-custom"
+                onClick={() => handleSortBy('')}
+              >
                 Todos
                 {!sortBy && (
                   <span className="ml-1">
@@ -295,7 +313,10 @@ function Cards() {
                   </span>
                 )}
               </DropdownItem>
-              <DropdownItem onClick={() => handleSortBy('name')}>
+              <DropdownItem
+                className="font-custom"
+                onClick={() => handleSortBy('name')}
+              >
                 Nombre{' '}
                 {sortBy === 'name' && (
                   <span className="ml-1">
@@ -303,7 +324,10 @@ function Cards() {
                   </span>
                 )}
               </DropdownItem>
-              <DropdownItem onClick={() => handleSortBy('precio')}>
+              <DropdownItem
+                className="font-custom"
+                onClick={() => handleSortBy('precio')}
+              >
                 Precio{' '}
                 {sortBy === 'precio' && (
                   <span className="ml-1">
