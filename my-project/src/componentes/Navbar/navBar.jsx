@@ -213,23 +213,9 @@ function Navbars() {
                           ))}
                         <DropdownItem>
                           <div className="flex justify-center px-4 py-2 bg-gray-100 bg-blue">
-                            <span className="font-custom">
-                              Total del carrito:
+                            <span onClick={onOpen} className="font-custom">
+                              Ver carrito completo
                             </span>
-                            {carrito && carrito.Productos ? (
-                              <span className="font-custom">
-                                ${totalCarrito.toFixed(2)}
-                              </span>
-                            ) : (
-                              <span className="font-custom">$0.00</span>
-                            )}
-                          </div>
-                        </DropdownItem>
-                        <DropdownItem>
-                          <div className="flex flex-col gap-2">
-                            <Button onClick={onOpen} className="max-w-fit">
-                              Ver carrito{' '}
-                            </Button>
                           </div>
                         </DropdownItem>
                       </DropdownMenu>
@@ -245,63 +231,81 @@ function Navbars() {
                           {(onClose) => (
                             <>
                               <ModalHeader className="flex flex-col gap-1">
-                                Modal Title
+                                Carrito de compras
                               </ModalHeader>
                               <ModalBody>
-                                {carrito &&
-                                  carrito.Productos &&
-                                  carrito.Productos.map((product, index) => (
-                                    <div key={index}>
-                                      <div className="flex items-center">
-                                        <div className="img1 mr-4">
-                                          <Image
-                                            src={product.imageUrl}
-                                            alt={product.name}
-                                            height="50px"
-                                            width="50px"
-                                            className="rounded-full border"
-                                          />
-                                        </div>
-                                        <div className="flex flex-col flex-grow">
-                                          <span className="font-custom span1 mb-1">
-                                            {product.name}
-                                          </span>
-                                          <span className="font-custom span2 mb-1">
-                                            {product.puffs} Puffs
-                                          </span>
-                                          <span className="font-custom span2 mb-1">
-                                            {product.CarritoProducto.cantidad}U
-                                          </span>
-                                          <span className="font-custom span2 mb-1">
-                                            ${product.precio}
-                                          </span>
-                                        </div>
-                                        <div className="ml-8">
-                                          <a>
-                                            <svg
-                                              className="w-5 h-5 text-gray-800 dark:text-white"
-                                              aria-hidden="true"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              fill="blue"
-                                              viewBox="0 0 24 24"
-                                            >
-                                              <path
-                                                fillRule="evenodd"
-                                                d="M11.3 6.2H5a2 2 0 0 0-2 2V19a2 2 0 0 0 2 2h11c1.1 0 2-1 2-2.1V11l-4 4.2c-.3.3-.7.6-1.2.7l-2.7.6c-1.7.3-3.3-1.3-3-3.1l.6-2.9c.1-.5.4-1 .7-1.3l3-3.1Z"
-                                                clipRule="evenodd"
-                                              />
-                                              <path
-                                                fillRule="evenodd"
-                                                d="M19.8 4.3a2.1 2.1 0 0 0-1-1.1 2 2 0 0 0-2.2.4l-.6.6 2.9 3 .5-.6a2.1 2.1 0 0 0 .6-1.5c0-.2 0-.5-.2-.8Zm-2.4 4.4-2.8-3-4.8 5-.1.3-.7 3c0 .3.3.7.6.6l2.7-.6.3-.1 4.7-5Z"
-                                                clipRule="evenodd"
-                                              />
-                                            </svg>
-                                          </a>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  ))}
+                                <table className="w-full">
+                                  <thead>
+                                    <tr className="border-b border-gray-200">
+                                      <th className="px-4 py-2 text-left"></th>
+                                      <th className="px-4 py-2 text-left">
+                                        Nombre
+                                      </th>
+                                      <th className="px-4 py-2 text-left">
+                                        Puffs
+                                      </th>
+                                      <th className="px-4 py-2 text-left">U</th>
+                                      <th className="px-4 py-2 text-left">
+                                        U/$
+                                      </th>
+                                      <th className="px-4 py-2 text-left">
+                                        Total
+                                      </th>
+                                      {/* Espacio para el botón de eliminación */}
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    {carrito &&
+                                      carrito.Productos &&
+                                      carrito.Productos.map(
+                                        (product, index) => (
+                                          <tr
+                                            key={index}
+                                            className="border-b border-gray-200"
+                                          >
+                                            <Image
+                                              src={product.imageUrl}
+                                              alt={product.name}
+                                              height="50px"
+                                              width="50px"
+                                              className="rounded-full border"
+                                            />{' '}
+                                            <td className="px-4 py-2 font-custom span2 mb-1">
+                                              {product.name}{' '}
+                                            </td>
+                                            <td className="px-4 py-2 font-custom span2 mb-1">
+                                              {product.puffs}
+                                            </td>
+                                            <td className="px-4 py-2 font-custom span2 mb-1">
+                                              {product.CarritoProducto.cantidad}{' '}
+                                            </td>
+                                            <td className="px-4 py-2 font-custom span2 mb-1">
+                                              ${product.precio}
+                                            </td>
+                                            <td className="px-4 py-2 font-custom span2 mb-1">
+                                              {' '}
+                                              {product.CarritoProducto
+                                                .cantidad * product.precio}
+                                            </td>
+                                          </tr>
+                                        )
+                                      )}
+                                  </tbody>
+                                </table>
+                                <div className="flex justify-center px-4 py-2 bg-gray-100 bg-blue">
+                                  <span className="font-custom">
+                                    Total del carrito:
+                                  </span>
+                                  {carrito && carrito.Productos ? (
+                                    <span className="font-custom">
+                                      ${totalCarrito.toFixed(2)}
+                                    </span>
+                                  ) : (
+                                    <span className="font-custom">$0.00</span>
+                                  )}
+                                </div>
                               </ModalBody>
+
                               <ModalFooter>
                                 <Button
                                   color="danger"
