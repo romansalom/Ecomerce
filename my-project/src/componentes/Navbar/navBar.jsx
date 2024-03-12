@@ -122,7 +122,6 @@ function Navbars() {
                         <DropdownTrigger>
                           <NavbarContent>
                             <NavbarItem>
-                              {' '}
                               <svg
                                 className="w-7 h-7 text-green-800 dark:text-white"
                                 aria-hidden="true"
@@ -145,53 +144,37 @@ function Navbars() {
                         <DropdownMenu
                           variant="faded"
                           aria-label="Dropdown menu with products"
-                          className="dropdown-menu-custom"
+                          className="dropdown-menu-custom max-h-80 overflow-y-auto" // Agregar clase para definir altura máxima y habilitar el scrollbar
                         >
                           {carrito &&
                             carrito.Productos &&
                             carrito.Productos.map((product, index) => (
                               <DropdownItem key={index}>
                                 <div className="flex items-center">
-                                  {' '}
-                                  {/* Contenedor con estilo flex y alineación de elementos al centro */}
                                   <div className="img1 mr-4">
-                                    {' '}
-                                    {/* Margen a la derecha para la imagen */}
                                     <Image
                                       src={product.imageUrl}
                                       alt={product.name}
                                       height="50px"
                                       width="50px"
-                                      className="rounded-full border" // Agregar la clase "border" para darle bordes
+                                      className="rounded-full border"
                                     />
                                   </div>
                                   <div className="flex flex-col flex-grow">
-                                    {' '}
-                                    <span className="span1 mb-1">
-                                      {' '}
-                                      {/* Margen inferior para separar los valores verticalmente */}
+                                    <span className="font-custom span1 mb-1">
                                       {product.name}
                                     </span>
-                                    {/* Contenedor con estilo flex, dirección de columna y crecimiento flexible */}
-                                    <span className="span2 mb-1">
-                                      {' '}
-                                      {/* Margen inferior para separar los valores verticalmente */}
+                                    <span className="font-custom span2 mb-1">
                                       {product.puffs} Puffs
                                     </span>
-                                    <span className="span2 mb-1">
-                                      {' '}
-                                      {/* Margen inferior para separar los valores verticalmente */}
+                                    <span className="font-custom span2 mb-1">
                                       {product.CarritoProducto.cantidad}U
                                     </span>
-                                    <span className="span2 mb-1">
-                                      {' '}
-                                      {/* Margen inferior para separar los valores verticalmente */}
+                                    <span className="font-custom span2 mb-1">
                                       ${product.precio}
                                     </span>
                                   </div>
                                   <div className="ml-8">
-                                    {' '}
-                                    {/* Margen a la izquierda para el SVG */}
                                     <a>
                                       <svg
                                         className="w-5 h-5 text-gray-800 dark:text-white"
