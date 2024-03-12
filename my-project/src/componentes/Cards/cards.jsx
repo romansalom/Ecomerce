@@ -434,7 +434,7 @@ function Cards() {
 
               <Button
                 onClick={agregarProductoAlCarrito}
-                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-indigo-500 hover:to-blue-600"
+                className="bg-blue-500"
                 variant="shadow"
               >
                 Agregar al carrito
