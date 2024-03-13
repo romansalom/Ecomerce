@@ -166,6 +166,17 @@ function Cards() {
   const agregarProductoAlCarrito = async () => {
     try {
       const productId = selectedProduct.id;
+      const productStock = selectedProduct.stock;
+
+      // Verificar si la cantidad seleccionada es mayor que el stock disponible
+      if (cantidad > productStock) {
+        setMensaje('No hay suficiente stock disponible');
+        setTimeout(() => {
+          setMensaje('');
+        }, 2000);
+        return; // Salir de la función sin agregar el producto al carrito
+      }
+
       const response = await axios.post(
         `http://localhost:5432/api/carritos/agregar-producto/${productId}/${cantidad}`
       );
@@ -176,8 +187,10 @@ function Cards() {
         setMensaje('¡Producto agregado al carrito!');
         setTimeout(() => {
           setMensaje('');
-        }, 2000); // Después de 3 segundos, limpiar el mensaje
-        setCantidad(1); // Restablecer la cantidad a 1 después de agregar el producto al carrito
+          closePreview();
+          window.location.reload();
+        }, 1000);
+        setCantidad(1);
       } else {
         throw new Error('Error al agregar producto al carrito');
       }
@@ -422,7 +435,11 @@ function Cards() {
                 alt={selectedProduct.name}
                 className="w-48 h-48 mx-auto mb-4 rounded-full"
               />
-              <h2 className="text-xl font-custom text-gray-800 mb-2">
+              <h2
+                className={`font-custom text-xl text-center ${
+                  selectedProduct.stock <= 0 ? 'text-red-500' : ''
+                }`}
+              >
                 {selectedProduct.name}
               </h2>
               <p className=" font-custom text-lg text-gray-600 mb-4">
@@ -454,7 +471,10 @@ function Cards() {
                 onChange={(e) => setCantidad(e.target.value)}
                 className="block mx-auto w-16 my-2 text-center placeholder-center" // Clases para centrar horizontalmente el input, espacios en la parte superior e inferior y reducir su ancho
               >
-                {Array.from({ length: 50 }, (_, i) => i + 1).map((value) => (
+                {Array.from(
+                  { length: selectedProduct.stock },
+                  (_, i) => i + 1
+                ).map((value) => (
                   <option key={value} value={value}>
                     {value}
                   </option>
