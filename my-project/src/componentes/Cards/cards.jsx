@@ -370,14 +370,19 @@ function Cards() {
                   isPressable
                   onClick={() => openPreview(pricing)}
                   className="border-2 border-black-800 transition duration-300 ease-in-out transform hover:shadow-xl hover:scale-105"
-                  style={{ height: 'auto', transform: 'scale(0.8)' }} // Reducción del 20%
+                  style={{ height: 'auto', transform: 'scale(0.8)' }}
                 >
                   <CardHeader className="pb-0 pt-2 px-4 flex-col items-center justify-center shadow-md bg-white-200">
-                    <h1 className="font-custom text-xl text-center">
-                      {' '}
-                      {/* Aumento de tamaño de fuente */}
+                    <h1
+                      className={`font-custom text-xl text-center ${
+                        pricing.stock <= 0 ? 'text-red-500' : ''
+                      }`}
+                    >
                       {pricing.name}
                     </h1>
+                    {pricing.stock <= 0 && (
+                      <p className="font-custom text-red-500">Sin stock</p>
+                    )}
                     <h4 className="font-custom text-lg text-center">
                       {' '}
                       {/* Aumento de tamaño de fuente */}
