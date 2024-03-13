@@ -430,7 +430,7 @@ function Cards() {
           </div>
         </ScrollShadow>
       )}
-      {selectedProduct && (
+      {selectedProduct && selectedProduct.stock > 0 && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
           <div className="relative w-full max-w-xl bg-white rounded-xl shadow-lg p-6">
             <button
