@@ -29,7 +29,7 @@ function Cards() {
   const [showFilters, setShowFilters] = useState(false);
   const [filteredModelos, setFilteredModelos] = useState([]);
   const [filteredPuffs, setFilteredPuffs] = useState([]);
-  const [sortBy, setSortBy] = useState('name'); // Estado para el criterio de ordenamiento
+  const [sortBy, setSortBy] = useState(''); // Estado para el criterio de ordenamiento
   const [sortDirection, setSortDirection] = useState('asc'); // Estado para la dirección de ordenamiento
   const [cantidad, setCantidad] = useState(1);
   const [mensaje, setMensaje] = useState('');
@@ -125,6 +125,16 @@ function Cards() {
         return sortDirection === 'asc'
           ? a.precio - b.precio
           : b.precio - a.precio;
+      }
+    })
+    .sort((a, b) => {
+      // Mover los productos sin stock al final de la lista
+      if (a.stock === 0 && b.stock !== 0) {
+        return 1; // Coloca "a" después de "b"
+      } else if (b.stock === 0 && a.stock !== 0) {
+        return -1; // Coloca "a" antes de "b"
+      } else {
+        return 0; // Mantén el orden actual
       }
     });
 
