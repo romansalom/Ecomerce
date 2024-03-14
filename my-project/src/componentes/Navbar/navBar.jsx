@@ -21,6 +21,7 @@ import {
   Popover,
   PopoverTrigger,
   PopoverContent,
+  Avatar,
 } from '@nextui-org/react';
 function Navbars() {
   const [open, setOpen] = useState(true);
@@ -122,23 +123,14 @@ function Navbars() {
               >
                 {usuarioAutenticado && (
                   <Navbar>
-                    <NavbarContent>
-                      <NavbarItem className="nav-item font-semibold">
-                        Home
-                      </NavbarItem>
-                    </NavbarContent>
-                    <NavbarContent>
-                      <NavbarItem className="nav-item font-semibold">
-                        Perfil
-                      </NavbarItem>
-                    </NavbarContent>
+                    <NavbarContent></NavbarContent>
 
                     <Dropdown>
                       <DropdownTrigger>
                         <NavbarContent>
                           <NavbarItem>
                             <svg
-                              className="w-7 h-7 text-green-800 dark:text-white"
+                              className="w-8 h-8 text-green-800 dark:text-white"
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
@@ -190,7 +182,7 @@ function Navbars() {
                                   </span>
                                 </div>
                                 <div className="ml-8">
-                                  <a>
+                                  <button>
                                     <svg
                                       className="w-5 h-5 text-gray-800 dark:text-white"
                                       aria-hidden="true"
@@ -209,17 +201,73 @@ function Navbars() {
                                         clipRule="evenodd"
                                       />
                                     </svg>
-                                  </a>
+                                  </button>
                                 </div>
                               </div>
                             </DropdownItem>
                           ))}
                         <DropdownItem>
                           <div className="flex justify-center px-4 py-2 bg-gray-100 bg-blue">
-                            <button onClick={onOpen} className="font-custom">
+                            <span onClick={onOpen} className="font-custom">
                               Desglose
-                            </button>
+                            </span>
                           </div>
+                        </DropdownItem>
+                      </DropdownMenu>
+                    </Dropdown>
+                    <Dropdown placement="bottom-end">
+                      <DropdownTrigger>
+                        <Avatar
+                          isBordered
+                          as="button"
+                          className="transition-transform"
+                          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                        />
+                      </DropdownTrigger>
+                      <DropdownMenu aria-label="Profile Actions" variant="flat">
+                        <DropdownItem key="profile" className="h-14 gap-2">
+                          <p className="font-semibold">Signed in as</p>
+                          <p className="font-semibold">zoey@example.com</p>
+                        </DropdownItem>
+                        <DropdownItem key="settings">My Settings</DropdownItem>
+                        <DropdownItem key="team_settings">
+                          Team Settings
+                        </DropdownItem>
+                        <DropdownItem key="analytics">Analytics</DropdownItem>
+                        <DropdownItem key="system">System</DropdownItem>
+                        <DropdownItem key="configurations">
+                          Configurations
+                        </DropdownItem>
+                        <DropdownItem key="help_and_feedback">
+                          Help & Feedback
+                        </DropdownItem>
+                        <DropdownItem key="logout" color="danger">
+                          <a
+                            onClick={() => {
+                              localStorage.removeItem('token');
+                              localStorage.removeItem('userId');
+                              setUsuarioAutenticado(false);
+                            }}
+                          >
+                            {' '}
+                            <div className="flex items-center justify-center">
+                              <svg
+                                className="w-6 h-6 text-red-500 dark:text-white hover:text-red-400 transition-colors duration-300"
+                                aria-hidden="true"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="white"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  stroke="currentColor"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
+                                />
+                              </svg>
+                            </div>
+                          </a>
                         </DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
@@ -379,34 +427,7 @@ function Navbars() {
                         </ModalContent>
                       </Modal>
                     </div>
-                    <NavbarContent>
-                      <NavbarItem>
-                        <a
-                          className="px-4 py-2 mt-2 md:mt-0 text-base font-semibold rounded-lg text-black md:ml-4 text-decoration-none text-reset hover:text-red-500 cursor-pointer"
-                          onClick={() => {
-                            localStorage.removeItem('token');
-                            localStorage.removeItem('userId');
-                            setUsuarioAutenticado(false);
-                          }}
-                        >
-                          <svg
-                            className="w-7 h-7 text-black-500 dark:text-white hover:text-red-400 transition-colors duration-300"
-                            aria-hidden="true"
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="white" // Cambiado a "red" para establecer directamente el color rojo
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              stroke="currentColor"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
-                            />
-                          </svg>
-                        </a>
-                      </NavbarItem>
-                    </NavbarContent>
+                    <NavbarContent></NavbarContent>
                   </Navbar>
                 )}
                 {!usuarioAutenticado && (
