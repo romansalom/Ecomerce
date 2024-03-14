@@ -215,7 +215,7 @@ function Navbars() {
                         </DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
-                    <Dropdown placement="bottom-end">
+                    <Dropdown placement="bottom-left">
                       <DropdownTrigger>
                         <Avatar
                           isBordered
