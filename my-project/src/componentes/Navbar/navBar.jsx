@@ -216,9 +216,9 @@ function Navbars() {
                           ))}
                         <DropdownItem>
                           <div className="flex justify-center px-4 py-2 bg-gray-100 bg-blue">
-                            <span onClick={onOpen} className="font-custom">
+                            <button onClick={onOpen} className="font-custom">
                               Desglose
-                            </span>
+                            </button>
                           </div>
                         </DropdownItem>
                       </DropdownMenu>
