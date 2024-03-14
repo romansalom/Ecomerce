@@ -292,23 +292,6 @@ function Navbars() {
                                         <PopoverTrigger>
                                           <div>
                                             {' '}
-                                            <svg
-                                              className="w-3 h-3 text-gray-800 dark:text-white"
-                                              aria-hidden="true"
-                                              xmlns="http://www.w3.org/2000/svg"
-                                              width="24"
-                                              height="24"
-                                              fill="none"
-                                              viewBox="0 0 24 24"
-                                            >
-                                              <path
-                                                stroke="currentColor"
-                                                strokeLinecap="round"
-                                                strokeLinejoin="round"
-                                                strokeWidth="2"
-                                                d="M10 11h2v5m-2 0h4m-2.592-8.5h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                                              />
-                                            </svg>
                                             <th
                                               className="py-2 text-left"
                                               style={{ paddingLeft: '0px' }}
@@ -323,23 +306,29 @@ function Navbars() {
                                         className="py-2 text-left"
                                         style={{ paddingLeft: '10px' }}
                                       >
+                                        Marca
+                                      </th>
+                                      <th
+                                        className="py-2 text-left"
+                                        style={{ paddingLeft: '5px' }}
+                                      >
                                         Puffs
                                       </th>
                                       <th
                                         className="py-2 text-left"
-                                        style={{ paddingLeft: '12px' }}
+                                        style={{ paddingLeft: '5px' }}
                                       >
                                         U
                                       </th>
                                       <th
                                         className="py-2 text-left"
-                                        style={{ paddingLeft: '20px' }}
+                                        style={{ paddingLeft: '0px' }}
                                       >
                                         U/$
                                       </th>
                                       <th
                                         className="py-2 text-left"
-                                        style={{ paddingLeft: '12px' }}
+                                        style={{ paddingLeft: '0px' }}
                                       >
                                         Total
                                       </th>
@@ -359,12 +348,18 @@ function Navbars() {
                                             {' '}
                                             <Popover placement="right">
                                               <PopoverTrigger>
-                                                <div className="flex items-center space-x-2">
-                                                  <span className="font-custom span1 mb-1">
-                                                    {product.name}
-                                                  </span>
-                                                </div>
+                                                <td
+                                                  className="font-custom span2 mb-1"
+                                                  style={{
+                                                    verticalAlign: 'middle',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                  }}
+                                                >
+                                                  {product.name}
+                                                </td>
                                               </PopoverTrigger>
+
                                               <PopoverContent>
                                                 <Image
                                                   src={product.imageUrl}
@@ -375,15 +370,30 @@ function Navbars() {
                                               </PopoverContent>
                                             </Popover>
                                             <td className="px-4 py-2 font-custom span2 mb-1">
+                                              {product.marca}
+                                            </td>
+                                            <td
+                                              className="px-4 py-2 font-custom span2 mb-1"
+                                              style={{ paddingLeft: '10px' }}
+                                            >
                                               {product.puffs}
                                             </td>
-                                            <td className="px-4 py-2 font-custom span2 mb-1">
+                                            <td
+                                              className="px-4 py-2 font-custom span2 mb-1"
+                                              style={{ paddingLeft: '5px' }}
+                                            >
                                               {product.CarritoProducto.cantidad}{' '}
                                             </td>
-                                            <td className="px-4 py-2 font-custom span2 mb-1">
+                                            <td
+                                              className="px-4 py-2 font-custom span2 mb-1 "
+                                              style={{ paddingLeft: '0px' }}
+                                            >
                                               ${product.precio}
                                             </td>
-                                            <td className="px-4 py-2 font-custom span2 mb-1">
+                                            <td
+                                              className="px-4 py-2 font-custom span2 mb-1"
+                                              style={{ paddingLeft: '10px' }}
+                                            >
                                               {`${(
                                                 product.CarritoProducto
                                                   .cantidad * product.precio
