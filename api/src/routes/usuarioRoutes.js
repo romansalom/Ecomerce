@@ -8,6 +8,9 @@ router.post('/post', usuarioController.createUsuario);
 // Ruta para obtener todos los usuarios (GET)
 router.get('/todos', usuarioController.getallususarios);
 
+// Ruta para obtener  usuario logeado (GET)
+router.get('/log', usuarioController.getUserInfo);
+
 // Ruta para iniciar sesión y obtener un token JWT (POST)
 router.post('/inicio-sesion', usuarioController.iniciarSesion);
 

@@ -30,7 +30,8 @@ function Navbars() {
   const [usuarioAutenticado, setUsuarioAutenticado] = useState(false);
   const [carrito, setCarrito] = useState(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [modalPlacement] = useState('bottom-center'); // Agrega este estado
+  const [modalPlacement] = useState('bottom-center');
+  const [usuario, setUsuario] = useState({});
   useEffect(() => {
     // Aquí debes poner la lógica para verificar si el usuario está autenticado.
     // Por ejemplo, puedes comprobar si tienes un token de autenticación en el almacenamiento local.
@@ -77,6 +78,22 @@ function Navbars() {
         return total + product.precio * product.CarritoProducto.cantidad;
       }, 0)
     : 0;
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    axios
+      .get('http://localhost:5432/api/users/log', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        setUsuario(response.data.user);
+      })
+      .catch((error) => {
+        console.error('Error al obtener la información del usuario:', error);
+      });
+  }, []);
 
   return (
     <div className="min-s-screen">
@@ -221,17 +238,37 @@ function Navbars() {
                           isBordered
                           as="button"
                           className="transition-transform"
-                          src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                        />
+                          style={{
+                            backgroundColor:
+                              '#' +
+                              Math.floor(Math.random() * 16777215).toString(16),
+                          }}
+                        >
+                          {/* Inserta el SVG aquí */}
+                          <svg
+                            className="w-6 h-6 text-gray-800 dark:text-white"
+                            aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            fill="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              fillRule="evenodd"
+                              d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+                              clipRule="evenodd"
+                            />
+                          </svg>
+                        </Avatar>
                       </DropdownTrigger>
                       <DropdownMenu aria-label="Profile Actions" variant="flat">
                         <DropdownItem key="profile" className="h-14 gap-2">
-                          <p className="font-semibold">Signed in as</p>
-                          <p className="font-semibold">zoey@example.com</p>
+                          <p className="font-semibold">Email Logeado</p>
+                          <p className="font-semibold">{usuario.email}</p>
                         </DropdownItem>
-                        <DropdownItem key="settings">My Settings</DropdownItem>
-                        <DropdownItem key="team_settings">
-                          Team Settings
+                        <DropdownItem onClick={onOpen} key="team_settings">
+                          Desglose
                         </DropdownItem>
                         <DropdownItem key="analytics">Analytics</DropdownItem>
                         <DropdownItem key="system">System</DropdownItem>

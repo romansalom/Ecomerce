@@ -108,5 +108,30 @@ const iniciarSesion = async (req, res) => {
     res.status(500).json({ error: 'Error al iniciar sesión' });
   }
 };
+const getUserInfo = async (req, res) => {
+  try {
+    // Extract the JWT token from the request headers
+    const token = req.headers.authorization.split(' ')[1];
 
-module.exports = { createUsuario, iniciarSesion, getallususarios };
+    // Verify the JWT token
+    const decodedToken = jwt.verify(token, 'miSecretoJWT');
+
+    // Extract the user ID from the decoded token
+    const userId = decodedToken.id;
+
+    // Retrieve the user information from the database using the user ID
+    const user = await UserModel.findByPk(userId);
+
+    // Check if the user exists
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Send the user information in the response
+    res.json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error retrieving user information' });
+  }
+};
+module.exports = { createUsuario, iniciarSesion, getallususarios, getUserInfo };
