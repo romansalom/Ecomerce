@@ -142,7 +142,7 @@ function Navbars() {
                   <Navbar>
                     <NavbarContent></NavbarContent>
 
-                    <Dropdown>
+                    <Dropdown className="border border-black">
                       <DropdownTrigger>
                         <NavbarContent>
                           <NavbarItem>
@@ -173,7 +173,10 @@ function Navbars() {
                         {carrito &&
                           carrito.Productos &&
                           carrito.Productos.map((product, index) => (
-                            <DropdownItem key={index}>
+                            <DropdownItem
+                              key={index}
+                              className="border border-grey"
+                            >
                               <div className="flex items-center">
                                 <div className="img1 mr-4">
                                   <Image
@@ -225,24 +228,22 @@ function Navbars() {
                           ))}
                         <DropdownItem>
                           <div className="flex justify-center px-4 py-2 bg-gray-100 bg-blue">
-                            <span onClick={onOpen} className="font-custom">
+                            <button onClick={onOpen} className="font-custom">
                               Desglose
-                            </span>
+                            </button>
                           </div>
                         </DropdownItem>
                       </DropdownMenu>
                     </Dropdown>
-                    <Dropdown placement="bottom-left">
+                    <Dropdown
+                      placement="bottom-left"
+                      className="border border-black"
+                    >
                       <DropdownTrigger>
                         <Avatar
                           isBordered
                           as="button"
                           className="transition-transform"
-                          style={{
-                            backgroundColor:
-                              '#' +
-                              Math.floor(Math.random() * 16777215).toString(16),
-                          }}
                         >
                           {/* Inserta el SVG aquí */}
                           <svg
@@ -267,17 +268,9 @@ function Navbars() {
                           <p className="font-semibold">Email Logeado</p>
                           <p className="font-semibold">{usuario.email}</p>
                         </DropdownItem>
-                        <DropdownItem onClick={onOpen} key="team_settings">
-                          Desglose
-                        </DropdownItem>
-                        <DropdownItem key="analytics">Analytics</DropdownItem>
-                        <DropdownItem key="system">System</DropdownItem>
-                        <DropdownItem key="configurations">
-                          Configurations
-                        </DropdownItem>
-                        <DropdownItem key="help_and_feedback">
-                          Help & Feedback
-                        </DropdownItem>
+
+                        <DropdownItem key="analytics">Mis pedidos</DropdownItem>
+
                         <DropdownItem key="logout" color="danger">
                           <a
                             onClick={() => {
