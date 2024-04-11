@@ -2,6 +2,7 @@ const { Router } = require('express');
 const {
   verContenidoCarrito,
   agregarProductoAlCarrito,
+  modificarCantidadProductoEnCarrito,
   verificarToken,
 } = require('../handlers/carritoController'); // Importa el controlador correcto
 
@@ -26,6 +27,13 @@ router.post(
   '/agregar-producto/:productId/:cantidad', // Agrega el parámetro de cantidad a la ruta
   verificarToken,
   agregarProductoAlCarrito
+);
+
+// Ruta para modificar la cantidad de un producto en el carrito
+router.put(
+  '/modificar-cantidad/', // Agrega el parámetro de cantidad a la ruta
+  verificarToken,
+  modificarCantidadProductoEnCarrito
 );
 
 module.exports = router;

@@ -92,9 +92,78 @@ const agregarProductoAlCarrito = async (req, res) => {
     res.status(500).json({ error: 'Error al agregar producto al carrito' });
   }
 };
+const modificarCantidadProductoEnCarrito = async (req, res) => {
+  try {
+    const { productId, cantidad } = req.body;
+    const userId = req.userId;
+
+    // Buscar el carrito del usuario
+    let carrito = await Carrito.findOne({ where: { usuario_id: userId } });
+
+    if (!carrito) {
+      return res.status(404).json({ error: 'Carrito no encontrado' });
+    }
+
+    // Buscar el producto en el carrito
+    const carritoProducto = await CarritoProducto.findOne({
+      where: { CarritoId: carrito.id, ProductoId: productId },
+    });
+
+    if (!carritoProducto) {
+      return res
+        .status(404)
+        .json({ error: 'Producto no encontrado en el carrito' });
+    }
+
+    // Obtener el producto
+    const producto = await Productos.findByPk(productId);
+
+    // Verificar si la cantidad solicitada es mayor que el stock restante
+    if (parseInt(cantidad) > producto.stock) {
+      return res
+        .status(400)
+        .json({ error: 'Cantidad solicitada excede el stock restante' });
+    }
+
+    // Calcular la diferencia entre la cantidad actual y la nueva cantidad
+    const cantidadAnterior = carritoProducto.cantidad;
+    const nuevaCantidad = parseInt(cantidad);
+    const diferenciaCantidad = nuevaCantidad - cantidadAnterior;
+
+    // Actualizar la cantidad del producto en el carrito
+    carritoProducto.cantidad = nuevaCantidad;
+    await carritoProducto.save();
+
+    // Actualizar el stock del producto
+    producto.stock -= diferenciaCantidad;
+    await producto.save();
+
+    // Obtener el carrito actualizado
+    const carritoActualizado = await verContenidoCarrito(userId);
+
+    // Enviar la respuesta con el carrito actualizado
+    const productosConCantidad = carritoActualizado.Productos.map(
+      (producto) => ({
+        ...producto.toJSON(),
+        cantidad: producto.CarritoProducto.cantidad,
+      })
+    );
+
+    res.json(productosConCantidad);
+  } catch (error) {
+    console.error(
+      'Error al modificar la cantidad del producto en el carrito:',
+      error
+    );
+    res.status(500).json({
+      error: 'Error al modificar la cantidad del producto en el carrito',
+    });
+  }
+};
 
 module.exports = {
   verContenidoCarrito,
   agregarProductoAlCarrito,
   verificarToken,
+  modificarCantidadProductoEnCarrito,
 };
