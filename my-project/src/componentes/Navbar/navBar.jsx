@@ -74,6 +74,7 @@ function Navbars() {
   const closeRegistroModal = () => {
     setRegistroModalIsOpen(false);
   };
+
   const totalCarrito = carrito
     ? carrito.Productos.reduce((total, product) => {
         return total + product.precio * product.CarritoProducto.cantidad;
@@ -96,9 +97,36 @@ function Navbars() {
       });
   }, []);
   const PagarButton = () => {
-    window.location.href =
-      'https://link.mercadopago.com.ar/vapestoremagsprueba';
+    // Asegúrate de que 'carrito' y 'totalCarrito' estén definidos y accesibles en este contexto
+
+    // Desglose de productos con doble salto de línea
+    const desgloseProductos = carrito?.Productos.map((producto) => {
+      return `${producto.name} (Modelo: ${producto.marca}, Cantidad: ${
+        producto.CarritoProducto.cantidad
+      }, Precio Unitario: ${producto.precio.toFixed(2)})`;
+    }).join('\n\n'); // Doble salto de línea entre productos
+
+    // Total del carrito
+    const total = totalCarrito.toFixed(2);
+
+    // Preparar el mensaje para WhatsApp
+    const mensajeWhatsApp = `Productos en el carrito:\n${desgloseProductos}\n\nTotal a pagar: ${total}\n\n Link de transferencia : https://link.mercadopago.com.ar/vapestoremagsprueba \n\n Responder el mensaje con direccion de entrega , rango horario y metodo de pago.`;
+
+    // Codificar el mensaje para la URL
+    const mensajeWhatsAppCodificado = encodeURIComponent(mensajeWhatsApp);
+
+    // Crear la URL de WhatsApp
+    const urlWhatsApp = `https://wa.me/+5491164339338?text=${mensajeWhatsAppCodificado}`;
+
+    // Redirigir a WhatsApp
+    window.open(urlWhatsApp, '_blank');
   };
+
+  // No olvides reemplazar '+5491164339338' con tu número de WhatsApp
+
+  // No olvides reemplazar '+5491164339338' con tu número de WhatsApp
+
+  // No olvides reemplazar 'nombre', 'cantidad' y 'precio' con las propiedades correctas de tus objetos de producto
 
   return (
     <div className="min-s-screen">
@@ -463,13 +491,9 @@ function Navbars() {
                                 >
                                   Close
                                 </Button>
-                                <button
-                                  className="boton-pago"
-                                  color="primary"
-                                  onClick={PagarButton}
-                                >
+                                <Button color="primary" onClick={PagarButton}>
                                   Pagar
-                                </button>
+                                </Button>
                               </ModalFooter>
                             </>
                           )}
