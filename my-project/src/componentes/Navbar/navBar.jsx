@@ -32,6 +32,7 @@ function Navbars() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [modalPlacement] = useState('bottom-center');
   const [usuario, setUsuario] = useState({});
+
   useEffect(() => {
     // Aquí debes poner la lógica para verificar si el usuario está autenticado.
     // Por ejemplo, puedes comprobar si tienes un token de autenticación en el almacenamiento local.
@@ -94,6 +95,10 @@ function Navbars() {
         console.error('Error al obtener la información del usuario:', error);
       });
   }, []);
+  const PagarButton = () => {
+    window.location.href =
+      'https://link.mercadopago.com.ar/vapestoremagsprueba';
+  };
 
   return (
     <div className="min-s-screen">
@@ -458,9 +463,13 @@ function Navbars() {
                                 >
                                   Close
                                 </Button>
-                                <Button color="primary" onPress={onClose}>
+                                <button
+                                  className="boton-pago"
+                                  color="primary"
+                                  onClick={PagarButton}
+                                >
                                   Pagar
-                                </Button>
+                                </button>
                               </ModalFooter>
                             </>
                           )}

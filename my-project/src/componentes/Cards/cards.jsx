@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  Card,
-  CardBody,
-  CardHeader,
   Image,
   Dropdown,
   DropdownTrigger,
@@ -11,8 +8,8 @@ import {
   DropdownItem,
   Button,
   Input,
-  ScrollShadow,
 } from '@nextui-org/react';
+import './cards.css';
 
 function Cards() {
   const [pricingData, setPricingData] = useState([]);
@@ -194,7 +191,7 @@ function Cards() {
       if (response.status >= 200 && response.status < 300) {
         const carritoActualizado = response.data;
         console.log(carritoActualizado);
-        setMensaje('¡Producto agregado al carrito!');
+        setMensaje(`'¡Producto agregado al carrito!'`);
         setTimeout(() => {
           setMensaje('');
           closePreview();
@@ -218,11 +215,6 @@ function Cards() {
             Product Collection
           </h2>
 
-          <p className="mx-auto mt-4 max-w-md text-gray-500">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Itaque
-            praesentium cumque iure dicta incidunt est ipsam, officia dolor
-            fugit natus?
-          </p>
           <div className="mt-4 flex justify-center">
             <div className="flex flex-wrap justify-center space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-10">
               <Dropdown>
@@ -401,19 +393,31 @@ function Cards() {
                   <a className="group block">
                     <Image
                       alt="Card background"
-                      className="object-cover rounded-xl w-full max-h-50  sm:h-[300px]" // Ajusta la altura máxima
+                      className={`object-cover rounded-xl w-full max-h-50 sm:h-[300px] ${
+                        pricing.stock === 0 ? 'blur' : ''
+                      }`} // Ajusta la altura máxima y añade desenfoque si stock es 0
                       src={pricing.imageUrl}
                     />
 
                     <div className="mt-3 flex justify-between text-sm">
                       <div>
-                        <h3 className="text-gray-900 group-hover:underline group-hover:underline-offset-4">
+                        <h1
+                          className={`text-gray-900 group-hover:underline group-hover:underline-offset-4r ${
+                            pricing.stock <= 0 ? 'text-red-500' : ''
+                          }`}
+                        >
                           {pricing.name}
-                        </h3>
+                        </h1>
 
-                        <p className="mt-1.5 text-pretty text-xs text-gray-500">
-                          {pricing.puffs} Puffs
-                        </p>
+                        <div className=" flex justify-between text-sm">
+                          {pricing.stock > 0 ? (
+                            <p className="text-gray-900">
+                              {pricing.puffs} Puffs
+                            </p>
+                          ) : (
+                            <p className="text-gray-900">Sin stock</p>
+                          )}
+                        </div>
                       </div>
 
                       <p className="text-gray-900">${pricing.precio}</p>
