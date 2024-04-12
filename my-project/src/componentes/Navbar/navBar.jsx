@@ -2,26 +2,23 @@ import { useState, useEffect } from 'react';
 import InicioSesionModal from '../../pages/home/inisiosession';
 import RegistroModal from '../../pages/home/register';
 import axios from 'axios';
+import './navBar.css';
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
-  Image,
   Navbar,
   NavbarContent,
   NavbarItem,
   Modal,
   ModalContent,
-  ModalHeader,
-  ModalBody,
   ModalFooter,
   Button,
   useDisclosure,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
   Avatar,
+  Image,
+  ScrollShadow,
 } from '@nextui-org/react';
 function Navbars() {
   const [open, setOpen] = useState(true);
@@ -178,14 +175,14 @@ function Navbars() {
                     <Dropdown className="border border-black">
                       <DropdownTrigger>
                         <NavbarContent>
-                          <NavbarItem>
+                          <NavbarItem onClick={obtenerContenidoCarrito}>
                             <svg
                               className="w-8 h-8 text-green-800 dark:text-white"
                               aria-hidden="true"
                               xmlns="http://www.w3.org/2000/svg"
                               fill="none"
                               viewBox="0 0 24 24"
-                              onClick={obtenerContenidoCarrito}
+                              onClick={onOpen}
                             >
                               <path
                                 stroke="currentColor"
@@ -198,75 +195,6 @@ function Navbars() {
                           </NavbarItem>
                         </NavbarContent>
                       </DropdownTrigger>
-                      <DropdownMenu
-                        variant="faded"
-                        aria-label="Dropdown menu with products"
-                        className="dropdown-menu-custom max-h-80 overflow-y-auto" // Agregar clase para definir altura máxima y habilitar el scrollbar
-                      >
-                        {carrito &&
-                          carrito.Productos &&
-                          carrito.Productos.map((product, index) => (
-                            <DropdownItem
-                              key={index}
-                              className="border border-grey"
-                            >
-                              <div className="flex items-center">
-                                <div className="img1 mr-4">
-                                  <Image
-                                    src={product.imageUrl}
-                                    alt={product.name}
-                                    height="50px"
-                                    width="50px"
-                                    className="rounded-full border"
-                                  />
-                                </div>
-                                <div className="flex flex-col flex-grow">
-                                  <span className="font-custom span1 mb-1">
-                                    {product.name}
-                                  </span>
-                                  <span className="font-custom span2 mb-1">
-                                    {product.puffs} Puffs
-                                  </span>
-                                  <span className="font-custom span2 mb-1">
-                                    {product.CarritoProducto.cantidad}U
-                                  </span>
-                                  <span className="font-custom span2 mb-1">
-                                    ${product.precio}
-                                  </span>
-                                </div>
-                                <div className="ml-8">
-                                  <button>
-                                    <svg
-                                      className="w-5 h-5 text-gray-800 dark:text-white"
-                                      aria-hidden="true"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                      fill="blue"
-                                      viewBox="0 0 24 24"
-                                    >
-                                      <path
-                                        fillRule="evenodd"
-                                        d="M11.3 6.2H5a2 2 0 0 0-2 2V19a2 2 0 0 0 2 2h11c1.1 0 2-1 2-2.1V11l-4 4.2c-.3.3-.7.6-1.2.7l-2.7.6c-1.7.3-3.3-1.3-3-3.1l.6-2.9c.1-.5.4-1 .7-1.3l3-3.1Z"
-                                        clipRule="evenodd"
-                                      />
-                                      <path
-                                        fillRule="evenodd"
-                                        d="M19.8 4.3a2.1 2.1 0 0 0-1-1.1 2 2 0 0 0-2.2.4l-.6.6 2.9 3 .5-.6a2.1 2.1 0 0 0 .6-1.5c0-.2 0-.5-.2-.8Zm-2.4 4.4-2.8-3-4.8 5-.1.3-.7 3c0 .3.3.7.6.6l2.7-.6.3-.1 4.7-5Z"
-                                        clipRule="evenodd"
-                                      />
-                                    </svg>
-                                  </button>
-                                </div>
-                              </div>
-                            </DropdownItem>
-                          ))}
-                        <DropdownItem>
-                          <div className="flex justify-center px-4 py-2 bg-gray-100 bg-blue">
-                            <button onClick={onOpen} className="font-custom">
-                              Desglose
-                            </button>
-                          </div>
-                        </DropdownItem>
-                      </DropdownMenu>
                     </Dropdown>
                     <Dropdown
                       placement="bottom-left"
@@ -340,161 +268,128 @@ function Navbars() {
                         isOpen={isOpen}
                         placement={modalPlacement}
                         onOpenChange={onOpenChange}
+                        scrollBehavior={'outside'}
                       >
                         <ModalContent>
                           {(onClose) => (
                             <>
-                              <ModalHeader className="flex flex-col gap-1">
-                                Carrito de compras
-                              </ModalHeader>
-                              <ModalBody>
-                                <table className="w-full">
-                                  <thead>
-                                    <tr className="border-b border-gray-200">
-                                      <Popover placement="right">
-                                        <PopoverTrigger>
-                                          <div>
-                                            {' '}
-                                            <th
-                                              className="py-2 text-left"
-                                              style={{ paddingLeft: '0px' }}
-                                            >
-                                              Nombre
-                                            </th>
-                                          </div>
-                                        </PopoverTrigger>
-                                        <PopoverContent>Imagen</PopoverContent>
-                                      </Popover>
-                                      <th
-                                        className="py-2 text-left"
-                                        style={{ paddingLeft: '10px' }}
-                                      >
-                                        Marca
-                                      </th>
-                                      <th
-                                        className="py-2 text-left"
-                                        style={{ paddingLeft: '5px' }}
-                                      >
-                                        Puffs
-                                      </th>
-                                      <th
-                                        className="py-2 text-left"
-                                        style={{ paddingLeft: '5px' }}
-                                      >
-                                        U
-                                      </th>
-                                      <th
-                                        className="py-2 text-left"
-                                        style={{ paddingLeft: '0px' }}
-                                      >
-                                        U/$
-                                      </th>
-                                      <th
-                                        className="py-2 text-left"
-                                        style={{ paddingLeft: '0px' }}
-                                      >
-                                        Total
-                                      </th>
-                                      {/* Espacio para el botón de eliminación */}
-                                    </tr>
-                                  </thead>
+                              <section>
+                                <div className=" mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
+                                  <div className="mx-auto max-w-3xl">
+                                    <header className="text-center">
+                                      <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">
+                                        Mi Carrito
+                                      </h1>
+                                    </header>
 
-                                  <tbody>
-                                    {carrito &&
-                                      carrito.Productos &&
-                                      carrito.Productos.map(
-                                        (product, index) => (
-                                          <tr
-                                            key={index}
-                                            className="border-b border-gray-200"
-                                          >
-                                            {' '}
-                                            <Popover placement="right">
-                                              <PopoverTrigger>
-                                                <td
-                                                  className="font-custom span2 mb-1"
-                                                  style={{
-                                                    verticalAlign: 'middle',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                  }}
+                                    <div className="mt-8">
+                                      <ul className="space-y-4">
+                                        <ScrollShadow>
+                                          {carrito &&
+                                            carrito.Productos &&
+                                            carrito.Productos.map(
+                                              (product, index) => (
+                                                <li
+                                                  key={index}
+                                                  className="flex items-center gap-6 mt-3"
                                                 >
-                                                  {product.name}
-                                                </td>
-                                              </PopoverTrigger>
+                                                  <Image
+                                                    src={product.imageUrl}
+                                                    alt={product.name}
+                                                    height="50px"
+                                                    width="50px"
+                                                    className="size-16 rounded object-cover"
+                                                  />
 
-                                              <PopoverContent>
-                                                <Image
-                                                  src={product.imageUrl}
-                                                  alt={product.name}
-                                                  height="100px"
-                                                  width="100px"
-                                                />
-                                              </PopoverContent>
-                                            </Popover>
-                                            <td className="px-4 py-2 font-custom span2 mb-1">
-                                              {product.marca}
-                                            </td>
-                                            <td
-                                              className="px-4 py-2 font-custom span2 mb-1"
-                                              style={{ paddingLeft: '10px' }}
-                                            >
-                                              {product.puffs}
-                                            </td>
-                                            <td
-                                              className="px-4 py-2 font-custom span2 mb-1"
-                                              style={{ paddingLeft: '5px' }}
-                                            >
-                                              {product.CarritoProducto.cantidad}{' '}
-                                            </td>
-                                            <td
-                                              className="px-4 py-2 font-custom span2 mb-1 "
-                                              style={{ paddingLeft: '0px' }}
-                                            >
-                                              ${product.precio}
-                                            </td>
-                                            <td
-                                              className="px-4 py-2 font-custom span2 mb-1"
-                                              style={{ paddingLeft: '10px' }}
-                                            >
-                                              {`${(
-                                                product.CarritoProducto
-                                                  .cantidad * product.precio
+                                                  <div>
+                                                    <h3 className="text-sm text-gray-900">
+                                                      {product.name}{' '}
+                                                    </h3>
+
+                                                    <dl className="mt-0.5 space-y-px text-[10px] text-gray-600">
+                                                      <div>
+                                                        <dt className="inline">
+                                                          {product.puffs} Puffs
+                                                        </dt>
+                                                      </div>
+                                                      <div>
+                                                        <dt className="inline">
+                                                          {product.flavor}
+                                                        </dt>
+                                                      </div>
+                                                      <div>
+                                                        <dt className="inline">
+                                                          ${product.precio}
+                                                        </dt>
+                                                      </div>
+                                                    </dl>
+                                                  </div>
+
+                                                  <div className="flex flex-1 items-center justify-end gap-2">
+                                                    <span className="sr-only">
+                                                      Remove item
+                                                    </span>
+                                                    <dt className="inline">
+                                                      {
+                                                        product.CarritoProducto
+                                                          .cantidad
+                                                      }
+                                                      U
+                                                    </dt>
+                                                    <svg
+                                                      xmlns="http://www.w3.org/2000/svg"
+                                                      fill="none"
+                                                      viewBox="0 0 24 24"
+                                                      strokeWidth="1.5"
+                                                      stroke="currentColor"
+                                                      className="h-4 w-4"
+                                                    >
+                                                      <path
+                                                        strokeLinecap="round"
+                                                        strokeLinejoin="round"
+                                                        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                                                      />
+                                                    </svg>
+                                                  </div>
+                                                </li>
                                               )
-                                                .toString()
-                                                .slice(0, 7)}`}
-                                            </td>
-                                          </tr>
-                                        )
-                                      )}
-                                  </tbody>
-                                </table>
-                                <div className="flex justify-center px-4 py-2 bg-gray-100 bg-blue">
-                                  <span className="font-custom">
-                                    Total del carrito:
-                                  </span>
-                                  {carrito && carrito.Productos ? (
-                                    <span className="font-custom">
-                                      ${totalCarrito.toFixed(2)}
-                                    </span>
-                                  ) : (
-                                    <span className="font-custom">$0.00</span>
-                                  )}
-                                </div>
-                              </ModalBody>
+                                            )}
+                                        </ScrollShadow>
+                                      </ul>
 
-                              <ModalFooter>
-                                <Button
-                                  color="danger"
-                                  variant="light"
-                                  onPress={onClose}
-                                >
-                                  Close
-                                </Button>
-                                <Button color="primary" onClick={PagarButton}>
-                                  Pagar
-                                </Button>
-                              </ModalFooter>
+                                      <div className=" flex justify-end border-t border-gray-100 pt-8">
+                                        <div className="w-full max-w-lg md:w-screen md:max-w-full space-y-4">
+                                          <dl className="space-y-0.5 text-sm text-gray-700">
+                                            <div className="flex justify-between !text-base font-medium">
+                                              <dt>Total</dt>
+                                              <dd>
+                                                {carrito &&
+                                                carrito.Productos ? (
+                                                  <span className="font-custom">
+                                                    ${totalCarrito.toFixed(2)}{' '}
+                                                    {/* Mostrar el botón Pagar solo en pantallas pequeñas */}
+                                                    <Button
+                                                      color="primary"
+                                                      onClick={PagarButton}
+                                                    >
+                                                      Pagar
+                                                    </Button>
+                                                  </span>
+                                                ) : (
+                                                  <span className="font-custom">
+                                                    $0.00
+                                                  </span>
+                                                )}
+                                              </dd>
+                                            </div>
+                                          </dl>
+                                          {/* Contenedor para el botón Pagar en pantallas grandes */}
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </section>
                             </>
                           )}
                         </ModalContent>
