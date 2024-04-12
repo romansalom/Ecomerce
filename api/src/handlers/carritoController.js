@@ -34,6 +34,8 @@ const verContenidoCarrito = async (userId) => {
             'precio',
             'stock',
             'imageUrl',
+            'modelo',
+            'flavor',
           ],
         },
       ],
