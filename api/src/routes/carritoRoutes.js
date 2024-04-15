@@ -3,8 +3,9 @@ const {
   verContenidoCarrito,
   agregarProductoAlCarrito,
   modificarCantidadProductoEnCarrito,
+  eliminarProductoDelCarrito, // Importa la función para eliminar productos del carrito
   verificarToken,
-} = require('../handlers/carritoController'); // Importa el controlador correcto
+} = require('../handlers/carritoController');
 
 const router = Router();
 
@@ -20,20 +21,27 @@ router.get('/carrito/', verificarToken, async (req, res) => {
       .status(500)
       .json({ error: 'Error al obtener el contenido del carrito' });
   }
-}); // Agrega el middleware verificarToken aquí
+});
 
 // Ruta para agregar un producto al carrito
 router.post(
-  '/agregar-producto/:productId/:cantidad', // Agrega el parámetro de cantidad a la ruta
+  '/agregar-producto/:productId/:cantidad',
   verificarToken,
   agregarProductoAlCarrito
 );
 
 // Ruta para modificar la cantidad de un producto en el carrito
 router.put(
-  '/modificar-cantidad/', // Agrega el parámetro de cantidad a la ruta
+  '/modificar-cantidad/',
   verificarToken,
   modificarCantidadProductoEnCarrito
+);
+
+// Ruta para eliminar un producto del carrito
+router.delete(
+  '/eliminar-producto/:productId', // Define el endpoint para eliminar productos del carrito
+  verificarToken,
+  eliminarProductoDelCarrito
 );
 
 module.exports = router;
