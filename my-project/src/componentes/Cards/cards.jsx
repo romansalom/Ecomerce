@@ -7,7 +7,6 @@ import {
   DropdownMenu,
   DropdownItem,
   Button,
-  Input,
 } from '@nextui-org/react';
 import './cards.css';
 
@@ -367,13 +366,12 @@ function Cards() {
               <br></br>
               <br></br>
               <br></br>
-              <Input
-                type="text"
-                placeholder="Buscar por nombre"
-                style={{ textAlign: 'center' }}
+              <input
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="search-input font-custom text-l text-center placeholder-center" // Clase personalizada para el input
+                type="text"
+                placeholder="Enter name"
+                className="pr-4 px-5 py-2.5 text-sm text-black rounded-full bg-white border border-green-500 w-full outline-[#007bff]"
               />
             </div>
           </div>
