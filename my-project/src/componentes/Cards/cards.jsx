@@ -386,7 +386,7 @@ function Cards() {
         ) : filteredPricingData.length === 0 ? (
           <p>No hay productos</p>
         ) : (
-          <ul className="mt-8 grid gap-20 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-8 grid gap-20 sm:grid-cols-2 lg:grid-cols-4 ">
             {filteredPricingData.map((pricing, index) => (
               <div key={index} onClick={() => openPreview(pricing)}>
                 <li>
@@ -429,84 +429,100 @@ function Cards() {
           </ul>
         )}{' '}
         {selectedProduct && selectedProduct.stock > 0 && (
-          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-gray-800 bg-opacity-75">
-            <div className="relative w-full max-w-xl bg-white rounded-xl shadow-lg p-6">
-              <button
-                className="absolute top-2 right-2 text-red-800 focus:outline-none"
-                onClick={closePreview}
-              >
-                Cerrar
-              </button>
-              <div className="text-center">
-                <img
-                  src={selectedProduct.imageUrl}
-                  alt={selectedProduct.name}
-                  className="w-48 h-48 mx-auto mb-4 rounded-full"
-                />
-                <h2
-                  className={`font-custom text-xl text-center ${
-                    selectedProduct.stock <= 0 ? 'text-red-500' : ''
-                  }`}
-                >
-                  {selectedProduct.name}
-                </h2>
-                <p className=" font-custom text-lg text-gray-600 mb-4">
-                  ${selectedProduct.precio}
-                </p>
-                <ul className=" font-custom text-sm text-gray-500 space-y-2">
-                  <li>
-                    <span className="font-custom">Sabor:</span>{' '}
-                    {selectedProduct.flavor}
-                  </li>
-                  <li>
-                    <span className="font-custom">Puffs:</span>{' '}
-                    {selectedProduct.puffs}
-                  </li>
-                  <li>
-                    <span className="font-custom">Marca:</span>{' '}
-                    {selectedProduct.marca}
-                  </li>
-                  <li>
-                    <span className="font-custom">Modelo:</span>{' '}
-                    {selectedProduct.modelo}
-                  </li>
-                  <li>
-                    {mensaje && (
-                      <div className="font-[sans-serif] space-y-6">
-                        <div
-                          className="bg-green-100 text-green-800 px-4 py-4 rounded"
-                          role="alert"
-                        >
-                          <strong className="font-bold text-base mr-4">
-                            {mensaje}
-                          </strong>
-                        </div>
+          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-white bg-opacity-96 overflow-y-auto">
+            <div className="font-[sans-serif]">
+              {mensaje && (
+                <div className="font-[sans-serif] space-y-6">
+                  <div
+                    className="bg-green-100 text-green-800 px-4 py-4 rounded"
+                    role="alert"
+                  >
+                    <strong className="font-bold text-base mr-4">
+                      {mensaje}
+                    </strong>
+                  </div>
+                </div>
+              )}
+              <div className="p-6 lg:max-w-7xl max-w-2xl max-lg:mx-auto">
+                <div className="grid items-start grid-cols-1 lg:grid-cols-2 gap-10">
+                  <div className="w-full lg:sticky top-0 text-center">
+                    <div className="lg:h-[600px]">
+                      <img
+                        src={selectedProduct.imageUrl}
+                        alt={selectedProduct.name}
+                        className="lg:w-11/12 w-full h-full rounded-xl object-cover object-top"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <div className="flex flex-wrap items-start gap-4">
+                      <button
+                        className="absolute top-2 right-2 text-red-800 focus:outline-none"
+                        onClick={closePreview}
+                      >
+                        X
+                      </button>
+                      <div>
+                        <h2 className="text-2xl font-extrabold text-gray-800">
+                          {selectedProduct.name} | {selectedProduct.modelo}
+                        </h2>
+                        <p className="text-sm text-gray-400 mt-2">
+                          {selectedProduct.marca} | {selectedProduct.puffs}{' '}
+                          puffs
+                        </p>
                       </div>
-                    )}
-                  </li>
-                </ul>
-                <select
-                  value={cantidad}
-                  onChange={(e) => setCantidad(e.target.value)}
-                  className="block mx-auto w-16 my-2 text-center placeholder-center" // Clases para centrar horizontalmente el input, espacios en la parte superior e inferior y reducir su ancho
-                >
-                  {Array.from(
-                    { length: selectedProduct.stock },
-                    (_, i) => i + 1
-                  ).map((value) => (
-                    <option key={value} value={value}>
-                      {value}
-                    </option>
-                  ))}
-                </select>
-
-                <Button
-                  onClick={agregarProductoAlCarrito}
-                  className="bg-blue-500"
-                  variant="shadow"
-                >
-                  Agregar al carrito
-                </Button>
+                      <div className="ml-auto flex flex-wrap gap-4">
+                        <button
+                          type="button"
+                          className="px-2.5 py-1.5 bg-pink-100 text-xs text-pink-600 rounded-md flex items-center"
+                        >
+                          {selectedProduct.stock}
+                        </button>
+                      </div>
+                    </div>
+                    <hr className="my-8" />
+                    <div className="flex flex-wrap gap-4 items-start">
+                      <div>
+                        <p className="text-gray-800 text-3xl font-bold">
+                          {selectedProduct.precio}
+                        </p>
+                      </div>
+                    </div>
+                    <hr className="my-8" />
+                    <div>
+                      <div className="flex flex-wrap mt-4">
+                        <h3 className="text-lg mt-2 font-bold text-gray-800">
+                          Seleccione la cantidad
+                        </h3>
+                        <select
+                          value={cantidad}
+                          onChange={(e) => setCantidad(e.target.value)}
+                          className="block mx-auto w-16 my-2 text-center placeholder-center"
+                        >
+                          {Array.from(
+                            { length: selectedProduct.stock },
+                            (_, i) => i + 1
+                          ).map((value) => (
+                            <option key={value} value={value}>
+                              {value}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </div>
+                    <hr className="my-8" />
+                    <div className="flex flex-wrap gap-4">
+                      <button
+                        onClick={agregarProductoAlCarrito}
+                        type="button"
+                        className="min-w-[200px] px-4 py-3 bg-gray-800 hover:bg-gray-900 text-white text-sm font-bold rounded"
+                      >
+                        Agregar al Carrito
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-center"></div>
               </div>
             </div>
           </div>
