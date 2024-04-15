@@ -31,6 +31,7 @@ function Navbars() {
   const [confirmacionModalIsOpen, setConfirmacionModalIsOpen] = useState(false);
   const [productoAEliminar, setProductoAEliminar] = useState(null);
   const [mensaje, setMensaje] = useState('');
+  const [mensajePagar, setMensajemensajePagar] = useState('');
 
   useEffect(() => {
     // Aquí debes poner la lógica para verificar si el usuario está autenticado.
@@ -115,10 +116,12 @@ function Navbars() {
     const mensajeWhatsAppCodificado = encodeURIComponent(mensajeWhatsApp);
 
     // Crear la URL de WhatsApp
-    const urlWhatsApp = `https://wa.me/+5491164339338?text=${mensajeWhatsAppCodificado}`;
+    const urlWhatsApp = `https://wa.me/+5491141666604?text=${mensajeWhatsAppCodificado}`;
 
     // Redirigir a WhatsApp
     window.open(urlWhatsApp, '_blank');
+    setCarrito(null);
+    setMensajemensajePagar('En un Tiempo nos pondremos en contacto');
   };
 
   // No olvides reemplazar '+5491164339338' con tu número de WhatsApp
@@ -145,7 +148,7 @@ function Navbars() {
       // Establecer un temporizador para limpiar el mensaje después de 3 segundos (3000 milisegundos)
       setTimeout(() => {
         setMensaje('');
-      }, 1000);
+      }, 4000);
     } catch (error) {
       console.error('Error al eliminar el producto del carrito:', error);
     }
@@ -300,10 +303,29 @@ function Navbars() {
                           <>
                             <section className="contenedores-zoom">
                               {mensaje && (
-                                <div className="bg-red-500 text-black px-4 py-2 rounded">
-                                  {mensaje}
+                                <div
+                                  className="bg-red-100 text-red-800 px-4 py-4 rounded"
+                                  role="alert"
+                                >
+                                  <strong className="font-bold text-base mr-4">
+                                    {mensaje}
+                                  </strong>
                                 </div>
                               )}
+                              {mensajePagar && (
+                                <div
+                                  className="bg-blue-100 text-blue-800 px-4 py-4 rounded"
+                                  role="alert"
+                                >
+                                  <strong className="font-bold text-base mr-4">
+                                    Info!
+                                  </strong>
+                                  <span className="block text-sm sm:inline max-sm:mt-1">
+                                    {mensajePagar}
+                                  </span>
+                                </div>
+                              )}
+
                               <div className=" mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                                 <div className="mx-auto max-w-3xl">
                                   <header className="text-center">
