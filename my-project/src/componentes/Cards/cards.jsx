@@ -427,8 +427,8 @@ function Cards() {
           </ul>
         )}{' '}
         {selectedProduct && selectedProduct.stock > 0 && (
-          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-white bg-opacity-96 overflow-y-auto">
-            <div className="font-[sans-serif]">
+          <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-white bg-opacity-90 overflow-y-auto">
+            <div className="font-[sans-serif] backdrop-blur">
               {mensaje && (
                 <div className="font-[sans-serif] space-y-6">
                   <div
@@ -454,12 +454,6 @@ function Cards() {
                   </div>
                   <div>
                     <div className="flex flex-wrap items-start gap-4">
-                      <button
-                        className="absolute top-2 right-2 text-red-800 focus:outline-none"
-                        onClick={closePreview}
-                      >
-                        X
-                      </button>
                       <div>
                         <h2 className="text-2xl font-extrabold text-gray-800">
                           {selectedProduct.name} | {selectedProduct.modelo}
@@ -516,6 +510,13 @@ function Cards() {
                         className="min-w-[200px] px-4 py-3 bg-gray-800 hover:bg-gray-900 text-white text-sm font-bold rounded"
                       >
                         Agregar al Carrito
+                      </button>
+                      <button
+                        onClick={closePreview}
+                        type="button"
+                        className="min-w-[200px] px-4 py-2.5 border border-red-300 bg-red-300 hover:bg-red-400 text-black-300 text-sm font-bold rounded"
+                      >
+                        Cerrar
                       </button>
                     </div>
                   </div>

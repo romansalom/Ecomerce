@@ -1,3 +1,8 @@
 .blur {
     filter: blur(2px);
 }
+
+.backdrop-blur {
+    backdrop-filter: blur(10px);
+    /* Ajusta el valor de blur según desees */
+}
