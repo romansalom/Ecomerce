@@ -1,0 +1,9 @@
+.contenedores-zoom {
+    zoom: 75%;
+    /* o transform: scale(0.8); */
+}
+
+.contenedor-zoom {
+    zoom: 75%;
+    /* o transform: scale(0.8); */
+}
