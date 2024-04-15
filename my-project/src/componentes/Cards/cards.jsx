@@ -472,8 +472,15 @@ function Cards() {
                   </li>
                   <li>
                     {mensaje && (
-                      <div className="bg-green-500 text-white px-4 py-2 rounded">
-                        {mensaje}
+                      <div className="font-[sans-serif] space-y-6">
+                        <div
+                          className="bg-green-100 text-green-800 px-4 py-4 rounded"
+                          role="alert"
+                        >
+                          <strong className="font-bold text-base mr-4">
+                            {mensaje}
+                          </strong>
+                        </div>
                       </div>
                     )}
                   </li>

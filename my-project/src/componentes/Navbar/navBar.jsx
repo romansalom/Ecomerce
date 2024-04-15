@@ -47,6 +47,7 @@ function Navbars() {
       setUsuarioAutenticado(false);
     }
   }, []);
+
   const obtenerContenidoCarrito = async () => {
     const token = localStorage.getItem('token');
     try {
@@ -148,7 +149,7 @@ function Navbars() {
       // Establecer un temporizador para limpiar el mensaje después de 3 segundos (3000 milisegundos)
       setTimeout(() => {
         setMensaje('');
-      }, 4000);
+      }, 1000);
     } catch (error) {
       console.error('Error al eliminar el producto del carrito:', error);
     }
@@ -313,16 +314,18 @@ function Navbars() {
                                 </div>
                               )}
                               {mensajePagar && (
-                                <div
-                                  className="bg-blue-100 text-blue-800 px-4 py-4 rounded"
-                                  role="alert"
-                                >
-                                  <strong className="font-bold text-base mr-4">
-                                    Info!
-                                  </strong>
-                                  <span className="block text-sm sm:inline max-sm:mt-1">
-                                    {mensajePagar}
-                                  </span>
+                                <div className="font-[sans-serif] space-y-6">
+                                  <div
+                                    className="bg-blue-100 text-blue-800 px-4 py-4 rounded"
+                                    role="alert"
+                                  >
+                                    <strong className="font-bold text-base mr-4">
+                                      Info!
+                                    </strong>
+                                    <span className="block text-sm sm:inline max-sm:mt-1">
+                                      {mensajePagar}
+                                    </span>
+                                  </div>
                                 </div>
                               )}
 
