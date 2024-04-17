@@ -26,6 +26,7 @@ function Navbars() {
   const [usuarioAutenticado, setUsuarioAutenticado] = useState(false);
   const [carrito, setCarrito] = useState(null);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   const [modalPlacement] = useState('bottom-center');
   const [usuario, setUsuario] = useState({});
   const [confirmacionModalIsOpen, setConfirmacionModalIsOpen] = useState(false);
@@ -332,7 +333,7 @@ function Navbars() {
                               <div className=" mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                                 <div className="mx-auto max-w-3xl">
                                   <header className="text-center">
-                                    <h1 className="text-xl font-bold text-gray-900 sm:text-3xl">
+                                    <h1 className="text-xl font-extrabold text-gray-800 sm:text-3xl">
                                       Mi Carrito
                                     </h1>
                                   </header>
@@ -346,22 +347,22 @@ function Navbars() {
                                             (product, index) => (
                                               <li
                                                 key={index}
-                                                className="flex items-center gap-6 mt-3"
+                                                className="flex items-center gap-6 mt-10"
                                               >
                                                 <Image
                                                   src={product.imageUrl}
                                                   alt={product.name}
                                                   height="50px"
                                                   width="50px"
-                                                  className="size-16 rounded object-cover"
+                                                  className="size-20 rounded object-cover"
                                                 />
 
                                                 <div>
-                                                  <h3 className="text-sm text-gray-900">
+                                                  <h3 className="text-2xl font-extrabold text-gray-800">
                                                     {product.name}{' '}
                                                   </h3>
 
-                                                  <dl className="mt-0.5 space-y-px text-[10px] text-gray-600">
+                                                  <dl className="text-sm text-gray-400 mt-2">
                                                     <div>
                                                       <dt className="inline">
                                                         {product.puffs} Puffs
@@ -428,16 +429,17 @@ function Navbars() {
                                     <div className=" flex justify-end border-t border-gray-100 pt-8">
                                       <div className="w-full max-w-lg md:w-screen md:max-w-full space-y-4">
                                         <dl className="space-y-0.5 text-sm text-gray-700">
-                                          <div className="flex justify-between !text-base font-medium">
+                                          <div className="flex justify-between text-2xl font-extrabold text-gray-800">
                                             <dt>Total</dt>
                                             <dd>
                                               {carrito && carrito.Productos ? (
-                                                <span className="font-custom">
+                                                <span>
                                                   ${totalCarrito.toFixed(2)}{' '}
                                                   {/* Mostrar el botón Pagar solo en pantallas pequeñas */}
                                                   <Button
-                                                    color="primary"
                                                     onClick={PagarButton}
+                                                    type="button"
+                                                    className="min-w-[150px] px-4 py-2.5 border border-blue-300 bg-blue-300 hover:bg-blue-400 text-black-300 text-sm font-bold rounded"
                                                   >
                                                     Pagar
                                                   </Button>
@@ -467,12 +469,13 @@ function Navbars() {
                       >
                         <ModalContent>
                           <div className="text-center">
-                            <p className="text-lg font-semibold text-gray-900">
-                              ¿Estás seguro de eliminar el producto?
+                            <p className="text-lg font-semibold text-gray-900 mt-3">
+                              ¿Estás seguro de eliminar el producto ?
                             </p>
-                            <div className="mt-4 space-x-4">
+
+                            <div className="space-x-4">
                               <Button
-                                color="danger"
+                                className="min-w-[150px] px-4 py-2.5 border border-red-300 bg-red-300 hover:bg-red-400 text-black-300 text-sm font-bold rounded mt-3 mb-3"
                                 onClick={() => {
                                   eliminarProductoDelCarrito(
                                     productoAEliminar.id
@@ -483,7 +486,7 @@ function Navbars() {
                                 Eliminar
                               </Button>
                               <Button
-                                color="success"
+                                className="min-w-[150px] px-4 py-2.5 border border-green-300 bg-green-300 hover:bg-green-400 text-black-300 text-sm font-bold rounded mt-3 mb-3"
                                 onClick={() =>
                                   setConfirmacionModalIsOpen(false)
                                 }

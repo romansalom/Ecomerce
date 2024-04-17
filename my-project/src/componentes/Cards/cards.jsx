@@ -371,7 +371,7 @@ function Cards() {
                 onChange={(e) => setSearchTerm(e.target.value)}
                 type="text"
                 placeholder="Enter name"
-                className="pr-4 px-5 py-2.5 text-sm text-black rounded-full bg-white border border-green-500 w-full outline-[#007bff]"
+                className=" pr-4 px-5 py-2.5 text-sm text-black rounded-full bg-white border border-green-500 w-full outline-[#007bff]"
               />
             </div>
           </div>
