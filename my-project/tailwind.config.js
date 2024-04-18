@@ -1,4 +1,5 @@
 import { nextui } from '@nextui-org/react';
+import daisyui from 'daisyui';
 
 /** @type {import('tailwindcss').Config} */
 export default {

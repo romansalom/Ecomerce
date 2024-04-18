@@ -29,6 +29,10 @@ function Cards() {
   const [sortDirection, setSortDirection] = useState('asc'); // Estado para la dirección de ordenamiento
   const [cantidad, setCantidad] = useState(1);
   const [mensaje, setMensaje] = useState('');
+  const [marcaDropdownOpen, setMarcaDropdownOpen] = useState(false);
+  const [modeloDropdownOpen, setModeloDropdownOpen] = useState(false);
+  const [puffsoDropdownOpen, setPuffsDropdownOpen] = useState(false);
+  const [filtrosDropdownOpen, setFiltrosDropdownOpen] = useState(false);
 
   useEffect(() => {
     axios
@@ -213,166 +217,115 @@ function Cards() {
           <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
             Product Collection
           </h2>
-
           <div className="mt-4 flex justify-center">
             <div className="flex flex-wrap justify-center space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-10">
-              <Dropdown>
-                <DropdownTrigger>
-                  <Button
-                    className="font-custom text-l text-center"
-                    variant="bordered"
-                  >
-                    {selectedMarca ? selectedMarca : 'Marcas'}
-                  </Button>
-                </DropdownTrigger>
-                <DropdownMenu aria-label="Static Actions">
-                  <DropdownItem
-                    className="font-custom"
-                    onClick={() => setSelectedMarca('')}
-                  >
-                    Todas las Marcas
-                  </DropdownItem>
-                  {uniqueMarcas.map((marca, index) => (
-                    <DropdownItem
-                      className="font-custom"
-                      key={index}
-                      onClick={() => setSelectedMarca(marca)}
-                    >
-                      {marca}
-                    </DropdownItem>
-                  ))}
-                </DropdownMenu>
-              </Dropdown>
-              <Dropdown>
-                <DropdownTrigger>
-                  <Button
-                    className="font-custom text-l text-center"
-                    variant="bordered"
-                  >
-                    {selectedModelo ? selectedModelo : 'Modelos'}
-                  </Button>
-                </DropdownTrigger>
-                <DropdownMenu aria-label="Static Actions">
-                  <DropdownItem
-                    className="font-custom"
-                    onClick={() => setSelectedModelo('')}
-                  >
-                    Todos los Modelos
-                  </DropdownItem>
-                  {filteredModelos.map((modelo, index) => (
-                    <DropdownItem
-                      className="font-custom"
-                      key={index}
-                      onClick={() => setSelectedModelo(modelo)}
-                    >
-                      {modelo}
-                    </DropdownItem>
-                  ))}
-                </DropdownMenu>
-              </Dropdown>
-              <Dropdown>
-                <DropdownTrigger>
-                  <Button
-                    className="font-custom text-l text-center"
-                    variant="bordered"
-                  >
-                    {puffsFilter ? puffsFilter : 'Puffs'}
-                  </Button>
-                </DropdownTrigger>
-                <DropdownMenu aria-label="Static Actions">
-                  <DropdownItem
-                    className="font-custom"
-                    onClick={() => setPuffsFilter('')}
-                  >
-                    Todos los Puffs
-                  </DropdownItem>
-                  {filteredPuffs.map((puff, index) => (
-                    <DropdownItem
-                      className="font-custom"
-                      key={index}
-                      onClick={() => setPuffsFilter(puff)}
-                    >
-                      {puff}
-                    </DropdownItem>
-                  ))}
-                </DropdownMenu>
-              </Dropdown>
-              <br></br>
-              <br></br>
+              <div className="relative z-30 md:z-20">
+                <Button
+                  className="px-2 py-2 min-w-[140px] shadow-lg shadow-blue-200 rounded text-black text-sm tracking-wider font-medium outline-none border-2 border-blue-600 active:shadow-inner bg-white"
+                  onClick={() => setMarcaDropdownOpen(!marcaDropdownOpen)}
+                >
+                  {selectedMarca ? selectedMarca : 'Marcas'}
+                </Button>
+                {marcaDropdownOpen && (
+                  <div className="absolute bg-white shadow-lg mt-1 rounded-lg w-full">
+                    <div className="py-1">
+                      <div
+                        className="font-custom px-4 py-2 cursor-pointer hover:bg-gray-100"
+                        onClick={() => {
+                          setSelectedMarca('');
+                          setMarcaDropdownOpen(false);
+                        }}
+                      >
+                        Todas
+                      </div>
+                      {uniqueMarcas.map((marca, index) => (
+                        <div
+                          key={index}
+                          className=" px-4 py-2 cursor-pointer hover:bg-gray-100"
+                          onClick={() => {
+                            setSelectedMarca(marca);
+                            setMarcaDropdownOpen(false);
+                          }}
+                        >
+                          {marca}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className="relative z-30 md:z-20">
+                <Button
+                  className="px-2 py-2 min-w-[140px] shadow-lg shadow-blue-200 rounded text-black text-sm tracking-wider font-medium outline-none border-2 border-blue-600 active:shadow-inner bg-white"
+                  onClick={() => setModeloDropdownOpen(!modeloDropdownOpen)}
+                >
+                  {selectedModelo ? selectedModelo : 'Modelos'}
+                </Button>
+                {modeloDropdownOpen && (
+                  <div className="absolute bg-white shadow-lg mt-1 rounded-lg w-full">
+                    <div className="py-1">
+                      <div
+                        className="font-custom px-4 py-2 cursor-pointer hover:bg-gray-100"
+                        onClick={() => {
+                          setSelectedModelo('');
+                          setModeloDropdownOpen(false);
+                        }}
+                      >
+                        Todos
+                      </div>
+                      {filteredModelos.map((modelo, index) => (
+                        <div
+                          key={index}
+                          className=" px-4 py-2 cursor-pointer hover:bg-gray-100"
+                          onClick={() => {
+                            setSelectedModelo(modelo);
+                            setModeloDropdownOpen(false);
+                          }}
+                        >
+                          {modelo}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
 
-              <Dropdown>
-                <DropdownTrigger>
-                  <Button
-                    className="font-custom text-l text-center"
-                    variant="bordered"
-                  >
-                    {sortBy === 'name'
-                      ? 'Ordenar por Nombre'
-                      : sortBy === 'precio'
-                      ? 'Ordenar por Precio'
-                      : 'Todos'}
-                    {sortBy && (
-                      <span className=" ml-1">
-                        {sortBy === 'name'
-                          ? sortDirection === 'asc'
-                            ? '▲'
-                            : '▼'
-                          : sortDirection === 'asc'
-                          ? '▲'
-                          : '▼'}
-                      </span>
-                    )}
-                  </Button>
-                </DropdownTrigger>
-
-                <DropdownMenu>
-                  <DropdownItem
-                    className="font-custom"
-                    onClick={() => handleSortBy('')}
-                  >
-                    Todos
-                    {!sortBy && (
-                      <span className="ml-1">
-                        {' '}
-                        {/* Mostrar la dirección solo si no hay sort */} ▲▼
-                      </span>
-                    )}
-                  </DropdownItem>
-                  <DropdownItem
-                    className="font-custom"
-                    onClick={() => handleSortBy('name')}
-                  >
-                    Nombre{' '}
-                    {sortBy === 'name' && (
-                      <span className="ml-1">
-                        {sortDirection === 'asc' ? '▲' : '▼'}
-                      </span>
-                    )}
-                  </DropdownItem>
-                  <DropdownItem
-                    className="font-custom"
-                    onClick={() => handleSortBy('precio')}
-                  >
-                    Precio{' '}
-                    {sortBy === 'precio' && (
-                      <span className="ml-1">
-                        {sortDirection === 'asc' ? '▲' : '▼'}
-                      </span>
-                    )}
-                  </DropdownItem>
-                </DropdownMenu>
-              </Dropdown>
-
-              <br></br>
-              <br></br>
-              <br></br>
-              <input
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                type="text"
-                placeholder="Enter name"
-                className=" pr-4 px-5 py-2.5 text-sm text-black rounded-full bg-white border border-green-500 w-full outline-[#007bff]"
-              />
+              <div className="relative z-20 md:z-20">
+                {/* Aquí modificamos el z-index del botón de Puffs */}
+                <Button
+                  className="px-2 py-2 min-w-[140px] shadow-lg shadow-blue-200 rounded text-black text-sm tracking-wider font-medium outline-none border-2 border-blue-600 active:shadow-inner bg-white mt-4 md:mt-0"
+                  onClick={() => setPuffsDropdownOpen(!puffsoDropdownOpen)}
+                >
+                  {puffsFilter ? puffsFilter : 'Puffs'}
+                </Button>
+                {puffsoDropdownOpen && (
+                  <div className="absolute bg-white shadow-lg mt-1 rounded-lg w-full">
+                    <div className="py-1">
+                      <div
+                        className="font-custom px-4 py-2 cursor-pointer"
+                        onClick={() => {
+                          setPuffsFilter('');
+                          setPuffsDropdownOpen(false);
+                        }}
+                      >
+                        Todos
+                      </div>
+                      {filteredPuffs.map((puff, index) => (
+                        <div
+                          key={index}
+                          className="px-4 py-2 cursor-pointer hover:bg-gray-100 "
+                          onClick={() => {
+                            setPuffsFilter(puff);
+                            setPuffsDropdownOpen(false);
+                          }}
+                        >
+                          {puff}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </header>
