@@ -209,20 +209,41 @@ function Cards() {
       throw error;
     }
   };
+  const handleMarcaClick = () => {
+    setMarcaDropdownOpen(!marcaDropdownOpen);
+    setModeloDropdownOpen(false); // Cerrar el dropdown de Modelo
+    setPuffsDropdownOpen(false); // Cerrar el dropdown de Puffs
+  };
+
+  // Función para manejar el clic en el filtro de Modelo
+  const handleModeloClick = () => {
+    setModeloDropdownOpen(!modeloDropdownOpen);
+    setMarcaDropdownOpen(false); // Cerrar el dropdown de Marca
+    setPuffsDropdownOpen(false); // Cerrar el dropdown de Puffs
+  };
+
+  // Función para manejar el clic en el filtro de Puffs
+  const handlePuffsClick = () => {
+    setPuffsDropdownOpen(!puffsDropdownOpen);
+    setMarcaDropdownOpen(false); // Cerrar el dropdown de Marca
+    setModeloDropdownOpen(false); // Cerrar el dropdown de Modelo
+  };
 
   return (
-    <section className="mt-4 flex justify-center">
+    <section className=" flex justify-center">
       <div className=" mx-auto max-w-screen-xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8 ">
         <header className="text-center">
           <h2 className="text-xl font-bold text-gray-900 sm:text-3xl">
             Product Collection
           </h2>
-          <div className="mt-4 flex justify-center">
+          <div className="mt-2 flex justify-center">
             <div className="flex flex-wrap justify-center space-x-2 sm:space-x-4 md:space-x-6 lg:space-x-10">
               <div className="relative z-30 md:z-20">
                 <Button
                   className="px-2 py-2 min-w-[140px] shadow-lg shadow-blue-200 rounded text-black text-sm tracking-wider font-medium outline-none border-2 border-blue-600 active:shadow-inner bg-white"
-                  onClick={() => setMarcaDropdownOpen(!marcaDropdownOpen)}
+                  onClick={() => {
+                    setMarcaDropdownOpen(!marcaDropdownOpen);
+                  }}
                 >
                   {selectedMarca ? selectedMarca : 'Marcas'}
                 </Button>
@@ -254,6 +275,7 @@ function Cards() {
                   </div>
                 )}
               </div>
+              <br></br> <br></br>
               <div className="relative z-30 md:z-20">
                 <Button
                   className="px-2 py-2 min-w-[140px] shadow-lg shadow-blue-200 rounded text-black text-sm tracking-wider font-medium outline-none border-2 border-blue-600 active:shadow-inner bg-white"
@@ -289,11 +311,10 @@ function Cards() {
                   </div>
                 )}
               </div>
-
               <div className="relative z-20 md:z-20">
                 {/* Aquí modificamos el z-index del botón de Puffs */}
                 <Button
-                  className="px-2 py-2 min-w-[140px] shadow-lg shadow-blue-200 rounded text-black text-sm tracking-wider font-medium outline-none border-2 border-blue-600 active:shadow-inner bg-white mt-4 md:mt-0"
+                  className="px-2 py-2 min-w-[140px] shadow-lg shadow-blue-200 rounded text-black text-sm tracking-wider font-medium outline-none border-2 border-blue-600 active:shadow-inner bg-white  md:mt-0"
                   onClick={() => setPuffsDropdownOpen(!puffsoDropdownOpen)}
                 >
                   {puffsFilter ? puffsFilter : 'Puffs'}
@@ -326,6 +347,15 @@ function Cards() {
                   </div>
                 )}
               </div>
+              <br></br>
+              <br></br>
+              <input
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                type="text"
+                placeholder="Enter name"
+                className=" pr-4 px-5 py-2.5 text-sm text-black rounded-full bg-white border border-green-500 w-full outline-[#007bff]"
+              />
             </div>
           </div>
         </header>
@@ -456,7 +486,7 @@ function Cards() {
                       </div>
                     </div>
                     <hr className="my-8" />
-                    <div className="flex flex-wrap gap-4">
+                    <div className="flex flex-wrap gap-4 justify-center">
                       <button
                         onClick={agregarProductoAlCarrito}
                         type="button"
