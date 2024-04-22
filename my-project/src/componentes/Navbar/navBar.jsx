@@ -33,6 +33,7 @@ function Navbars() {
   const [productoAEliminar, setProductoAEliminar] = useState(null);
   const [mensaje, setMensaje] = useState('');
   const [mensajePagar, setMensajemensajePagar] = useState('');
+  const [marcaDropdownOpen, setMarcaDropdownOpen] = useState(false);
 
   useEffect(() => {
     // Aquí debes poner la lógica para verificar si el usuario está autenticado.
@@ -227,15 +228,16 @@ function Navbars() {
                         </NavbarContent>
                       </DropdownTrigger>
                     </Dropdown>
-                    <Dropdown
-                      placement="bottom-left"
-                      className="border border-black"
-                    >
-                      <DropdownTrigger>
+                    <div className="relative z-30 md:z-20">
+                      <Button
+                        className="bg-white"
+                        onClick={() => {
+                          setMarcaDropdownOpen(!marcaDropdownOpen);
+                        }}
+                      >
                         <Avatar
-                          isBordered
                           as="button"
-                          className="transition-transform"
+                          className="transition-transform shadow-lg shadow-blue-200 rounded-full text-black text-sm tracking-wider font-medium outline-none border-2 border-blue-600 active:shadow-inner bg-white"
                         >
                           {/* Inserta el SVG aquí */}
                           <svg
@@ -254,45 +256,56 @@ function Navbars() {
                             />
                           </svg>
                         </Avatar>
-                      </DropdownTrigger>
-                      <DropdownMenu aria-label="Profile Actions" variant="flat">
-                        <DropdownItem key="profile" className="h-14 gap-2">
-                          <p className="font-semibold">Email Logeado</p>
-                          <p className="font-semibold">{usuario.email}</p>
-                        </DropdownItem>
-
-                        <DropdownItem key="analytics">Mis pedidos</DropdownItem>
-
-                        <DropdownItem key="logout" color="danger">
-                          <a
-                            onClick={() => {
-                              localStorage.removeItem('token');
-                              localStorage.removeItem('userId');
-                              setUsuarioAutenticado(false);
-                            }}
-                          >
-                            {' '}
-                            <div className="flex items-center justify-center">
-                              <svg
-                                className="w-6 h-6 text-red-500 dark:text-white hover:text-red-400 transition-colors duration-300"
-                                aria-hidden="true"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="white"
-                                viewBox="0 0 24 24"
+                      </Button>
+                      {marcaDropdownOpen && (
+                        <div className="absolute bg-white shadow-lg mt-1 rounded-lg w-full">
+                          <div className="py-1">
+                            <div
+                              className="font-custom px-4 py-2 cursor-pointer hover:bg-gray-100"
+                              onClick={() => {
+                                setMarcaDropdownOpen(false);
+                              }}
+                            >
+                              <a
+                                onClick={() => {
+                                  localStorage.removeItem('token');
+                                  localStorage.removeItem('userId');
+                                  setUsuarioAutenticado(false);
+                                }}
                               >
-                                <path
-                                  stroke="currentColor"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                  strokeWidth="2"
-                                  d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
-                                />
-                              </svg>
+                                {' '}
+                                <div className="flex items-center justify-center">
+                                  <svg
+                                    className="w-6 h-6 text-red-500 dark:text-white hover:text-red-400 transition-colors duration-300"
+                                    aria-hidden="true"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="white"
+                                    viewBox="0 0 24 24"
+                                  >
+                                    <path
+                                      stroke="currentColor"
+                                      strokeLinecap="round"
+                                      strokeLinejoin="round"
+                                      strokeWidth="2"
+                                      d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2"
+                                    />
+                                  </svg>
+                                </div>
+                              </a>
                             </div>
-                          </a>
-                        </DropdownItem>
-                      </DropdownMenu>
-                    </Dropdown>
+
+                            <div
+                              className=" px-4 py-2 cursor-pointer hover:bg-gray-100"
+                              onClick={() => {
+                                setMarcaDropdownOpen(false);
+                              }}
+                            >
+                              sas
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
                     <div>
                       {' '}
                       <Modal
