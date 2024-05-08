@@ -1,5 +1,5 @@
 
-¡Por supuesto! Aquí tienes una versión en primera persona para el archivo README:
+
 
 ¡Bienvenidos a mi proyecto de eCommerce! Este proyecto fue desarrollado por mí utilizando React.js y representa mi enfoque en las últimas prácticas de desarrollo web y diseño centrado en el usuario.
 
